@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+  - api-tests
+
+ignoredBuiltDependencies:
+  - esbuild
+
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - bcrypt
+  - prisma
+  - sharp
+  - unrs-resolver

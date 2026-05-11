@@ -1,0 +1,158 @@
+import { getCached } from "@zenit/shared/src/cache";
+import { prisma } from "../config/database";
+import { AppError } from "../middlewares/error.middleware";
+
+export interface ProductQuery {
+  page?:       number;
+  limit?:      number;
+  categoryId?: string;
+  q?:          string;
+  minPrice?:   number;
+  maxPrice?:   number;
+  minRating?:  number;
+  // FIX: terima snake_case alias dari URL query param supaya k6/frontend tidak perlu ubah konvensi.
+  // sortMapping di bawah normalize ke camelCase sebelum masuk Prisma.
+  sortBy?:     "price" | "rating" | "soldCount" | "createdAt" | "sold_count" | "created_at";
+  sortOrder?:  "asc" | "desc";
+}
+
+// -- Normalisasi snake_case ? camelCase untuk Prisma orderBy ------------------
+// REST menerima query param dari URL (string), bisa datang dalam snake_case.
+// tRPC tidak perlu ini karena Zod schema + mapInput() di router sudah handle.
+const SORT_MAP: Record<string, "price" | "rating" | "soldCount" | "createdAt"> = {
+  created_at: "createdAt",
+  createdAt:  "createdAt",
+  sold_count: "soldCount",
+  soldCount:  "soldCount",
+  price:      "price",
+  rating:     "rating",
+};
+
+// -- Sanitize input untuk PostgreSQL tsquery -----------------------------------
+// FIX #12: strip karakter non-alphanumeric supaya tidak bisa inject tsquery syntax.
+// Spasi antar kata ? AND (&). Gunakan "|" kalau mau OR semantics.
+function buildTsQuery(q: string): string {
+  return q
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(w => w.replace(/[^a-zA-Z0-9]/g, ""))
+    .filter(Boolean)
+    .join(" & ");
+}
+
+// -- Shared select fragments ---------------------------------------------------
+const PRODUCT_LIST_SELECT = {
+  id:        true,
+  name:      true,
+  slug:      true,
+  price:     true,
+  images:    true,
+  rating:    true,
+  soldCount: true,
+  location:  true,
+  discount:  true,
+  stock:     true,
+  category:  { select: { id: true, name: true, slug: true } },
+} as const;
+
+const PRODUCT_DETAIL_SELECT = {
+  ...PRODUCT_LIST_SELECT,
+  description: true,
+  createdAt:   true,
+} as const;
+
+// -- buildWhere ----------------------------------------------------------------
+function buildWhere(query: ProductQuery) {
+  const { categoryId, q, minPrice, maxPrice, minRating } = query;
+
+  return {
+    isActive: true,
+    ...(categoryId && { categoryId }),
+
+    // FIX #12: Full-Text Search via Prisma fullTextSearchPostgres (tsquery).
+    // Jauh lebih cepat dari ILIKE '%x%' karena bisa pakai GIN index.
+    // Requires: previewFeatures = ["fullTextSearchPostgres"] di schema.prisma (sudah ada).
+    // Requires: GIN index dari migration SQL (wajib dijalankan manual):
+    //   CREATE INDEX idx_products_name_fts ON products USING GIN (to_tsvector('english', name));
+    ...(q && q.trim().length > 0 && {
+      name: { search: buildTsQuery(q) },
+    }),
+
+    // FIX: pakai !== undefined supaya nilai 0 tetap diproses (truthy check skip nilai 0)
+    ...(minPrice !== undefined || maxPrice !== undefined
+      ? {
+          price: {
+            ...(minPrice !== undefined && { gte: minPrice }),
+            ...(maxPrice !== undefined && { lte: maxPrice }),
+          },
+        }
+      : {}),
+    ...(minRating !== undefined && { rating: { gte: minRating } }),
+  };
+}
+
+// -- getAll --------------------------------------------------------------------
+export async function getAll(query: ProductQuery) {
+  const {
+    page      = 1,
+    limit     = 20,
+    sortBy    = "createdAt",
+    sortOrder = "desc",
+  } = query;
+
+  // FIX: normalize sortBy ke camelCase — default ke "createdAt" kalau tidak dikenal
+  const finalSortBy = SORT_MAP[sortBy] ?? "createdAt";
+
+  const where = buildWhere(query);
+
+  // FIX #4: count dan findMany jalan concurrent via Promise.all.
+  // Sebelumnya sequential (await count, lalu await findMany) ? 2 RTT.
+  // Pure read, tidak ada write ? aman diparalelkan.
+  const [total, products] = await Promise.all([
+    prisma.product.count({ where }),
+    prisma.product.findMany({
+      where,
+      select:  PRODUCT_LIST_SELECT,
+      orderBy: { [finalSortBy]: sortOrder },
+      skip:    (page - 1) * limit,
+      take:    limit,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
+
+  return {
+    data:        products,
+    totalCount:  total,
+    page,
+    totalPages,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1,
+  };
+}
+
+// -- getBySlug -----------------------------------------------------------------
+export async function getBySlug(slug: string) {
+  const product = await prisma.product.findFirst({
+    where:  { slug, isActive: true },
+    select: PRODUCT_DETAIL_SELECT,
+  });
+  if (!product) throw new AppError("Produk tidak ditemukan.", 404);
+  return product;
+}
+
+// -- getById -------------------------------------------------------------------
+export async function getById(id: string) {
+  const product = await prisma.product.findUnique({
+    where:  { id },
+    select: PRODUCT_DETAIL_SELECT,
+  });
+  if (!product) throw new AppError("Produk tidak ditemukan.", 404);
+  return product;
+}
+
+// -- search --------------------------------------------------------------------
+export async function search(keyword: string, query?: Omit<ProductQuery, "q">) {
+  return getAll({ ...query, q: keyword });
+}

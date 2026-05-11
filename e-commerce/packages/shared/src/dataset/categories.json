@@ -1,0 +1,2222 @@
+[
+  {
+    "id": "cat_aksesoris_kamera_baterai_charger",
+    "name": "Aksesoris Kamera Baterai Charger",
+    "slug": "aksesoris-kamera-baterai-charger",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_case",
+    "name": "Aksesoris Kamera Case",
+    "slug": "aksesoris-kamera-case",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_cleaning",
+    "name": "Aksesoris Kamera Cleaning",
+    "slug": "aksesoris-kamera-cleaning",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_dry_box",
+    "name": "Aksesoris Kamera Dry Box",
+    "slug": "aksesoris-kamera-dry-box",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_microphone",
+    "name": "Aksesoris Kamera Microphone",
+    "slug": "aksesoris-kamera-microphone",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_stabilizer",
+    "name": "Aksesoris Kamera Stabilizer",
+    "slug": "aksesoris-kamera-stabilizer",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_strap",
+    "name": "Aksesoris Kamera Strap",
+    "slug": "aksesoris-kamera-strap",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_tas",
+    "name": "Aksesoris Kamera Tas",
+    "slug": "aksesoris-kamera-tas",
+    "description": null
+  },
+  {
+    "id": "cat_aksesoris_kamera_tripod",
+    "name": "Aksesoris Kamera Tripod",
+    "slug": "aksesoris-kamera-tripod",
+    "description": null
+  },
+  {
+    "id": "cat_al_quran",
+    "name": "Al Quran",
+    "slug": "al-quran",
+    "description": null
+  },
+  {
+    "id": "cat_alkitab",
+    "name": "Alkitab",
+    "slug": "alkitab",
+    "description": null
+  },
+  {
+    "id": "cat_audio_amplifier",
+    "name": "Audio Amplifier",
+    "slug": "audio-amplifier",
+    "description": null
+  },
+  {
+    "id": "cat_audio_earphone",
+    "name": "Audio Earphone",
+    "slug": "audio-earphone",
+    "description": null
+  },
+  {
+    "id": "cat_audio_headphone",
+    "name": "Audio Headphone",
+    "slug": "audio-headphone",
+    "description": null
+  },
+  {
+    "id": "cat_audio_speaker",
+    "name": "Audio Speaker",
+    "slug": "audio-speaker",
+    "description": null
+  },
+  {
+    "id": "cat_audio_tws",
+    "name": "Audio Tws",
+    "slug": "audio-tws",
+    "description": null
+  },
+  {
+    "id": "cat_audio_voice_recorder",
+    "name": "Audio Voice Recorder",
+    "slug": "audio-voice-recorder",
+    "description": null
+  },
+  {
+    "id": "cat_buku_agama_islam",
+    "name": "Buku Agama Islam",
+    "slug": "buku-agama-islam",
+    "description": null
+  },
+  {
+    "id": "cat_buku_aktivitas",
+    "name": "Buku Aktivitas",
+    "slug": "buku-aktivitas",
+    "description": null
+  },
+  {
+    "id": "cat_buku_biografi",
+    "name": "Buku Biografi",
+    "slug": "buku-biografi",
+    "description": null
+  },
+  {
+    "id": "cat_buku_bisnis",
+    "name": "Buku Bisnis",
+    "slug": "buku-bisnis",
+    "description": null
+  },
+  {
+    "id": "cat_buku_cerita_anak",
+    "name": "Buku Cerita Anak",
+    "slug": "buku-cerita-anak",
+    "description": null
+  },
+  {
+    "id": "cat_buku_database",
+    "name": "Buku Database",
+    "slug": "buku-database",
+    "description": null
+  },
+  {
+    "id": "cat_buku_design_graphics",
+    "name": "Buku Design Graphics",
+    "slug": "buku-design-graphics",
+    "description": null
+  },
+  {
+    "id": "cat_buku_diet",
+    "name": "Buku Diet",
+    "slug": "buku-diet",
+    "description": null
+  },
+  {
+    "id": "cat_buku_dongeng",
+    "name": "Buku Dongeng",
+    "slug": "buku-dongeng",
+    "description": null
+  },
+  {
+    "id": "cat_buku_ekonomi",
+    "name": "Buku Ekonomi",
+    "slug": "buku-ekonomi",
+    "description": null
+  },
+  {
+    "id": "cat_buku_ensiklopedia",
+    "name": "Buku Ensiklopedia",
+    "slug": "buku-ensiklopedia",
+    "description": null
+  },
+  {
+    "id": "cat_buku_fotografi",
+    "name": "Buku Fotografi",
+    "slug": "buku-fotografi",
+    "description": null
+  },
+  {
+    "id": "cat_buku_kesehatan_anak",
+    "name": "Buku Kesehatan Anak",
+    "slug": "buku-kesehatan-anak",
+    "description": null
+  },
+  {
+    "id": "cat_buku_kesuksesan",
+    "name": "Buku Kesuksesan",
+    "slug": "buku-kesuksesan",
+    "description": null
+  },
+  {
+    "id": "cat_buku_kewirausahaan",
+    "name": "Buku Kewirausahaan",
+    "slug": "buku-kewirausahaan",
+    "description": null
+  },
+  {
+    "id": "cat_buku_kuliner",
+    "name": "Buku Kuliner",
+    "slug": "buku-kuliner",
+    "description": null
+  },
+  {
+    "id": "cat_buku_latihan_kebugaran",
+    "name": "Buku Latihan Kebugaran",
+    "slug": "buku-latihan-kebugaran",
+    "description": null
+  },
+  {
+    "id": "cat_buku_leadership",
+    "name": "Buku Leadership",
+    "slug": "buku-leadership",
+    "description": null
+  },
+  {
+    "id": "cat_buku_manajemen",
+    "name": "Buku Manajemen",
+    "slug": "buku-manajemen",
+    "description": null
+  },
+  {
+    "id": "cat_buku_mewarnai",
+    "name": "Buku Mewarnai",
+    "slug": "buku-mewarnai",
+    "description": null
+  },
+  {
+    "id": "cat_buku_olahraga",
+    "name": "Buku Olahraga",
+    "slug": "buku-olahraga",
+    "description": null
+  },
+  {
+    "id": "cat_buku_programming",
+    "name": "Buku Programming",
+    "slug": "buku-programming",
+    "description": null
+  },
+  {
+    "id": "cat_buku_resep_kue",
+    "name": "Buku Resep Kue",
+    "slug": "buku-resep-kue",
+    "description": null
+  },
+  {
+    "id": "cat_buku_resep_masakan",
+    "name": "Buku Resep Masakan",
+    "slug": "buku-resep-masakan",
+    "description": null
+  },
+  {
+    "id": "cat_buku_resep_minuman",
+    "name": "Buku Resep Minuman",
+    "slug": "buku-resep-minuman",
+    "description": null
+  },
+  {
+    "id": "cat_buku_sd_kelas_1",
+    "name": "Buku Sd Kelas 1",
+    "slug": "buku-sd-kelas-1",
+    "description": null
+  },
+  {
+    "id": "cat_buku_sd_kelas_4",
+    "name": "Buku Sd Kelas 4",
+    "slug": "buku-sd-kelas-4",
+    "description": null
+  },
+  {
+    "id": "cat_buku_sejarah",
+    "name": "Buku Sejarah",
+    "slug": "buku-sejarah",
+    "description": null
+  },
+  {
+    "id": "cat_buku_self_improvement",
+    "name": "Buku Self Improvement",
+    "slug": "buku-self-improvement",
+    "description": null
+  },
+  {
+    "id": "cat_buku_sma_kelas_1",
+    "name": "Buku Sma Kelas 1",
+    "slug": "buku-sma-kelas-1",
+    "description": null
+  },
+  {
+    "id": "cat_buku_sma_kelas_2",
+    "name": "Buku Sma Kelas 2",
+    "slug": "buku-sma-kelas-2",
+    "description": null
+  },
+  {
+    "id": "cat_buku_smp_kelas_1",
+    "name": "Buku Smp Kelas 1",
+    "slug": "buku-smp-kelas-1",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_botol_minum",
+    "name": "Dapur Botol Minum",
+    "slug": "dapur-botol-minum",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_cetakan_kue",
+    "name": "Dapur Cetakan Kue",
+    "slug": "dapur-cetakan-kue",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_coffee_maker",
+    "name": "Dapur Coffee Maker",
+    "slug": "dapur-coffee-maker",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_deep_fryer",
+    "name": "Dapur Deep Fryer",
+    "slug": "dapur-deep-fryer",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_gelas_mug",
+    "name": "Dapur Gelas Mug",
+    "slug": "dapur-gelas-mug",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_gunting",
+    "name": "Dapur Gunting",
+    "slug": "dapur-gunting",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_kompor",
+    "name": "Dapur Kompor",
+    "slug": "dapur-kompor",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_kotak_makan",
+    "name": "Dapur Kotak Makan",
+    "slug": "dapur-kotak-makan",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_loyang",
+    "name": "Dapur Loyang",
+    "slug": "dapur-loyang",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_mangkok",
+    "name": "Dapur Mangkok",
+    "slug": "dapur-mangkok",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_panci",
+    "name": "Dapur Panci",
+    "slug": "dapur-panci",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_parutan",
+    "name": "Dapur Parutan",
+    "slug": "dapur-parutan",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_peeler",
+    "name": "Dapur Peeler",
+    "slug": "dapur-peeler",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_piring",
+    "name": "Dapur Piring",
+    "slug": "dapur-piring",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_pisau",
+    "name": "Dapur Pisau",
+    "slug": "dapur-pisau",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_rak",
+    "name": "Dapur Rak",
+    "slug": "dapur-rak",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_sendok_garpu",
+    "name": "Dapur Sendok Garpu",
+    "slug": "dapur-sendok-garpu",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_spatula",
+    "name": "Dapur Spatula",
+    "slug": "dapur-spatula",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_talenan",
+    "name": "Dapur Talenan",
+    "slug": "dapur-talenan",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_termos",
+    "name": "Dapur Termos",
+    "slug": "dapur-termos",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_toples",
+    "name": "Dapur Toples",
+    "slug": "dapur-toples",
+    "description": null
+  },
+  {
+    "id": "cat_dapur_wajan",
+    "name": "Dapur Wajan",
+    "slug": "dapur-wajan",
+    "description": null
+  },
+  {
+    "id": "cat_drone_kamera",
+    "name": "Drone Kamera",
+    "slug": "drone-kamera",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_ac",
+    "name": "Elektronik Ac",
+    "slug": "elektronik-ac",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_ac_portable",
+    "name": "Elektronik Ac Portable",
+    "slug": "elektronik-ac-portable",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_air_cooler",
+    "name": "Elektronik Air Cooler",
+    "slug": "elektronik-air-cooler",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_air_fryer",
+    "name": "Elektronik Air Fryer",
+    "slug": "elektronik-air-fryer",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_air_purifier",
+    "name": "Elektronik Air Purifier",
+    "slug": "elektronik-air-purifier",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_blender",
+    "name": "Elektronik Blender",
+    "slug": "elektronik-blender",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_dispenser",
+    "name": "Elektronik Dispenser",
+    "slug": "elektronik-dispenser",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_juicer",
+    "name": "Elektronik Juicer",
+    "slug": "elektronik-juicer",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_kipas",
+    "name": "Elektronik Kipas",
+    "slug": "elektronik-kipas",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_kulkas",
+    "name": "Elektronik Kulkas",
+    "slug": "elektronik-kulkas",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_mesin_cuci",
+    "name": "Elektronik Mesin Cuci",
+    "slug": "elektronik-mesin-cuci",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_microwave",
+    "name": "Elektronik Microwave",
+    "slug": "elektronik-microwave",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_mixer",
+    "name": "Elektronik Mixer",
+    "slug": "elektronik-mixer",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_oven",
+    "name": "Elektronik Oven",
+    "slug": "elektronik-oven",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_rice_cooker",
+    "name": "Elektronik Rice Cooker",
+    "slug": "elektronik-rice-cooker",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_setrika",
+    "name": "Elektronik Setrika",
+    "slug": "elektronik-setrika",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_teko",
+    "name": "Elektronik Teko",
+    "slug": "elektronik-teko",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_televisi",
+    "name": "Elektronik Televisi",
+    "slug": "elektronik-televisi",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_toaster",
+    "name": "Elektronik Toaster",
+    "slug": "elektronik-toaster",
+    "description": null
+  },
+  {
+    "id": "cat_elektronik_vacuum",
+    "name": "Elektronik Vacuum",
+    "slug": "elektronik-vacuum",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_baju_tidur",
+    "name": "Fashion Anak Laki Baju Tidur",
+    "slug": "fashion-anak-laki-baju-tidur",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_celana_panjang",
+    "name": "Fashion Anak Laki Celana Panjang",
+    "slug": "fashion-anak-laki-celana-panjang",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_celana_pendek",
+    "name": "Fashion Anak Laki Celana Pendek",
+    "slug": "fashion-anak-laki-celana-pendek",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_hoodie",
+    "name": "Fashion Anak Laki Hoodie",
+    "slug": "fashion-anak-laki-hoodie",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_jaket",
+    "name": "Fashion Anak Laki Jaket",
+    "slug": "fashion-anak-laki-jaket",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_kaos",
+    "name": "Fashion Anak Laki Kaos",
+    "slug": "fashion-anak-laki-kaos",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_kemeja",
+    "name": "Fashion Anak Laki Kemeja",
+    "slug": "fashion-anak-laki-kemeja",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_sepatu_sandal",
+    "name": "Fashion Anak Laki Sepatu Sandal",
+    "slug": "fashion-anak-laki-sepatu-sandal",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_sepatu_sneakers",
+    "name": "Fashion Anak Laki Sepatu Sneakers",
+    "slug": "fashion-anak-laki-sepatu-sneakers",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_laki_setelan",
+    "name": "Fashion Anak Laki Setelan",
+    "slug": "fashion-anak-laki-setelan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_perempuan_blouse",
+    "name": "Fashion Anak Perempuan Blouse",
+    "slug": "fashion-anak-perempuan-blouse",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_perempuan_dress",
+    "name": "Fashion Anak Perempuan Dress",
+    "slug": "fashion-anak-perempuan-dress",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_perempuan_rok",
+    "name": "Fashion Anak Perempuan Rok",
+    "slug": "fashion-anak-perempuan-rok",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_perempuan_sandal",
+    "name": "Fashion Anak Perempuan Sandal",
+    "slug": "fashion-anak-perempuan-sandal",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_perempuan_setelan",
+    "name": "Fashion Anak Perempuan Setelan",
+    "slug": "fashion-anak-perempuan-setelan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_perempuan_sneakers",
+    "name": "Fashion Anak Perempuan Sneakers",
+    "slug": "fashion-anak-perempuan-sneakers",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_anak_tas_ransel",
+    "name": "Fashion Anak Tas Ransel",
+    "slug": "fashion-anak-tas-ransel",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_bayi_jumper",
+    "name": "Fashion Bayi Jumper",
+    "slug": "fashion-bayi-jumper",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_bayi_pakaian_laki",
+    "name": "Fashion Bayi Pakaian Laki",
+    "slug": "fashion-bayi-pakaian-laki",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_abaya",
+    "name": "Fashion Muslim Abaya",
+    "slug": "fashion-muslim-abaya",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_baju_koko",
+    "name": "Fashion Muslim Baju Koko",
+    "slug": "fashion-muslim-baju-koko",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_celana",
+    "name": "Fashion Muslim Celana",
+    "slug": "fashion-muslim-celana",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_gamis",
+    "name": "Fashion Muslim Gamis",
+    "slug": "fashion-muslim-gamis",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_hijab_instan",
+    "name": "Fashion Muslim Hijab Instan",
+    "slug": "fashion-muslim-hijab-instan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_hijab_segi_empat",
+    "name": "Fashion Muslim Hijab Segi Empat",
+    "slug": "fashion-muslim-hijab-segi-empat",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_kaftan",
+    "name": "Fashion Muslim Kaftan",
+    "slug": "fashion-muslim-kaftan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_mukena",
+    "name": "Fashion Muslim Mukena",
+    "slug": "fashion-muslim-mukena",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_pashmina",
+    "name": "Fashion Muslim Pashmina",
+    "slug": "fashion-muslim-pashmina",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_rok",
+    "name": "Fashion Muslim Rok",
+    "slug": "fashion-muslim-rok",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_sajadah",
+    "name": "Fashion Muslim Sajadah",
+    "slug": "fashion-muslim-sajadah",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_sarung",
+    "name": "Fashion Muslim Sarung",
+    "slug": "fashion-muslim-sarung",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_muslim_tunik",
+    "name": "Fashion Muslim Tunik",
+    "slug": "fashion-muslim-tunik",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_batik_kemeja",
+    "name": "Fashion Pria Batik Kemeja",
+    "slug": "fashion-pria-batik-kemeja",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_blazer",
+    "name": "Fashion Pria Blazer",
+    "slug": "fashion-pria-blazer",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_boots",
+    "name": "Fashion Pria Boots",
+    "slug": "fashion-pria-boots",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_cardigan",
+    "name": "Fashion Pria Cardigan",
+    "slug": "fashion-pria-cardigan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_celana_cargo",
+    "name": "Fashion Pria Celana Cargo",
+    "slug": "fashion-pria-celana-cargo",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_celana_chino",
+    "name": "Fashion Pria Celana Chino",
+    "slug": "fashion-pria-celana-chino",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_celana_dalam",
+    "name": "Fashion Pria Celana Dalam",
+    "slug": "fashion-pria-celana-dalam",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_celana_jogger",
+    "name": "Fashion Pria Celana Jogger",
+    "slug": "fashion-pria-celana-jogger",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_celana_pendek",
+    "name": "Fashion Pria Celana Pendek",
+    "slug": "fashion-pria-celana-pendek",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_dompet",
+    "name": "Fashion Pria Dompet",
+    "slug": "fashion-pria-dompet",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_hoodie",
+    "name": "Fashion Pria Hoodie",
+    "slug": "fashion-pria-hoodie",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_ikat_pinggang",
+    "name": "Fashion Pria Ikat Pinggang",
+    "slug": "fashion-pria-ikat-pinggang",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_jaket",
+    "name": "Fashion Pria Jaket",
+    "slug": "fashion-pria-jaket",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_jas",
+    "name": "Fashion Pria Jas",
+    "slug": "fashion-pria-jas",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_jeans",
+    "name": "Fashion Pria Jeans",
+    "slug": "fashion-pria-jeans",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_kaos",
+    "name": "Fashion Pria Kaos",
+    "slug": "fashion-pria-kaos",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_kemeja",
+    "name": "Fashion Pria Kemeja",
+    "slug": "fashion-pria-kemeja",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_loafers",
+    "name": "Fashion Pria Loafers",
+    "slug": "fashion-pria-loafers",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_sandal",
+    "name": "Fashion Pria Sandal",
+    "slug": "fashion-pria-sandal",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_sneakers",
+    "name": "Fashion Pria Sneakers",
+    "slug": "fashion-pria-sneakers",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_tas_ransel",
+    "name": "Fashion Pria Tas Ransel",
+    "slug": "fashion-pria-tas-ransel",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_tas_selempang",
+    "name": "Fashion Pria Tas Selempang",
+    "slug": "fashion-pria-tas-selempang",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_pria_topi_baseball",
+    "name": "Fashion Pria Topi Baseball",
+    "slug": "fashion-pria-topi-baseball",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_seragam_bawahan",
+    "name": "Fashion Seragam Bawahan",
+    "slug": "fashion-seragam-bawahan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_anting",
+    "name": "Fashion Wanita Anting",
+    "slug": "fashion-wanita-anting",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_blazer",
+    "name": "Fashion Wanita Blazer",
+    "slug": "fashion-wanita-blazer",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_blouse",
+    "name": "Fashion Wanita Blouse",
+    "slug": "fashion-wanita-blouse",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_boots",
+    "name": "Fashion Wanita Boots",
+    "slug": "fashion-wanita-boots",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_bra",
+    "name": "Fashion Wanita Bra",
+    "slug": "fashion-wanita-bra",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_cardigan",
+    "name": "Fashion Wanita Cardigan",
+    "slug": "fashion-wanita-cardigan",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_celana_dalam",
+    "name": "Fashion Wanita Celana Dalam",
+    "slug": "fashion-wanita-celana-dalam",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_celana_kulot",
+    "name": "Fashion Wanita Celana Kulot",
+    "slug": "fashion-wanita-celana-kulot",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_celana_panjang",
+    "name": "Fashion Wanita Celana Panjang",
+    "slug": "fashion-wanita-celana-panjang",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_celana_pendek",
+    "name": "Fashion Wanita Celana Pendek",
+    "slug": "fashion-wanita-celana-pendek",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_crop_top",
+    "name": "Fashion Wanita Crop Top",
+    "slug": "fashion-wanita-crop-top",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_dompet",
+    "name": "Fashion Wanita Dompet",
+    "slug": "fashion-wanita-dompet",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_flat_shoes",
+    "name": "Fashion Wanita Flat Shoes",
+    "slug": "fashion-wanita-flat-shoes",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_gelang",
+    "name": "Fashion Wanita Gelang",
+    "slug": "fashion-wanita-gelang",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_handbag",
+    "name": "Fashion Wanita Handbag",
+    "slug": "fashion-wanita-handbag",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_heels",
+    "name": "Fashion Wanita Heels",
+    "slug": "fashion-wanita-heels",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_hoodie",
+    "name": "Fashion Wanita Hoodie",
+    "slug": "fashion-wanita-hoodie",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_jeans",
+    "name": "Fashion Wanita Jeans",
+    "slug": "fashion-wanita-jeans",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_kalung",
+    "name": "Fashion Wanita Kalung",
+    "slug": "fashion-wanita-kalung",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_kaos",
+    "name": "Fashion Wanita Kaos",
+    "slug": "fashion-wanita-kaos",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_kebaya_brukat",
+    "name": "Fashion Wanita Kebaya Brukat",
+    "slug": "fashion-wanita-kebaya-brukat",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_kemeja",
+    "name": "Fashion Wanita Kemeja",
+    "slug": "fashion-wanita-kemeja",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_legging",
+    "name": "Fashion Wanita Legging",
+    "slug": "fashion-wanita-legging",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_maxi_dress",
+    "name": "Fashion Wanita Maxi Dress",
+    "slug": "fashion-wanita-maxi-dress",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_midi_dress",
+    "name": "Fashion Wanita Midi Dress",
+    "slug": "fashion-wanita-midi-dress",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_mini_dress",
+    "name": "Fashion Wanita Mini Dress",
+    "slug": "fashion-wanita-mini-dress",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_rok",
+    "name": "Fashion Wanita Rok",
+    "slug": "fashion-wanita-rok",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_sandal",
+    "name": "Fashion Wanita Sandal",
+    "slug": "fashion-wanita-sandal",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_sneakers",
+    "name": "Fashion Wanita Sneakers",
+    "slug": "fashion-wanita-sneakers",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_tank_top",
+    "name": "Fashion Wanita Tank Top",
+    "slug": "fashion-wanita-tank-top",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_tas_ransel",
+    "name": "Fashion Wanita Tas Ransel",
+    "slug": "fashion-wanita-tas-ransel",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_tas_selempang",
+    "name": "Fashion Wanita Tas Selempang",
+    "slug": "fashion-wanita-tas-selempang",
+    "description": null
+  },
+  {
+    "id": "cat_fashion_wanita_tote",
+    "name": "Fashion Wanita Tote",
+    "slug": "fashion-wanita-tote",
+    "description": null
+  },
+  {
+    "id": "cat_film_alat_musik_tradisional",
+    "name": "Film Alat Musik Tradisional",
+    "slug": "film-alat-musik-tradisional",
+    "description": null
+  },
+  {
+    "id": "cat_film_bass_elektrik",
+    "name": "Film Bass Elektrik",
+    "slug": "film-bass-elektrik",
+    "description": null
+  },
+  {
+    "id": "cat_film_drum_elektrik",
+    "name": "Film Drum Elektrik",
+    "slug": "film-drum-elektrik",
+    "description": null
+  },
+  {
+    "id": "cat_film_drum_pad",
+    "name": "Film Drum Pad",
+    "slug": "film-drum-pad",
+    "description": null
+  },
+  {
+    "id": "cat_film_gitar_akustik",
+    "name": "Film Gitar Akustik",
+    "slug": "film-gitar-akustik",
+    "description": null
+  },
+  {
+    "id": "cat_film_gitar_elektrik",
+    "name": "Film Gitar Elektrik",
+    "slug": "film-gitar-elektrik",
+    "description": null
+  },
+  {
+    "id": "cat_film_keyboard",
+    "name": "Film Keyboard",
+    "slug": "film-keyboard",
+    "description": null
+  },
+  {
+    "id": "cat_film_piano_elektrik",
+    "name": "Film Piano Elektrik",
+    "slug": "film-piano-elektrik",
+    "description": null
+  },
+  {
+    "id": "cat_film_ukulele",
+    "name": "Film Ukulele",
+    "slug": "film-ukulele",
+    "description": null
+  },
+  {
+    "id": "cat_gaming_aksesoris_casing",
+    "name": "Gaming Aksesoris Casing",
+    "slug": "gaming-aksesoris-casing",
+    "description": null
+  },
+  {
+    "id": "cat_gaming_aksesoris_joystick",
+    "name": "Gaming Aksesoris Joystick",
+    "slug": "gaming-aksesoris-joystick",
+    "description": null
+  },
+  {
+    "id": "cat_gaming_nintendo",
+    "name": "Gaming Nintendo",
+    "slug": "gaming-nintendo",
+    "description": null
+  },
+  {
+    "id": "cat_gaming_playstation",
+    "name": "Gaming Playstation",
+    "slug": "gaming-playstation",
+    "description": null
+  },
+  {
+    "id": "cat_gaming_xbox",
+    "name": "Gaming Xbox",
+    "slug": "gaming-xbox",
+    "description": null
+  },
+  {
+    "id": "cat_hp_aksesoris_charger",
+    "name": "Hp Aksesoris Charger",
+    "slug": "hp-aksesoris-charger",
+    "description": null
+  },
+  {
+    "id": "cat_hp_aksesoris_hardcase",
+    "name": "Hp Aksesoris Hardcase",
+    "slug": "hp-aksesoris-hardcase",
+    "description": null
+  },
+  {
+    "id": "cat_hp_aksesoris_holder",
+    "name": "Hp Aksesoris Holder",
+    "slug": "hp-aksesoris-holder",
+    "description": null
+  },
+  {
+    "id": "cat_hp_aksesoris_kabel_data",
+    "name": "Hp Aksesoris Kabel Data",
+    "slug": "hp-aksesoris-kabel-data",
+    "description": null
+  },
+  {
+    "id": "cat_hp_aksesoris_screen_protector",
+    "name": "Hp Aksesoris Screen Protector",
+    "slug": "hp-aksesoris-screen-protector",
+    "description": null
+  },
+  {
+    "id": "cat_hp_aksesoris_softcase",
+    "name": "Hp Aksesoris Softcase",
+    "slug": "hp-aksesoris-softcase",
+    "description": null
+  },
+  {
+    "id": "cat_hp_android",
+    "name": "Hp Android",
+    "slug": "hp-android",
+    "description": null
+  },
+  {
+    "id": "cat_hp_ios",
+    "name": "Hp Ios",
+    "slug": "hp-ios",
+    "description": null
+  },
+  {
+    "id": "cat_hp_powerbank",
+    "name": "Hp Powerbank",
+    "slug": "hp-powerbank",
+    "description": null
+  },
+  {
+    "id": "cat_hp_smartband",
+    "name": "Hp Smartband",
+    "slug": "hp-smartband",
+    "description": null
+  },
+  {
+    "id": "cat_hp_smartwatch",
+    "name": "Hp Smartwatch",
+    "slug": "hp-smartwatch",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_bantal_guling",
+    "name": "Ibu Bayi Bantal Guling",
+    "slug": "ibu-bayi-bantal-guling",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_bathtub",
+    "name": "Ibu Bayi Bathtub",
+    "slug": "ibu-bayi-bathtub",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_botol_susu",
+    "name": "Ibu Bayi Botol Susu",
+    "slug": "ibu-bayi-botol-susu",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_box_tidur",
+    "name": "Ibu Bayi Box Tidur",
+    "slug": "ibu-bayi-box-tidur",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_car_seat",
+    "name": "Ibu Bayi Car Seat",
+    "slug": "ibu-bayi-car-seat",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_gendongan",
+    "name": "Ibu Bayi Gendongan",
+    "slug": "ibu-bayi-gendongan",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_kursi_makan",
+    "name": "Ibu Bayi Kursi Makan",
+    "slug": "ibu-bayi-kursi-makan",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_minyak_telon",
+    "name": "Ibu Bayi Minyak Telon",
+    "slug": "ibu-bayi-minyak-telon",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_playmat",
+    "name": "Ibu Bayi Playmat",
+    "slug": "ibu-bayi-playmat",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_popok",
+    "name": "Ibu Bayi Popok",
+    "slug": "ibu-bayi-popok",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_sereal_bubur",
+    "name": "Ibu Bayi Sereal Bubur",
+    "slug": "ibu-bayi-sereal-bubur",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_shampoo",
+    "name": "Ibu Bayi Shampoo",
+    "slug": "ibu-bayi-shampoo",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_stroller",
+    "name": "Ibu Bayi Stroller",
+    "slug": "ibu-bayi-stroller",
+    "description": null
+  },
+  {
+    "id": "cat_ibu_bayi_susu_bayi",
+    "name": "Ibu Bayi Susu Bayi",
+    "slug": "ibu-bayi-susu-bayi",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_360",
+    "name": "Kamera 360",
+    "slug": "kamera-360",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_action_camera",
+    "name": "Kamera Action Camera",
+    "slug": "kamera-action-camera",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_cctv",
+    "name": "Kamera Cctv",
+    "slug": "kamera-cctv",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_dslr",
+    "name": "Kamera Dslr",
+    "slug": "kamera-dslr",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_instan_printer",
+    "name": "Kamera Instan Printer",
+    "slug": "kamera-instan-printer",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_ip",
+    "name": "Kamera Ip",
+    "slug": "kamera-ip",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_mirrorless",
+    "name": "Kamera Mirrorless",
+    "slug": "kamera-mirrorless",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_pocket",
+    "name": "Kamera Pocket",
+    "slug": "kamera-pocket",
+    "description": null
+  },
+  {
+    "id": "cat_kamera_spy",
+    "name": "Kamera Spy",
+    "slug": "kamera-spy",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_bedak",
+    "name": "Kecantikan Bedak",
+    "slug": "kecantikan-bedak",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_blush_on",
+    "name": "Kecantikan Blush On",
+    "slug": "kecantikan-blush-on",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_catokan",
+    "name": "Kecantikan Catokan",
+    "slug": "kecantikan-catokan",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_cleanser",
+    "name": "Kecantikan Cleanser",
+    "slug": "kecantikan-cleanser",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_collagen",
+    "name": "Kecantikan Collagen",
+    "slug": "kecantikan-collagen",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_conditioner",
+    "name": "Kecantikan Conditioner",
+    "slug": "kecantikan-conditioner",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_cushion",
+    "name": "Kecantikan Cushion",
+    "slug": "kecantikan-cushion",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_eyeliner",
+    "name": "Kecantikan Eyeliner",
+    "slug": "kecantikan-eyeliner",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_eyeshadow",
+    "name": "Kecantikan Eyeshadow",
+    "slug": "kecantikan-eyeshadow",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_foundation",
+    "name": "Kecantikan Foundation",
+    "slug": "kecantikan-foundation",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_hair_dryer",
+    "name": "Kecantikan Hair Dryer",
+    "slug": "kecantikan-hair-dryer",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_krim_wajah",
+    "name": "Kecantikan Krim Wajah",
+    "slug": "kecantikan-krim-wajah",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_kuteks",
+    "name": "Kecantikan Kuteks",
+    "slug": "kecantikan-kuteks",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_lip_balm",
+    "name": "Kecantikan Lip Balm",
+    "slug": "kecantikan-lip-balm",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_lip_tint",
+    "name": "Kecantikan Lip Tint",
+    "slug": "kecantikan-lip-tint",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_lipstik",
+    "name": "Kecantikan Lipstik",
+    "slug": "kecantikan-lipstik",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_mascara",
+    "name": "Kecantikan Mascara",
+    "slug": "kecantikan-mascara",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_masker_wajah",
+    "name": "Kecantikan Masker Wajah",
+    "slug": "kecantikan-masker-wajah",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_pensil_alis",
+    "name": "Kecantikan Pensil Alis",
+    "slug": "kecantikan-pensil-alis",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_serum_mata",
+    "name": "Kecantikan Serum Mata",
+    "slug": "kecantikan-serum-mata",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_serum_wajah",
+    "name": "Kecantikan Serum Wajah",
+    "slug": "kecantikan-serum-wajah",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_shampoo",
+    "name": "Kecantikan Shampoo",
+    "slug": "kecantikan-shampoo",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_sunblock",
+    "name": "Kecantikan Sunblock",
+    "slug": "kecantikan-sunblock",
+    "description": null
+  },
+  {
+    "id": "cat_kecantikan_toner",
+    "name": "Kecantikan Toner",
+    "slug": "kecantikan-toner",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_alat_diagnosa",
+    "name": "Kesehatan Alat Diagnosa",
+    "slug": "kesehatan-alat-diagnosa",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_alat_pijat",
+    "name": "Kesehatan Alat Pijat",
+    "slug": "kesehatan-alat-pijat",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_calcium",
+    "name": "Kesehatan Calcium",
+    "slug": "kesehatan-calcium",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_masker_medis",
+    "name": "Kesehatan Masker Medis",
+    "slug": "kesehatan-masker-medis",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_multivitamin",
+    "name": "Kesehatan Multivitamin",
+    "slug": "kesehatan-multivitamin",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_obat_herbal",
+    "name": "Kesehatan Obat Herbal",
+    "slug": "kesehatan-obat-herbal",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_suplemen_olahraga",
+    "name": "Kesehatan Suplemen Olahraga",
+    "slug": "kesehatan-suplemen-olahraga",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_termometer",
+    "name": "Kesehatan Termometer",
+    "slug": "kesehatan-termometer",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_vitamin_anak",
+    "name": "Kesehatan Vitamin Anak",
+    "slug": "kesehatan-vitamin-anak",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_vitamin_c",
+    "name": "Kesehatan Vitamin C",
+    "slug": "kesehatan-vitamin-c",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_vitamin_d",
+    "name": "Kesehatan Vitamin D",
+    "slug": "kesehatan-vitamin-d",
+    "description": null
+  },
+  {
+    "id": "cat_kesehatan_vitamin_e",
+    "name": "Kesehatan Vitamin E",
+    "slug": "kesehatan-vitamin-e",
+    "description": null
+  },
+  {
+    "id": "cat_komik_anak",
+    "name": "Komik Anak",
+    "slug": "komik-anak",
+    "description": null
+  },
+  {
+    "id": "cat_komik_manga",
+    "name": "Komik Manga",
+    "slug": "komik-manga",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_flashdisk",
+    "name": "Komputer Flashdisk",
+    "slug": "komputer-flashdisk",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_hdd_external",
+    "name": "Komputer Hdd External",
+    "slug": "komputer-hdd-external",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_headset_gaming",
+    "name": "Komputer Headset Gaming",
+    "slug": "komputer-headset-gaming",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_keyboard",
+    "name": "Komputer Keyboard",
+    "slug": "komputer-keyboard",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_keyboard_gaming",
+    "name": "Komputer Keyboard Gaming",
+    "slug": "komputer-keyboard-gaming",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_laptop",
+    "name": "Komputer Laptop",
+    "slug": "komputer-laptop",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_laptop_gaming",
+    "name": "Komputer Laptop Gaming",
+    "slug": "komputer-laptop-gaming",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_macbook",
+    "name": "Komputer Macbook",
+    "slug": "komputer-macbook",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_microsd",
+    "name": "Komputer Microsd",
+    "slug": "komputer-microsd",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_monitor_led",
+    "name": "Komputer Monitor Led",
+    "slug": "komputer-monitor-led",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_mouse",
+    "name": "Komputer Mouse",
+    "slug": "komputer-mouse",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_mouse_gaming",
+    "name": "Komputer Mouse Gaming",
+    "slug": "komputer-mouse-gaming",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_mousepad_gaming",
+    "name": "Komputer Mousepad Gaming",
+    "slug": "komputer-mousepad-gaming",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_printer_inkjet",
+    "name": "Komputer Printer Inkjet",
+    "slug": "komputer-printer-inkjet",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_printer_laser",
+    "name": "Komputer Printer Laser",
+    "slug": "komputer-printer-laser",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_ram",
+    "name": "Komputer Ram",
+    "slug": "komputer-ram",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_router",
+    "name": "Komputer Router",
+    "slug": "komputer-router",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_ssd",
+    "name": "Komputer Ssd",
+    "slug": "komputer-ssd",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_tas_laptop",
+    "name": "Komputer Tas Laptop",
+    "slug": "komputer-tas-laptop",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_vga",
+    "name": "Komputer Vga",
+    "slug": "komputer-vga",
+    "description": null
+  },
+  {
+    "id": "cat_komputer_webcam",
+    "name": "Komputer Webcam",
+    "slug": "komputer-webcam",
+    "description": null
+  },
+  {
+    "id": "cat_lensa_kamera",
+    "name": "Lensa Kamera",
+    "slug": "lensa-kamera",
+    "description": null
+  },
+  {
+    "id": "cat_lighting_flash_kamera",
+    "name": "Lighting Flash Kamera",
+    "slug": "lighting-flash-kamera",
+    "description": null
+  },
+  {
+    "id": "cat_lighting_ring_light",
+    "name": "Lighting Ring Light",
+    "slug": "lighting-ring-light",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_action_figure",
+    "name": "Mainan Action Figure",
+    "slug": "mainan-action-figure",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_anak_edukasi",
+    "name": "Mainan Anak Edukasi",
+    "slug": "mainan-anak-edukasi",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_bayi_edukasi",
+    "name": "Mainan Bayi Edukasi",
+    "slug": "mainan-bayi-edukasi",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_board_game",
+    "name": "Mainan Board Game",
+    "slug": "mainan-board-game",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_boneka_beruang",
+    "name": "Mainan Boneka Beruang",
+    "slug": "mainan-boneka-beruang",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_boneka_karakter",
+    "name": "Mainan Boneka Karakter",
+    "slug": "mainan-boneka-karakter",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_diecast_mobil",
+    "name": "Mainan Diecast Mobil",
+    "slug": "mainan-diecast-mobil",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_diecast_motor",
+    "name": "Mainan Diecast Motor",
+    "slug": "mainan-diecast-motor",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_gundam",
+    "name": "Mainan Gundam",
+    "slug": "mainan-gundam",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_puzzle_jigsaw",
+    "name": "Mainan Puzzle Jigsaw",
+    "slug": "mainan-puzzle-jigsaw",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_rc_helikopter",
+    "name": "Mainan Rc Helikopter",
+    "slug": "mainan-rc-helikopter",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_rc_mobil",
+    "name": "Mainan Rc Mobil",
+    "slug": "mainan-rc-mobil",
+    "description": null
+  },
+  {
+    "id": "cat_mainan_slime",
+    "name": "Mainan Slime",
+    "slug": "mainan-slime",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_beras_putih",
+    "name": "Makanan Beras Putih",
+    "slug": "makanan-beras-putih",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_biskuit",
+    "name": "Makanan Biskuit",
+    "slug": "makanan-biskuit",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_bumbu_masak",
+    "name": "Makanan Bumbu Masak",
+    "slug": "makanan-bumbu-masak",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_coklat",
+    "name": "Makanan Coklat",
+    "slug": "makanan-coklat",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_granola",
+    "name": "Makanan Granola",
+    "slug": "makanan-granola",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_gula",
+    "name": "Makanan Gula",
+    "slug": "makanan-gula",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_kacang",
+    "name": "Makanan Kacang",
+    "slug": "makanan-kacang",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_keripik",
+    "name": "Makanan Keripik",
+    "slug": "makanan-keripik",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_kopi_bubuk",
+    "name": "Makanan Kopi Bubuk",
+    "slug": "makanan-kopi-bubuk",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_mie_instan",
+    "name": "Makanan Mie Instan",
+    "slug": "makanan-mie-instan",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_oat",
+    "name": "Makanan Oat",
+    "slug": "makanan-oat",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_permen",
+    "name": "Makanan Permen",
+    "slug": "makanan-permen",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_roti",
+    "name": "Makanan Roti",
+    "slug": "makanan-roti",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_sambal",
+    "name": "Makanan Sambal",
+    "slug": "makanan-sambal",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_susu_bubuk",
+    "name": "Makanan Susu Bubuk",
+    "slug": "makanan-susu-bubuk",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_susu_uht",
+    "name": "Makanan Susu Uht",
+    "slug": "makanan-susu-uht",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_teh",
+    "name": "Makanan Teh",
+    "slug": "makanan-teh",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_tepung_terigu",
+    "name": "Makanan Tepung Terigu",
+    "slug": "makanan-tepung-terigu",
+    "description": null
+  },
+  {
+    "id": "cat_makanan_yogurt",
+    "name": "Makanan Yogurt",
+    "slug": "makanan-yogurt",
+    "description": null
+  },
+  {
+    "id": "cat_novel_fantasi",
+    "name": "Novel Fantasi",
+    "slug": "novel-fantasi",
+    "description": null
+  },
+  {
+    "id": "cat_novel_indonesia",
+    "name": "Novel Indonesia",
+    "slug": "novel-indonesia",
+    "description": null
+  },
+  {
+    "id": "cat_novel_misteri",
+    "name": "Novel Misteri",
+    "slug": "novel-misteri",
+    "description": null
+  },
+  {
+    "id": "cat_novel_roman",
+    "name": "Novel Roman",
+    "slug": "novel-roman",
+    "description": null
+  },
+  {
+    "id": "cat_novel_terjemahan",
+    "name": "Novel Terjemahan",
+    "slug": "novel-terjemahan",
+    "description": null
+  },
+  {
+    "id": "cat_office_buku_tulis",
+    "name": "Office Buku Tulis",
+    "slug": "office-buku-tulis",
+    "description": null
+  },
+  {
+    "id": "cat_office_cat_akrilik",
+    "name": "Office Cat Akrilik",
+    "slug": "office-cat-akrilik",
+    "description": null
+  },
+  {
+    "id": "cat_office_gunting",
+    "name": "Office Gunting",
+    "slug": "office-gunting",
+    "description": null
+  },
+  {
+    "id": "cat_office_kalkulator",
+    "name": "Office Kalkulator",
+    "slug": "office-kalkulator",
+    "description": null
+  },
+  {
+    "id": "cat_office_map_binder",
+    "name": "Office Map Binder",
+    "slug": "office-map-binder",
+    "description": null
+  },
+  {
+    "id": "cat_office_mesin_jahit",
+    "name": "Office Mesin Jahit",
+    "slug": "office-mesin-jahit",
+    "description": null
+  },
+  {
+    "id": "cat_office_notebook",
+    "name": "Office Notebook",
+    "slug": "office-notebook",
+    "description": null
+  },
+  {
+    "id": "cat_office_pensil",
+    "name": "Office Pensil",
+    "slug": "office-pensil",
+    "description": null
+  },
+  {
+    "id": "cat_office_pensil_warna",
+    "name": "Office Pensil Warna",
+    "slug": "office-pensil-warna",
+    "description": null
+  },
+  {
+    "id": "cat_office_pulpen",
+    "name": "Office Pulpen",
+    "slug": "office-pulpen",
+    "description": null
+  },
+  {
+    "id": "cat_office_spidol",
+    "name": "Office Spidol",
+    "slug": "office-spidol",
+    "description": null
+  },
+  {
+    "id": "cat_office_sticky_notes",
+    "name": "Office Sticky Notes",
+    "slug": "office-sticky-notes",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_baju_renang_pria",
+    "name": "Olahraga Baju Renang Pria",
+    "slug": "olahraga-baju-renang-pria",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_baju_renang_wanita",
+    "name": "Olahraga Baju Renang Wanita",
+    "slug": "olahraga-baju-renang-wanita",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_bola_sepak",
+    "name": "Olahraga Bola Sepak",
+    "slug": "olahraga-bola-sepak",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_dumbbell",
+    "name": "Olahraga Dumbbell",
+    "slug": "olahraga-dumbbell",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_gym_ball",
+    "name": "Olahraga Gym Ball",
+    "slug": "olahraga-gym-ball",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_helm_sepeda",
+    "name": "Olahraga Helm Sepeda",
+    "slug": "olahraga-helm-sepeda",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_jersey_bola",
+    "name": "Olahraga Jersey Bola",
+    "slug": "olahraga-jersey-bola",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_knee_pad",
+    "name": "Olahraga Knee Pad",
+    "slug": "olahraga-knee-pad",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_legging_sport",
+    "name": "Olahraga Legging Sport",
+    "slug": "olahraga-legging-sport",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_raket_badminton",
+    "name": "Olahraga Raket Badminton",
+    "slug": "olahraga-raket-badminton",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_raket_tenis",
+    "name": "Olahraga Raket Tenis",
+    "slug": "olahraga-raket-tenis",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_resistance_band",
+    "name": "Olahraga Resistance Band",
+    "slug": "olahraga-resistance-band",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sarung_tinju",
+    "name": "Olahraga Sarung Tinju",
+    "slug": "olahraga-sarung-tinju",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepatu_badminton",
+    "name": "Olahraga Sepatu Badminton",
+    "slug": "olahraga-sepatu-badminton",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepatu_bola",
+    "name": "Olahraga Sepatu Bola",
+    "slug": "olahraga-sepatu-bola",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepatu_futsal",
+    "name": "Olahraga Sepatu Futsal",
+    "slug": "olahraga-sepatu-futsal",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepatu_lari_pria",
+    "name": "Olahraga Sepatu Lari Pria",
+    "slug": "olahraga-sepatu-lari-pria",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepatu_lari_wanita",
+    "name": "Olahraga Sepatu Lari Wanita",
+    "slug": "olahraga-sepatu-lari-wanita",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepeda_gunung",
+    "name": "Olahraga Sepeda Gunung",
+    "slug": "olahraga-sepeda-gunung",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sepeda_statis",
+    "name": "Olahraga Sepeda Statis",
+    "slug": "olahraga-sepeda-statis",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_shuttlecock",
+    "name": "Olahraga Shuttlecock",
+    "slug": "olahraga-shuttlecock",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sleeping_bag",
+    "name": "Olahraga Sleeping Bag",
+    "slug": "olahraga-sleeping-bag",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_sport_bra",
+    "name": "Olahraga Sport Bra",
+    "slug": "olahraga-sport-bra",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_tas_gunung",
+    "name": "Olahraga Tas Gunung",
+    "slug": "olahraga-tas-gunung",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_tenda_camping",
+    "name": "Olahraga Tenda Camping",
+    "slug": "olahraga-tenda-camping",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_treadmill",
+    "name": "Olahraga Treadmill",
+    "slug": "olahraga-treadmill",
+    "description": null
+  },
+  {
+    "id": "cat_olahraga_yoga_mat",
+    "name": "Olahraga Yoga Mat",
+    "slug": "olahraga-yoga-mat",
+    "description": null
+  },
+  {
+    "id": "cat_otomotif_helm_full_face",
+    "name": "Otomotif Helm Full Face",
+    "slug": "otomotif-helm-full-face",
+    "description": null
+  },
+  {
+    "id": "cat_tablet_android",
+    "name": "Tablet Android",
+    "slug": "tablet-android",
+    "description": null
+  },
+  {
+    "id": "cat_tablet_ios",
+    "name": "Tablet Ios",
+    "slug": "tablet-ios",
+    "description": null
+  }
+]
