@@ -10,7 +10,7 @@ import {
 import * as authService from "../services/auth.service";
 import type { Request } from "express";
 
-// Cookie config — mirrors REST (auth.service.ts COOKIE_OPTIONS)
+// Cookie config — mirrors REST (auth.controller.ts COOKIE_OPTIONS)
 const COOKIE_BASE = {
   httpOnly: true,
   secure:   process.env.NODE_ENV === "production",
@@ -18,34 +18,28 @@ const COOKIE_BASE = {
   path:     "/",
 };
 
-const ACCESS_COOKIE_OPTIONS  = { ...COOKIE_BASE, maxAge: 60 * 60 * 1000        }; // 1 jam
+const ACCESS_COOKIE_OPTIONS  = { ...COOKIE_BASE, maxAge: 60 * 60 * 1000          }; // 1 jam
 const REFRESH_COOKIE_OPTIONS = { ...COOKIE_BASE, maxAge: 7 * 24 * 60 * 60 * 1000 }; // 7 hari
 
 export const authRouter = router({
 
-  // ── GET /auth/me ─────────────────────────────────────────
-  // REST:  GET /auth/me → getMeController
-  // tRPC:  trpc.auth.me.useQuery()
+  // ── auth.me ──────────────────────────────────────────────
   me: protectedProcedure.query(async ({ ctx }) => {
     const result = await serviceCall(() => authService.getProfile(ctx.userId!));
     return result.user;
   }),
 
-  // ── POST /auth/register ───────────────────────────────────
-  // REST:  POST /auth/register
-  // tRPC:  trpc.auth.register.useMutation()
+  // ── auth.register ─────────────────────────────────────────
   register: publicProcedure
     .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
       const result = await serviceCall(() => authService.register(input));
       ctx.res.cookie("accessToken",  result.accessToken,  ACCESS_COOKIE_OPTIONS);
       ctx.res.cookie("refreshToken", result.refreshToken, REFRESH_COOKIE_OPTIONS);
-      return { user: result.user };  // accessToken tidak perlu di body
+      return { user: result.user };
     }),
 
-  // ── POST /auth/login ──────────────────────────────────────
-  // REST:  POST /auth/login
-  // tRPC:  trpc.auth.login.useMutation()
+  // ── auth.login ────────────────────────────────────────────
   login: publicProcedure
     .input(loginSchema)
     .mutation(async ({ input, ctx }) => {
@@ -55,9 +49,7 @@ export const authRouter = router({
       return { user: result.user };
     }),
 
-  // ── POST /auth/logout ─────────────────────────────────────
-  // REST:  POST /auth/logout
-  // tRPC:  trpc.auth.logout.useMutation()
+  // ── auth.logout ───────────────────────────────────────────
   logout: protectedProcedure.mutation(async ({ ctx }) => {
     await serviceCall(() => authService.logout(ctx.userId!));
     ctx.res.clearCookie("accessToken",  { path: "/" });
@@ -65,27 +57,45 @@ export const authRouter = router({
     return { success: true };
   }),
 
-  // ── POST /auth/refresh ────────────────────────────────────
-  // REST:  POST /auth/refresh (reads cookie)
-  // tRPC:  trpc.auth.refresh.useMutation()
-  //        Input: refreshToken dari cookie atau body
+  // ── auth.refresh ──────────────────────────────────────────
+  // BUG SEBELUMNYA (sama dengan REST refreshTokenController):
+  //   const accessToken = await serviceCall(() => authService.refreshToken(token))
+  //   → authService.refreshToken() return { accessToken, refreshToken }
+  //   → seluruh object di-set sebagai cookie "accessToken"
+  //   → jwt.verify("[object Object]") di middleware → 401
+  //   → semua request berikutnya (logout, me) gagal
+  //
+  // FIX: destructure result, set KEDUA cookie (accessToken + refreshToken baru).
+  // refreshToken baru wajib di-set karena token rotation di authService
+  // sudah revoke refreshToken lama — kalau tidak di-update di cookie,
+  // request refresh berikutnya kirim token yang sudah invalid → 401.
   refresh: publicProcedure
     .mutation(async ({ ctx }) => {
-      // ctx sudah expose res, akses req via res.req (Express pattern)
-      const req = ctx.res.req as Request;
+      const req   = ctx.res.req as Request;
       const token = req.cookies?.refreshToken as string | undefined;
+
       if (!token) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Refresh token tidak ditemukan." });
+        throw new TRPCError({
+          code:    "UNAUTHORIZED",
+          message: "Refresh token tidak ditemukan.",
+        });
       }
-      const accessToken = await serviceCall(() => authService.refreshToken(token));
-      // Set new accessToken as cookie — same as REST refreshTokenController
+
+      // FIX: destructure — jangan assign object ke satu variable
+      const { accessToken, refreshToken: newRefreshToken } =
+        await serviceCall(() => authService.refreshToken(token));
+
+      // Set accessToken cookie baru
       ctx.res.cookie("accessToken", accessToken, ACCESS_COOKIE_OPTIONS);
-      return { success: true };  // tidak perlu return token di body
+
+      // FIX: set refreshToken cookie baru — token lama sudah di-revoke
+      // oleh rotation di authService.refreshToken()
+      ctx.res.cookie("refreshToken", newRefreshToken, REFRESH_COOKIE_OPTIONS);
+
+      return { success: true };
     }),
 
-  // ── PATCH /auth/change-password ───────────────────────────
-  // REST:  PATCH /auth/change-password
-  // tRPC:  trpc.auth.changePassword.useMutation()
+  // ── auth.changePassword ───────────────────────────────────
   changePassword: protectedProcedure
     .input(changePasswordSchema)
     .mutation(async ({ input, ctx }) => {

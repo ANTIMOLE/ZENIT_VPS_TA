@@ -1,0 +1,4 @@
+timestamp,cpu_total_pct,mem_used_mb,mem_total_mb,pg_active,pg_idle,pg_cache_hit_ratio,pg_tps_delta,target_pid_cpu_pct,target_pid_mem_mb
+2026-05-11T07:00:59,2.4,2353,7941,0,1,100.00,6,0.1,82.7
+2026-05-11T07:01:04,3.0,2353,7941,0,1,100.00,1,0.0,82.8
+2026-05-11T07:01:10,4.6,2341,7941,0,1,100.00,6,0.1,83.0

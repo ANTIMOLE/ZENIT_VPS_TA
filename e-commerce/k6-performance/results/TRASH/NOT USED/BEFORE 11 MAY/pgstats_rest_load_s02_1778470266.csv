@@ -1,0 +1,81 @@
+query,calls,avg_ms,total_ms,rows
+"CREATE INDEX CONCURRENTLY idx_products_name_trgm
+  ON products
+  USING GIN (name gin_trgm_ops)",1,1833.57,1833.57,0
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE (""public"".""product",4007,1329.27,5326395.74,4007
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",4007,787.28,3154613.88,48084
+"CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_products_name_fts
+ON products
+USING GIN (to_tsvector('english', name))",3,608.43,1825.30,0
+"EXPLAIN (ANALYZE, BUFFERS)
+SELECT COUNT(*) FROM (
+  SELECT id FROM products
+  WHERE is_active = $1
+  AND to_tsvector(con",1,477.78,477.78,0
+"EXPLAIN (ANALYZE, BUFFERS)
+SELECT COUNT(*) FROM (
+  SELECT id FROM products
+  WHERE is_active = $1
+  AND to_tsvector(con",1,475.79,475.79,1
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE (""public"".""product",75145,405.81,30494960.60,75145
+UPDATE products SET stock = $1 WHERE stock < $2,24,346.48,8315.43,100030
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",75145,208.18,15643781.80,901516
+"INSERT INTO orders (id, user_id, address_id, status, subtotal, tax, shipping_cost, total,
+                    shipping_a",2,126.20,252.40,4000
+"EXPLAIN (ANALYZE, BUFFERS)
+SELECT COUNT(*) FROM (
+  SELECT id FROM products
+  WHERE is_active = $1
+  AND name ILIKE $2
+ ",1,114.62,114.62,0
+"EXPLAIN (ANALYZE, BUFFERS)
+SELECT COUNT(*) FROM (
+  SELECT id FROM products
+  WHERE is_active = $1
+  AND name ILIKE $2
+ ",1,113.00,113.00,1
+"INSERT INTO orders (id, user_id, address_id, status, subtotal, tax, shipping_cost, total,
+                    shipping_a",10,57.56,575.61,5000
+"SELECT SUM(""public"".""orders"".""total"") AS ""_sum$total"", COUNT(""public"".""orders"".""id"") AS ""_count$id"", ""public"".""orders"".""",29,47.84,1387.46,451182
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"", ""public"".""categories"".""de",46,41.09,1890.25,17020
+SELECT id FROM products WHERE is_active=$1 AND stock>$2 ORDER BY random() LIMIT $3,2,38.68,77.35,60
+"SELECT
+  (SELECT COUNT(*) FROM products WHERE is_active=$1) AS products,
+  (SELECT COUNT(*) FROM users WHERE role=$2)   ",1,35.95,35.95,1
+SELECT slug FROM products WHERE is_active=$1 AND stock>$2 ORDER BY random() LIMIT $3,2,34.09,68.18,200
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""price"", ""public"".""products"".""images"" F",1,33.48,33.48,2000
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""order_items"".""id"" FROM ""public"".""order_items"" WHERE $2=$3 OFFSET",1,32.61,32.61,1
+DELETE FROM orders,24,31.23,749.45,50000
+"SELECT ""public"".""addresses"".""id"", ""public"".""addresses"".""recipient_name"", ""public"".""addresses"".""phone"", ""public"".""address",1,28.83,28.83,30000
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",60,27.42,1645.20,30000
+"SELECT 
+  (SELECT COUNT(*) FROM categories) AS categories,
+  (SELECT COUNT(*) FROM products WHERE is_active=$1) AS produ",1,24.27,24.27,1
+"INSERT INTO ""public"".""products"" (""id"",""category_id"",""name"",""slug"",""description"",""price"",""stock"",""images"",""rating"",""sold_",100,22.03,2203.20,50000
+"INSERT INTO ""public"".""cart_items"" (""id"",""cart_id"",""product_id"",""quantity"",""price_at_time"",""created_at"") VALUES ($1,$2,$3",10,21.54,215.36,5000
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,21.53,21.53,310
+DELETE FROM products WHERE name LIKE $1,7,21.52,150.63,2969
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,21.01,21.01,259
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",201,20.23,4066.51,100500
+UPDATE carts SET status = $1,24,19.76,474.28,49515
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,19.06,19.06,316
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,18.01,18.01,243
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE ""public"".""products",157771,17.91,2825144.30,157771
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,16.88,16.88,296
+"CREATE TABLE _prisma_migrations (
+    id                      VARCHAR(36) PRIMARY KEY NOT NULL,
+    checksum            ",1,16.75,16.75,0
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,16.40,16.40,305
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,16.18,16.18,317
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,16.00,16.00,442
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,15.74,15.74,457
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,15.10,15.10,263
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,15.04,15.04,470
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,14.95,14.95,269
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,14.91,14.91,292
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE $2=$3 OFFSET $1) A",2998,14.61,43795.67,2998
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,14.54,14.54,382
+SELECT COUNT(*) FROM users u JOIN addresses a ON a.user_id = u.id WHERE u.role = $1 AND u.email NOT LIKE $2,1,14.33,14.33,1
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",1,14.32,14.32,278
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",2,14.21,28.42,508
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""product_image"",""quantity"",""unit_price"",",1,14.13,14.13,404

@@ -1,5 +1,5 @@
 import { getCached } from "@ecommerce/shared";
-import { prisma } from "../config/database";
+import { prisma }   from "../config/database";
 import { AppError } from "../middlewares/error.middleware";
 
 export interface ProductQuery {
@@ -74,8 +74,19 @@ async function fetchProducts(query: ProductQuery) {
 
   const where = buildWhere(query);
 
+  // OPSI B: COUNT di-cache terpisah dari SELECT.
+  // Key di-strip dari page/limit/sort — total tidak berubah dengan paging.
+  // TTL 300s (5 menit): cukup untuk benchmarking, stale count maksimal 5 menit.
+  const countCacheKey = `products:count:${JSON.stringify({
+    categoryId: query.categoryId,
+    q:          query.q,
+    minPrice:   query.minPrice,
+    maxPrice:   query.maxPrice,
+    minRating:  query.minRating,
+  })}`;
+
   const [total, products] = await Promise.all([
-    prisma.product.count({ where }),
+    getCached(countCacheKey, 300, () => prisma.product.count({ where })),
     prisma.product.findMany({
       where,
       select:  PRODUCT_LIST_SELECT,

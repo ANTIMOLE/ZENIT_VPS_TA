@@ -7,6 +7,7 @@ const COOKIE_OPTIONS = {
   httpOnly: true,
   secure:   process.env.NODE_ENV === "production",
   sameSite: "lax" as const,
+  path:     "/",
 };
 
 // ============================================================
@@ -148,8 +149,26 @@ export async function refreshTokenController(req: Request, res: Response, next: 
       return;
     }
 
-    const accessToken = await authService.refreshToken(token);
-    res.cookie("accessToken", accessToken, { httpOnly: true, secure: env.NODE_ENV === "production", sameSite: "lax", maxAge: 60 * 60 * 1000 });
+    // FIX: destructure — sebelumnya assign object ke variable accessToken
+    const { accessToken, refreshToken: newRefreshToken } = await authService.refreshToken(token);
+
+    // Set accessToken cookie baru
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure:   env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge:   60 * 60 * 1000, // 1 jam
+    });
+
+    // FIX: set refreshToken cookie baru — token lama sudah di-revoke oleh rotation
+    // Tanpa ini k6 masih kirim refreshToken lama yang sudah invalid di request berikutnya
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure:   env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge:   7 * 24 * 60 * 60 * 1000, // 7 hari
+    });
+
     res.json({ success: true, message: "Token diperbarui." });
   } catch (error) {
     next(error);
