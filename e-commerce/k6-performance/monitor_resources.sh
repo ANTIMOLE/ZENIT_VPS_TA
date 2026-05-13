@@ -35,7 +35,7 @@ TEST_TYPE="${2:-load}"
 SCENARIO="${3:-s01}"
 INTERVAL="${4:-5}"
 
-TIMESTAMP=$(date +%s)
+TIMESTAMP="${5:-$(date +%s)}"
 OUTFILE="results/resource_${API}_${TEST_TYPE}_${SCENARIO}_${TIMESTAMP}.csv"
 
 mkdir -p results
