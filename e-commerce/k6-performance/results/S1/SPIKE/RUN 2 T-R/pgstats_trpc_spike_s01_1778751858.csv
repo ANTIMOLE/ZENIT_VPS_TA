@@ -1,0 +1,100 @@
+query,calls,avg_ms,total_ms,rows
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE (""public"".""product",63,657.40,41416.27,63
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",155,384.17,59546.12,1860
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"", ""public"".""categories"".""de",1,11.55,11.55,370
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE ""public"".""products",3,6.71,20.12,3
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		seq_scan,
+		seq_tup_read,
+		idx_scan,
+		idx_tup_fetch,
+	",80,3.25,259.68,800
+"SELECT name, setting, COALESCE(unit, $1), short_desc, vartype FROM pg_settings WHERE vartype IN ($2, $3, $4) AND name !=",80,1.47,117.36,20720
+SELECT pg_database_size($1),320,0.81,259.52,320
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		heap_blks_read,
+		heap_blks_hit,
+		idx_blks_read,
+		idx_",80,0.53,42.03,800
+"SELECT 
+		  pg_database.datname as datname,
+		  tmp.mode as mode,
+		  COALESCE(count, $1) as count 
+		FROM 
+		  (
+		    ",80,0.38,30.52,2880
+"SELECT COUNT(*) FILTER (WHERE state=$1), COUNT(*) FILTER (WHERE state=$2)
+    FROM pg_stat_activity WHERE datname=$3 AND",139,0.31,43.69,139
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",1225,0.31,381.70,13701
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",1187,0.30,353.27,13619
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",1245,0.29,361.27,14000
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",1157,0.27,309.18,13007
+"SELECT
+				pg_database.datname,
+				tmp.state,
+				tmp2.usename,
+				tmp2.application_name,
+				tmp2.backend_type,
+				t",80,0.19,15.13,1928
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",95,0.18,17.02,1140
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE (""public"".""product",6001,0.17,1037.25,6001
+SELECT pg_stat_statements_reset(),1,0.16,0.16,1
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",1187,0.14,168.95,13362
+"SELECT datid,datname,numbackends,xact_commit,xact_rollback,blks_read,blks_hit,tup_returned,tup_fetched,tup_inserted,tup_",80,0.14,11.32,400
+"SELECT *,
+				(case pg_is_in_recovery() when $1 then pg_last_wal_receive_lsn() else pg_current_wal_lsn() end) AS pg_curr",80,0.12,9.80,0
+"SELECT
+			COUNT(*) AS segments,
+			SUM(size) AS size
+		FROM pg_ls_waldir()
+		WHERE name ~ $1",80,0.12,9.68,80
+"SELECT ROUND(blks_hit::numeric/NULLIF(blks_hit+blks_read,$1)*$2,$3)
+    FROM pg_stat_database WHERE datname=$4",139,0.07,10.20,139
+SELECT xact_commit+xact_rollback FROM pg_stat_database WHERE datname=$1,140,0.07,9.67,140
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",200,0.06,12.91,200
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",41,0.04,1.61,41
+"SELECT *,
+				extract($1 from now() - last_archived_time) AS last_archive_age
+			FROM pg_stat_archiver",80,0.04,3.03,80
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",5673,0.03,188.14,6121
+SELECT * FROM pg_stat_database_conflicts,80,0.03,2.62,320
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",53,0.03,1.72,53
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",24,0.03,0.74,24
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",55,0.03,1.69,55
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",59,0.03,1.80,59
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",36,0.03,1.09,36
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",25,0.03,0.74,25
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",37,0.03,1.08,37
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",40,0.03,1.12,40
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",282,0.03,7.73,282
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",55,0.03,1.49,55
+"SELECT
+		slot_name,
+		slot_type,
+		CASE WHEN pg_is_in_recovery() THEN
+		    pg_last_wal_receive_lsn() - $1
+		ELSE
+		    ",80,0.02,1.62,0
+"SELECT
+		checkpoints_timed
+		,checkpoints_req
+		,checkpoint_write_time
+		,checkpoint_sync_time
+		,buffers_checkpoint
+		,",80,0.02,1.39,80
+"SELECT pg_roles.rolname, pg_roles.rolconnlimit FROM pg_roles",80,0.02,1.36,1280
+"SELECT pg_database.datname, pg_database.datconnlimit FROM pg_database",80,0.01,0.88,320
+"SELECT slot_name, database, active,
+				(case pg_is_in_recovery() when $1 then pg_wal_lsn_diff(pg_last_wal_receive_lsn()",80,0.01,0.84,0
+"SELECT
+	CASE
+		WHEN NOT pg_is_in_recovery() THEN $1
+                WHEN pg_last_wal_receive_lsn () = pg_last_wal_replay",80,0.01,0.74,80
+SELECT version(),160,0.01,1.41,160
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",71,0.00,0.17,0

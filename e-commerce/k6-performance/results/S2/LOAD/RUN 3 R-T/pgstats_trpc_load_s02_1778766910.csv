@@ -1,0 +1,103 @@
+query,calls,avg_ms,total_ms,rows
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE ""public"".""products",9,5.06,45.51,9
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		seq_scan,
+		seq_tup_read,
+		idx_scan,
+		idx_tup_fetch,
+	",229,2.68,614.67,2290
+"SELECT name, setting, COALESCE(unit, $1), short_desc, vartype FROM pg_settings WHERE vartype IN ($2, $3, $4) AND name !=",229,1.43,327.40,59311
+SELECT pg_database_size($1),916,0.75,687.32,916
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		heap_blks_read,
+		heap_blks_hit,
+		idx_blks_read,
+		idx_",229,0.46,105.69,2290
+"SELECT 
+		  pg_database.datname as datname,
+		  tmp.mode as mode,
+		  COALESCE(count, $1) as count 
+		FROM 
+		  (
+		    ",229,0.35,80.25,8244
+"SELECT COUNT(*) FILTER (WHERE state=$1), COUNT(*) FILTER (WHERE state=$2)
+    FROM pg_stat_activity WHERE datname=$3 AND",423,0.32,134.82,423
+"SELECT
+				pg_database.datname,
+				tmp.state,
+				tmp2.usename,
+				tmp2.application_name,
+				tmp2.backend_type,
+				t",229,0.22,49.83,5522
+SELECT pg_stat_statements_reset(),1,0.19,0.19,1
+"INSERT INTO ""public"".""refresh_tokens"" (""id"",""user_id"",""token_hash"",""expires_at"",""revoked"",""created_at"") VALUES ($1,$2,$3",300,0.17,50.73,300
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",183,0.17,30.74,2196
+"INSERT INTO ""public"".""cart_items"" (""id"",""cart_id"",""product_id"",""quantity"",""price_at_time"",""created_at"") VALUES ($1,$2,$3",87225,0.16,13636.88,87225
+"SELECT
+			COUNT(*) AS segments,
+			SUM(size) AS size
+		FROM pg_ls_waldir()
+		WHERE name ~ $1",229,0.11,25.32,229
+"SELECT datid,datname,numbackends,xact_commit,xact_rollback,blks_read,blks_hit,tup_returned,tup_fetched,tup_inserted,tup_",229,0.11,25.09,1145
+"SELECT *,
+				(case pg_is_in_recovery() when $1 then pg_last_wal_receive_lsn() else pg_current_wal_lsn() end) AS pg_curr",229,0.10,23.26,0
+SELECT xact_commit+xact_rollback FROM pg_stat_database WHERE datname=$1,423,0.08,31.73,423
+"SELECT ROUND(blks_hit::numeric/NULLIF(blks_hit+blks_read,$1)*$2,$3)
+    FROM pg_stat_database WHERE datname=$4",423,0.07,28.66,423
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",725,0.07,48.66,725
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",87225,0.06,4886.28,261675
+"UPDATE ""public"".""cart_items"" SET ""quantity"" = $1 WHERE (""public"".""cart_items"".""id"" = $2 AND $3=$4) RETURNING ""public"".""c",29075,0.05,1514.65,29075
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",87225,0.04,3855.02,174450
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""password_hash"", ""publ",300,0.04,12.66,300
+"DELETE FROM ""public"".""cart_items"" WHERE ""public"".""cart_items"".""cart_id"" = $1",29075,0.04,1087.63,57550
+SELECT * FROM pg_stat_database_conflicts,229,0.03,7.90,916
+"DELETE FROM ""public"".""cart_items"" WHERE (""public"".""cart_items"".""id"" = $1 AND $2=$3) RETURNING ""public"".""cart_items"".""id""",29075,0.03,988.49,29075
+"SELECT $2 FROM ONLY ""public"".""users"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",300,0.03,9.16,300
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",183,0.03,5.46,293
+"SELECT ""public"".""cart_items"".""id"", ""public"".""cart_items"".""product_id"", ""public"".""cart_items"".""quantity"", ""public"".""cart_",232600,0.03,6819.53,465200
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",29075,0.03,833.86,29075
+"SELECT ""public"".""carts"".""id"", ""public"".""carts"".""status""::text FROM ""public"".""carts"" WHERE (""public"".""carts"".""user_id"" = ",174450,0.03,4735.47,174450
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""price"", ""public"".""products"".""discount"", ""public"".""products"".""stock",87225,0.03,2255.59,87225
+"SELECT $2 FROM ONLY ""public"".""carts"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",87225,0.02,1976.11,87225
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""stock"" FROM ""public"".""products"" WHERE (""public"".""products"".""id"" = ",29075,0.02,656.07,29075
+"SELECT ""public"".""carts"".""id"", ""public"".""carts"".""user_id"", ""public"".""carts"".""status""::text FROM ""public"".""carts"" WHERE (""",232600,0.02,5231.34,232600
+"SELECT ""public"".""cart_items"".""id"" FROM ""public"".""cart_items"" WHERE (""public"".""cart_items"".""id"" = $1 AND ""public"".""cart_i",29075,0.02,635.66,29075
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",725,0.02,15.80,725
+"SELECT ""public"".""cart_items"".""id"", ""public"".""cart_items"".""product_id"" FROM ""public"".""cart_items"" WHERE (""public"".""cart_i",29075,0.02,633.38,29075
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""user_id"" = $2 AND ""public"".""refres",300,0.02,5.94,0
+"SELECT ""public"".""cart_items"".""id"", ""public"".""cart_items"".""quantity"" FROM ""public"".""cart_items"" WHERE ((""public"".""cart_it",87225,0.02,1625.49,0
+"SELECT *,
+				extract($1 from now() - last_archived_time) AS last_archive_age
+			FROM pg_stat_archiver",229,0.02,4.00,229
+"SELECT
+		slot_name,
+		slot_type,
+		CASE WHEN pg_is_in_recovery() THEN
+		    pg_last_wal_receive_lsn() - $1
+		ELSE
+		    ",229,0.02,3.88,0
+"SELECT
+		checkpoints_timed
+		,checkpoints_req
+		,checkpoint_write_time
+		,checkpoint_sync_time
+		,buffers_checkpoint
+		,",229,0.02,3.55,229
+"SELECT pg_roles.rolname, pg_roles.rolconnlimit FROM pg_roles",229,0.02,3.45,3664
+"SELECT $2 FROM ONLY ""public"".""products"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",87225,0.01,1284.53,87225
+"SELECT slot_name, database, active,
+				(case pg_is_in_recovery() when $1 then pg_wal_lsn_diff(pg_last_wal_receive_lsn()",229,0.01,2.89,0
+"SELECT pg_database.datname, pg_database.datconnlimit FROM pg_database",229,0.01,2.34,916
+"SELECT
+	CASE
+		WHEN NOT pg_is_in_recovery() THEN $1
+                WHEN pg_last_wal_receive_lsn () = pg_last_wal_replay",229,0.01,1.89,229
+SELECT version(),458,0.01,3.28,458
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",29075,0.00,58.50,0
+BEGIN,300,0.00,0.43,0
