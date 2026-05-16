@@ -9762,3 +9762,36 @@ Error: Cannot find module '/home/zenit/e-commerce/apps/backend-rest/dist/server.
   code: 'MODULE_NOT_FOUND',
   requireStack: []
 }
+[Error] Connection terminated unexpectedly Error: Connection terminated unexpectedly
+    at /home/zenit/e-commerce/node_modules/.pnpm/pg-pool@3.13.0_pg@8.20.0/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async PrismaPgAdapter.performIO (/home/zenit/e-commerce/node_modules/.pnpm/@prisma+adapter-pg@7.5.0/node_modules/@prisma/adapter-pg/dist/index.js:652:22)
+    at async PrismaPgAdapter.queryRaw (/home/zenit/e-commerce/node_modules/.pnpm/@prisma+adapter-pg@7.5.0/node_modules/@prisma/adapter-pg/dist/index.js:602:30)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:44517)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:44961)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:46181)
+    at async e.run (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:43231)
+    at async e.execute (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:61:815)
+    at async jt.request (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:62:2327)
+[Error] Connection terminated unexpectedly Error: Connection terminated unexpectedly
+    at /home/zenit/e-commerce/node_modules/.pnpm/pg-pool@3.13.0_pg@8.20.0/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async PrismaPgAdapter.performIO (/home/zenit/e-commerce/node_modules/.pnpm/@prisma+adapter-pg@7.5.0/node_modules/@prisma/adapter-pg/dist/index.js:652:22)
+    at async PrismaPgAdapter.queryRaw (/home/zenit/e-commerce/node_modules/.pnpm/@prisma+adapter-pg@7.5.0/node_modules/@prisma/adapter-pg/dist/index.js:602:30)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:44517)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:44961)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:46181)
+    at async e.run (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:43231)
+    at async e.execute (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:61:815)
+    at async jt.request (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:62:2327)
+[Error] Connection terminated unexpectedly Error: Connection terminated unexpectedly
+    at /home/zenit/e-commerce/node_modules/.pnpm/pg-pool@3.13.0_pg@8.20.0/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async PrismaPgAdapter.performIO (/home/zenit/e-commerce/node_modules/.pnpm/@prisma+adapter-pg@7.5.0/node_modules/@prisma/adapter-pg/dist/index.js:652:22)
+    at async PrismaPgAdapter.queryRaw (/home/zenit/e-commerce/node_modules/.pnpm/@prisma+adapter-pg@7.5.0/node_modules/@prisma/adapter-pg/dist/index.js:602:30)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:44517)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:44961)
+    at async e.interpretNode (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:46181)
+    at async e.run (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:43231)
+    at async e.execute (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:61:815)
+    at async jt.request (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:62:2327)

@@ -7,7 +7,7 @@ const regular  = 15_000;
 const express  = 35_000;
 
 // FIX [Critical]: tambah userId agar hanya pemilik cart yang bisa menghitung summary-nya.
-// Sebelumnya hanya filter by cartId — siapa saja yang tahu UUID cart bisa melihat isinya.
+// Sebelumnya hanya filter by cartId ï¿½ siapa saja yang tahu UUID cart bisa melihat isinya.
 export async function calculateCheckoutSummary(userId: string, cartId: string, shippingMethod: string) {
   const cart = await prisma.cart.findUnique({
     where: { id: cartId },
@@ -32,7 +32,7 @@ export async function getCheckoutSummary(userId: string, orderNumber: string) {
   const checkout = await prisma.order.findFirst({
     where: { orderNumber, userId },
     select: {
-      // FIX [Low]: hapus userId dari response — tidak perlu dikembalikan ke client,
+      // FIX [Low]: hapus userId dari response ï¿½ tidak perlu dikembalikan ke client,
       // sudah implisit dari sesi login. Sebelumnya REST mengembalikan userId tapi tRPC tidak.
       orderNumber:     true,
       status:          true,
@@ -71,7 +71,7 @@ export async function getCheckoutSummary(userId: string, orderNumber: string) {
     subtotal:     Number(checkout.subtotal),
     tax:          Number(checkout.tax),
     shippingCost: Number(checkout.shippingCost),
-    items: checkout.items.map((item) => ({
+    items: (checkout.items ?? []).map((item) => ({
       ...item,
       unitPrice: Number(item.unitPrice),
       subtotal:  Number(item.subtotal),
@@ -111,7 +111,7 @@ export async function confirmCheckout(
   const flatShipping = shippingMethod === "express" ? express : regular;
 
   const order = await prisma.$transaction(async (tx) => {
-    // FIX [Critical]: filter cart by id AND userId dalam tx — cegah checkout cart milik orang lain
+    // FIX [Critical]: filter cart by id AND userId dalam tx ï¿½ cegah checkout cart milik orang lain
     const cart = await tx.cart.findUnique({
       where: { id: cartId },
       select: {
@@ -150,7 +150,7 @@ export async function confirmCheckout(
     const newOrder = await tx.order.create({
       data: {
         userId,
-        orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
         subtotal,
         tax,
         shippingCost:    flatShipping,

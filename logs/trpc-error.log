@@ -10421,3 +10421,6 @@ Error: Cannot find module '/home/zenit/e-commerce/apps/backend-trpc/dist/server.
   code: 'MODULE_NOT_FOUND',
   requireStack: []
 }
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
