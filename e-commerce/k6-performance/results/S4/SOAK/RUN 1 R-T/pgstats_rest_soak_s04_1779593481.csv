@@ -1,0 +1,85 @@
+query,calls,avg_ms,total_ms,rows
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		seq_scan,
+		seq_tup_read,
+		idx_scan,
+		idx_tup_fetch,
+	",1514,5.21,7892.92,15140
+"SELECT name, setting, COALESCE(unit, $1), short_desc, vartype FROM pg_settings WHERE vartype IN ($2, $3, $4) AND name !=",1514,1.62,2457.01,392126
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		heap_blks_read,
+		heap_blks_hit,
+		idx_blks_read,
+		idx_",1514,0.93,1402.95,15140
+SELECT pg_database_size($1),6056,0.79,4765.88,6056
+"SELECT COUNT(*) FILTER (WHERE state=$1), COUNT(*) FILTER (WHERE state=$2)
+    FROM pg_stat_activity WHERE datname=$3 AND",2793,0.70,1957.62,2793
+"SELECT 
+		  pg_database.datname as datname,
+		  tmp.mode as mode,
+		  COALESCE(count, $1) as count 
+		FROM 
+		  (
+		    ",1514,0.52,791.59,54504
+"SELECT
+				pg_database.datname,
+				tmp.state,
+				tmp2.usename,
+				tmp2.application_name,
+				tmp2.backend_type,
+				t",1514,0.33,497.27,36460
+SELECT pg_stat_statements_reset(),1,0.28,0.28,1
+"SELECT
+			COUNT(*) AS segments,
+			SUM(size) AS size
+		FROM pg_ls_waldir()
+		WHERE name ~ $1",1514,0.15,227.86,1514
+"SELECT *,
+				(case pg_is_in_recovery() when $1 then pg_last_wal_receive_lsn() else pg_current_wal_lsn() end) AS pg_curr",1514,0.14,211.48,0
+"SELECT datid,datname,numbackends,xact_commit,xact_rollback,blks_read,blks_hit,tup_returned,tup_fetched,tup_inserted,tup_",1514,0.14,208.58,7570
+"INSERT INTO ""public"".""refresh_tokens"" (""id"",""user_id"",""token_hash"",""expires_at"",""revoked"",""created_at"") VALUES ($1,$2,$3",342961,0.14,46780.80,342961
+"SELECT ROUND(blks_hit::numeric/NULLIF(blks_hit+blks_read,$1)*$2,$3)
+    FROM pg_stat_database WHERE datname=$4",2793,0.10,291.79,2793
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""id"" = $2 AND $3=$4) RETURNING ""pub",171480,0.09,15229.57,171480
+SELECT xact_commit+xact_rollback FROM pg_stat_database WHERE datname=$1,2794,0.08,233.98,2794
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""user_id"" = $2 AND ""public"".""refres",342962,0.07,23659.34,171481
+"SELECT ""public"".""refresh_tokens"".""id"", ""public"".""refresh_tokens"".""user_id"", ""public"".""refresh_tokens"".""token_hash"", ""pub",171480,0.04,7406.22,171480
+SELECT * FROM pg_stat_database_conflicts,1514,0.04,62.38,6056
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""password_hash"", ""publ",222778,0.04,8029.77,222778
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""role""::text FROM ""public"".""users"" WHERE (""public"".""users"".""id"" = $1 AND ",342961,0.03,10925.68,342961
+"SELECT
+		slot_name,
+		slot_type,
+		CASE WHEN pg_is_in_recovery() THEN
+		    pg_last_wal_receive_lsn() - $1
+		ELSE
+		    ",1514,0.03,48.02,0
+"SELECT $2 FROM ONLY ""public"".""users"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",342961,0.03,9233.88,342961
+"SELECT *,
+				extract($1 from now() - last_archived_time) AS last_archive_age
+			FROM pg_stat_archiver",1514,0.03,40.32,1514
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""phone"", ""public"".""use",171480,0.03,4389.06,171480
+"SELECT
+		checkpoints_timed
+		,checkpoints_req
+		,checkpoint_write_time
+		,checkpoint_sync_time
+		,buffers_checkpoint
+		,",1514,0.02,28.71,1514
+"SELECT pg_roles.rolname, pg_roles.rolconnlimit FROM pg_roles",1514,0.02,26.16,24224
+"SELECT pg_database.datname, pg_database.datconnlimit FROM pg_database",1514,0.02,23.36,6056
+"SELECT slot_name, database, active,
+				(case pg_is_in_recovery() when $1 then pg_wal_lsn_diff(pg_last_wal_receive_lsn()",1514,0.01,19.69,0
+"SELECT
+	CASE
+		WHEN NOT pg_is_in_recovery() THEN $1
+                WHEN pg_last_wal_receive_lsn () = pg_last_wal_replay",1514,0.01,15.28,1514
+SELECT version(),3028,0.01,27.32,3028
+BEGIN,342962,0.00,617.87,0
+COMMIT,342962,0.00,461.48,0

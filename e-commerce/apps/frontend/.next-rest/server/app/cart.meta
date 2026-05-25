@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(main)/layout,_N_T_/(main)/cart/layout,_N_T_/(main)/cart/page,_N_T_/cart"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KG1haW4p/cart/__PAGE__",
+    "/!KG1haW4p/cart",
+    "/!KG1haW4p",
+    "/_index",
+    "/_head"
+  ]
+}

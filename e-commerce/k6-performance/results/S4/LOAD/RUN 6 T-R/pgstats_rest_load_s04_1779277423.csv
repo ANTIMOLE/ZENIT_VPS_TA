@@ -1,0 +1,85 @@
+query,calls,avg_ms,total_ms,rows
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		seq_scan,
+		seq_tup_read,
+		idx_scan,
+		idx_tup_fetch,
+	",222,5.51,1223.17,2220
+"SELECT name, setting, COALESCE(unit, $1), short_desc, vartype FROM pg_settings WHERE vartype IN ($2, $3, $4) AND name !=",222,1.57,347.84,57498
+SELECT pg_database_size($1),888,0.81,723.25,888
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		heap_blks_read,
+		heap_blks_hit,
+		idx_blks_read,
+		idx_",222,0.81,180.67,2220
+"SELECT COUNT(*) FILTER (WHERE state=$1), COUNT(*) FILTER (WHERE state=$2)
+    FROM pg_stat_activity WHERE datname=$3 AND",406,0.57,231.32,406
+"SELECT 
+		  pg_database.datname as datname,
+		  tmp.mode as mode,
+		  COALESCE(count, $1) as count 
+		FROM 
+		  (
+		    ",222,0.44,97.27,7992
+"SELECT
+				pg_database.datname,
+				tmp.state,
+				tmp2.usename,
+				tmp2.application_name,
+				tmp2.backend_type,
+				t",222,0.26,57.73,5350
+SELECT pg_stat_statements_reset(),1,0.14,0.14,1
+"SELECT datid,datname,numbackends,xact_commit,xact_rollback,blks_read,blks_hit,tup_returned,tup_fetched,tup_inserted,tup_",222,0.14,30.71,1110
+"SELECT
+			COUNT(*) AS segments,
+			SUM(size) AS size
+		FROM pg_ls_waldir()
+		WHERE name ~ $1",222,0.14,30.71,222
+"INSERT INTO ""public"".""refresh_tokens"" (""id"",""user_id"",""token_hash"",""expires_at"",""revoked"",""created_at"") VALUES ($1,$2,$3",47897,0.12,5972.53,47897
+"SELECT *,
+				(case pg_is_in_recovery() when $1 then pg_last_wal_receive_lsn() else pg_current_wal_lsn() end) AS pg_curr",222,0.10,22.53,0
+"SELECT ROUND(blks_hit::numeric/NULLIF(blks_hit+blks_read,$1)*$2,$3)
+    FROM pg_stat_database WHERE datname=$4",406,0.09,38.45,406
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""id"" = $2 AND $3=$4) RETURNING ""pub",23944,0.08,1916.98,23944
+SELECT xact_commit+xact_rollback FROM pg_stat_database WHERE datname=$1,407,0.08,30.74,407
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""user_id"" = $2 AND ""public"".""refres",47900,0.06,2859.12,23953
+"SELECT ""public"".""refresh_tokens"".""id"", ""public"".""refresh_tokens"".""user_id"", ""public"".""refresh_tokens"".""token_hash"", ""pub",23946,0.04,903.07,23944
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""password_hash"", ""publ",31081,0.03,1085.65,31081
+SELECT * FROM pg_stat_database_conflicts,222,0.03,7.14,888
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""role""::text FROM ""public"".""users"" WHERE (""public"".""users"".""id"" = $1 AND ",47895,0.03,1486.52,47895
+"SELECT pg_roles.rolname, pg_roles.rolconnlimit FROM pg_roles",222,0.03,6.09,3552
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""phone"", ""public"".""use",23948,0.03,648.15,23948
+"SELECT $2 FROM ONLY ""public"".""users"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",47897,0.03,1254.74,47897
+"SELECT *,
+				extract($1 from now() - last_archived_time) AS last_archive_age
+			FROM pg_stat_archiver",222,0.02,4.47,222
+"SELECT
+		slot_name,
+		slot_type,
+		CASE WHEN pg_is_in_recovery() THEN
+		    pg_last_wal_receive_lsn() - $1
+		ELSE
+		    ",222,0.02,4.36,0
+"SELECT
+		checkpoints_timed
+		,checkpoints_req
+		,checkpoint_write_time
+		,checkpoint_sync_time
+		,buffers_checkpoint
+		,",222,0.02,3.93,222
+"SELECT slot_name, database, active,
+				(case pg_is_in_recovery() when $1 then pg_wal_lsn_diff(pg_last_wal_receive_lsn()",222,0.01,3.07,0
+"SELECT pg_database.datname, pg_database.datconnlimit FROM pg_database",222,0.01,2.55,888
+"SELECT
+	CASE
+		WHEN NOT pg_is_in_recovery() THEN $1
+                WHEN pg_last_wal_receive_lsn () = pg_last_wal_replay",222,0.01,2.31,222
+SELECT version(),444,0.01,3.71,444
+BEGIN,47900,0.00,68.26,0
+COMMIT,47900,0.00,59.80,0

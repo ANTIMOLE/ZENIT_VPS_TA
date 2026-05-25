@@ -1,0 +1,85 @@
+query,calls,avg_ms,total_ms,rows
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE ""public"".""products",11,7.02,77.23,11
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		seq_scan,
+		seq_tup_read,
+		idx_scan,
+		idx_tup_fetch,
+	",238,3.28,780.83,2380
+"SELECT name, setting, COALESCE(unit, $1), short_desc, vartype FROM pg_settings WHERE vartype IN ($2, $3, $4) AND name !=",238,1.56,370.46,61642
+SELECT pg_database_size($1),952,0.86,820.82,952
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		heap_blks_read,
+		heap_blks_hit,
+		idx_blks_read,
+		idx_",238,0.58,137.54,2380
+"SELECT 
+		  pg_database.datname as datname,
+		  tmp.mode as mode,
+		  COALESCE(count, $1) as count 
+		FROM 
+		  (
+		    ",238,0.48,115.16,8568
+"UPDATE ""public"".""products"" SET ""stock"" = (""public"".""products"".""stock"" - $1), ""sold_count"" = (""public"".""products"".""sold_c",136110,0.45,61046.56,136110
+"SELECT COUNT(*) FILTER (WHERE state=$1), COUNT(*) FILTER (WHERE state=$2)
+    FROM pg_stat_activity WHERE datname=$3 AND",410,0.42,171.97,410
+"SELECT
+				pg_database.datname,
+				tmp.state,
+				tmp2.usename,
+				tmp2.application_name,
+				tmp2.backend_type,
+				t",238,0.28,66.82,5759
+"INSERT INTO ""public"".""order_items"" (""id"",""order_id"",""product_id"",""product_name"",""quantity"",""unit_price"",""subtotal"") VALU",45370,0.27,12412.78,136110
+"SELECT
+			COUNT(*) AS segments,
+			SUM(size) AS size
+		FROM pg_ls_waldir()
+		WHERE name ~ $1",238,0.23,53.69,238
+"INSERT INTO ""public"".""orders"" (""id"",""user_id"",""address_id"",""order_number"",""status"",""subtotal"",""tax"",""shipping_cost"",""tot",45370,0.21,9730.13,45370
+"INSERT INTO ""public"".""refresh_tokens"" (""id"",""user_id"",""token_hash"",""expires_at"",""revoked"",""created_at"") VALUES ($1,$2,$3",300,0.19,58.34,300
+"INSERT INTO ""public"".""cart_items"" (""id"",""cart_id"",""product_id"",""quantity"",""price_at_time"",""created_at"") VALUES ($1,$2,$3",136110,0.17,23187.44,136110
+SELECT pg_stat_statements_reset(),1,0.15,0.15,1
+"SELECT datid,datname,numbackends,xact_commit,xact_rollback,blks_read,blks_hit,tup_returned,tup_fetched,tup_inserted,tup_",238,0.13,30.36,1190
+"SELECT *,
+				(case pg_is_in_recovery() when $1 then pg_last_wal_receive_lsn() else pg_current_wal_lsn() end) AS pg_curr",238,0.12,28.34,0
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""slug"", ""public"".""products"".""images"" FROM ""public"".""products"" WHERE",300,0.10,30.25,900
+"SELECT ROUND(blks_hit::numeric/NULLIF(blks_hit+blks_read,$1)*$2,$3)
+    FROM pg_stat_database WHERE datname=$4",410,0.09,38.24,410
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""orders"".""id"" FROM ""public"".""orders"" WHERE ""public"".""orders"".""use",45370,0.09,3912.15,45370
+"SELECT ""public"".""order_items"".""id"", ""public"".""order_items"".""product_id"", ""public"".""order_items"".""product_name"", ""public""",44270,0.08,3704.96,663720
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",46,0.08,3.74,552
+"SELECT ""public"".""order_items"".""id"", ""public"".""order_items"".""product_id"", ""public"".""order_items"".""product_name"", ""public""",300,0.08,23.95,3300
+SELECT xact_commit+xact_rollback FROM pg_stat_database WHERE datname=$1,411,0.08,32.62,411
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""slug"", ""public"".""products"".""images"" FROM ""public"".""products"" WHERE",300,0.07,20.63,900
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",90740,0.07,6156.28,272220
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""slug"", ""public"".""products"".""images"" FROM ""public"".""products"" WHERE",300,0.07,20.34,900
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""slug"", ""public"".""products"".""images"" FROM ""public"".""products"" WHERE",44170,0.06,2869.46,132510
+"SELECT ""public"".""order_items"".""id"", ""public"".""order_items"".""product_id"", ""public"".""order_items"".""product_name"", ""public""",299,0.06,19.37,2400
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""slug"", ""public"".""products"".""images"" FROM ""public"".""products"" WHERE",45670,0.06,2866.74,137010
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",713,0.06,42.61,713
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""password_hash"", ""publ",300,0.06,16.98,300
+"UPDATE ""public"".""carts"" SET ""status"" = CAST($1::text AS ""public"".""CartStatus""), ""updated_at"" = $2 WHERE (""public"".""carts",45070,0.06,2542.10,45070
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""stock"", ""public"".""products"".""name"" FROM ""public"".""products"" WHERE ",45370,0.05,2405.86,136110
+"UPDATE ""public"".""carts"" SET ""status"" = CAST($1::text AS ""public"".""CartStatus""), ""updated_at"" = $2 WHERE (""public"".""carts",45370,0.05,2382.86,45370
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",45370,0.05,2369.33,90740
+"SELECT ""public"".""order_items"".""id"", ""public"".""order_items"".""product_id"", ""public"".""order_items"".""product_name"", ""public""",292,0.05,14.62,1503
+"SELECT ""public"".""order_items"".""id"", ""public"".""order_items"".""product_id"", ""public"".""order_items"".""product_name"", ""public""",209,0.05,9.95,627
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""order_number"", ""public"".""orders"".""status""::text, ""public"".""orders"".""to",45370,0.05,2130.70,224240
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""order_number"", ""public"".""orders"".""status""::text, ""public"".""orders"".""su",45370,0.05,2089.48,45370
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""user_id"", ""public"".""orders"".""address_id"", ""public"".""orders"".""order_num",45370,0.04,1760.03,45370
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""images"", ""public"".""products"".""category",45370,0.03,1581.94,45370
+"SELECT ""public"".""order_items"".""id"", ""public"".""order_items"".""product_id"", ""public"".""order_items"".""product_name"", ""public""",45370,0.03,1552.32,136110
+SELECT * FROM pg_stat_database_conflicts,238,0.03,7.74,952
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"", ""public"".""categories"".""slug"" FROM ""public"".""categories""",46,0.03,1.40,92
+"SELECT ""public"".""addresses"".""id"", ""public"".""addresses"".""user_id"", ""public"".""addresses"".""label"", ""public"".""addresses"".""re",45370,0.03,1373.05,136110
+"SELECT ""public"".""cart_items"".""id"", ""public"".""cart_items"".""product_id"", ""public"".""cart_items"".""quantity"", ""public"".""cart_",272220,0.03,8159.51,544440
+"SELECT ""public"".""addresses"".""id"", ""public"".""addresses"".""user_id"", ""public"".""addresses"".""label"", ""public"".""addresses"".""re",45370,0.03,1358.73,45370
+"DELETE FROM ""public"".""cart_items"" WHERE ""public"".""cart_items"".""cart_id"" = $1",90740,0.03,2688.38,136110
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""user_id"" = $2 AND ""public"".""refres",300,0.03,8.74,0

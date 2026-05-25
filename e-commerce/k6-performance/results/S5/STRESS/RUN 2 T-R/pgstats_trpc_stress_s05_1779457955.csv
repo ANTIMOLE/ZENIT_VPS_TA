@@ -1,0 +1,106 @@
+query,calls,avg_ms,total_ms,rows
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""role""::text, ""public""",1340,18.75,25121.72,26800
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE $2=$3 OFFSET $1) A",3870,11.00,42552.99,3870
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""products"".""id"" FROM ""public"".""products"" WHERE ""public"".""products",5183,9.34,48435.05,5183
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		seq_scan,
+		seq_tup_read,
+		idx_scan,
+		idx_tup_fetch,
+	",153,4.21,643.98,1530
+"SELECT
+      DATE_TRUNC($2, created_at)   AS date,
+      COALESCE(SUM(total), $3)::float8 AS revenue,
+      COUNT(*)::in",5183,3.32,17207.88,5183
+"SELECT SUM(""total"") AS ""_sum$total"" FROM (SELECT ""public"".""orders"".""total"" FROM ""public"".""orders"" WHERE (""public"".""order",5183,2.34,12140.11,5183
+"SELECT name, setting, COALESCE(unit, $1), short_desc, vartype FROM pg_settings WHERE vartype IN ($2, $3, $4) AND name !=",153,1.46,224.07,39627
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""orders"".""id"" FROM ""public"".""orders"" WHERE ""public"".""orders"".""cre",5183,1.17,6080.85,5183
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""users"".""id"" FROM ""public"".""users"" WHERE $2=$3 OFFSET $1) AS ""sub",6523,1.08,7014.84,6523
+"SELECT
+		current_database() datname,
+		schemaname,
+		relname,
+		heap_blks_read,
+		heap_blks_hit,
+		idx_blks_read,
+		idx_",153,0.86,131.27,1530
+SELECT pg_database_size($1),612,0.79,484.43,612
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""orders"".""id"" FROM ""public"".""orders"" WHERE $2=$3 OFFSET $1) AS ""s",5724,0.53,3037.04,5724
+"SELECT COUNT(*) FILTER (WHERE state=$1), COUNT(*) FILTER (WHERE state=$2)
+    FROM pg_stat_activity WHERE datname=$3 AND",274,0.50,137.52,274
+"SELECT 
+		  pg_database.datname as datname,
+		  tmp.mode as mode,
+		  COALESCE(count, $1) as count 
+		FROM 
+		  (
+		    ",153,0.49,74.82,5508
+"SELECT COUNT(*) AS ""_count$_all"" FROM (SELECT ""public"".""orders"".""id"" FROM ""public"".""orders"" WHERE ""public"".""orders"".""sta",2152,0.45,967.48,2152
+"INSERT INTO ""public"".""products"" (""id"",""category_id"",""name"",""slug"",""description"",""price"",""stock"",""images"",""sold_count"",""d",3866,0.40,1550.42,3866
+"SELECT
+				pg_database.datname,
+				tmp.state,
+				tmp2.usename,
+				tmp2.application_name,
+				tmp2.backend_type,
+				t",153,0.36,55.60,3675
+"UPDATE ""public"".""products"" SET ""is_active"" = $1, ""updated_at"" = $2 WHERE (""public"".""products"".""id"" = $3 AND $4=$5) RETUR",3862,0.32,1249.05,3862
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""order_number"", ""public"".""orders"".""status""::text, ""public"".""orders"".""to",2152,0.22,475.94,43040
+SELECT pg_stat_statements_reset(),1,0.20,0.20,1
+"SELECT *,
+				(case pg_is_in_recovery() when $1 then pg_last_wal_receive_lsn() else pg_current_wal_lsn() end) AS pg_curr",153,0.19,29.01,0
+"SELECT
+			COUNT(*) AS segments,
+			SUM(size) AS size
+		FROM pg_ls_waldir()
+		WHERE name ~ $1",153,0.17,25.57,153
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"" FROM ""public"".""users"" WHERE ""public"".""us",2693,0.16,425.84,53860
+"UPDATE ""public"".""orders"" SET ""status"" = CAST($1::text AS ""public"".""OrderStatus""), ""updated_at"" = $2 WHERE (""public"".""ord",291,0.16,45.56,291
+"SELECT datid,datname,numbackends,xact_commit,xact_rollback,blks_read,blks_hit,tup_returned,tup_fetched,tup_inserted,tup_",153,0.14,22.11,765
+"INSERT INTO ""public"".""refresh_tokens"" (""id"",""user_id"",""token_hash"",""expires_at"",""revoked"",""created_at"") VALUES ($1,$2,$3",13107,0.13,1725.80,13107
+"UPDATE ""public"".""refresh_tokens"" SET ""revoked"" = $1 WHERE (""public"".""refresh_tokens"".""user_id"" = $2 AND ""public"".""refres",13107,0.13,1673.14,13097
+"UPDATE ""public"".""products"" SET ""stock"" = $1, ""updated_at"" = $2 WHERE (""public"".""products"".""id"" = $3 AND $4=$5) RETURNING",3864,0.11,423.80,3864
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"" FROM ""public"".""categories"" WHERE ""public"".""categories"".""",3870,0.09,362.11,76351
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",5183,0.09,475.23,51830
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"" FROM ""public"".""users"" WHERE ""public"".""us",5183,0.09,467.90,51830
+"SELECT ""public"".""products"".""id"", ""public"".""products"".""name"", ""public"".""products"".""slug"", ""public"".""products"".""price"", ""p",3870,0.09,339.05,77400
+"SELECT ROUND(blks_hit::numeric/NULLIF(blks_hit+blks_read,$1)*$2,$3)
+    FROM pg_stat_database WHERE datname=$4",274,0.09,23.71,274
+SELECT xact_commit+xact_rollback FROM pg_stat_database WHERE datname=$1,275,0.08,21.37,275
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""order_number"", ""public"".""orders"".""status""::text, ""public"".""orders"".""to",541,0.07,37.73,10820
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""status""::text FROM ""public"".""orders"" WHERE (""public"".""orders"".""id"" = $",533,0.06,31.97,533
+"SELECT ""public"".""categories"".""id"", ""public"".""categories"".""name"" FROM ""public"".""categories"" WHERE ""public"".""categories"".""",5183,0.06,299.34,51830
+"SELECT ""public"".""orders"".""id"", ""public"".""orders"".""order_number"", ""public"".""orders"".""status""::text, ""public"".""orders"".""to",5183,0.05,234.89,51830
+"SELECT
+		slot_name,
+		slot_type,
+		CASE WHEN pg_is_in_recovery() THEN
+		    pg_last_wal_receive_lsn() - $1
+		ELSE
+		    ",153,0.04,6.20,0
+"SELECT ""public"".""users"".""id"", ""public"".""users"".""name"", ""public"".""users"".""email"", ""public"".""users"".""password_hash"", ""publ",13107,0.04,505.25,13107
+SELECT * FROM pg_stat_database_conflicts,153,0.04,5.60,612
+"SELECT $2 FROM ONLY ""public"".""users"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",13107,0.03,365.23,13107
+"SELECT $2 FROM ONLY ""public"".""categories"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",3866,0.03,106.62,3866
+"SELECT pg_database.datname, pg_database.datconnlimit FROM pg_database",153,0.02,3.63,612
+"SELECT *,
+				extract($1 from now() - last_archived_time) AS last_archive_age
+			FROM pg_stat_archiver",153,0.02,2.88,153
+"SELECT
+		checkpoints_timed
+		,checkpoints_req
+		,checkpoint_write_time
+		,checkpoint_sync_time
+		,buffers_checkpoint
+		,",153,0.02,2.77,153
+"SELECT pg_roles.rolname, pg_roles.rolconnlimit FROM pg_roles",153,0.02,2.43,2448
+"SELECT slot_name, database, active,
+				(case pg_is_in_recovery() when $1 then pg_wal_lsn_diff(pg_last_wal_receive_lsn()",153,0.01,1.99,0
+"SELECT
+	CASE
+		WHEN NOT pg_is_in_recovery() THEN $1
+                WHEN pg_last_wal_receive_lsn () = pg_last_wal_replay",153,0.01,1.37,153
+SELECT version(),306,0.01,2.70,306

@@ -229,16 +229,22 @@ export default function ProductDetailPage({ params }: Props) {
             </div>
           )}
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons — FIXED: keduanya solid, tidak pakai gradient */}
           <div className="flex gap-3 pt-2">
+            {/* Tambah ke Keranjang — outline/secondary agar ada hierarki visual */}
             <Button
+              variant="outline"
               disabled={!isAvailable || isAddingItem}
               onClick={() => addItem({ productId: product.id, quantity })}
+              className="gap-2"
             >
-              {isAddingItem ? "Menambahkan..." : "Tambah ke Keranjang"}
+              <ShoppingCart className="w-4 h-4" />
+              {isAddingItem ? "Menambahkan..." : "Keranjang"}
             </Button>
+
+            {/* Beli Sekarang — solid primary, primary action */}
             <Button
-              className="flex-1 gap-2 bg-gradient-zenit border-0"
+              className="flex-1 gap-2"
               disabled={!isAvailable || isAddingItem}
               onClick={async () => {
                 await addItem({ productId: product.id, quantity });

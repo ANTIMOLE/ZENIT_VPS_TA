@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, ShoppingBag, Zap, Shield, Truck, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard, ProductCardSkeleton } from "@/components/shared/ProductCard";
@@ -130,30 +129,43 @@ export default function HomePage() {
       <main className="flex-1 flex flex-col gap-0">
 
         {/* ── Hero ────────────────────────────────────────────── */}
-        <section className="bg-gradient-zenit text-white">
-          <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                Belanja Lebih Mudah,<br />
-                Harga Lebih Hemat
-              </h1>
-              <p className="text-white/80 text-lg mb-8">
-                Jutaan produk pilihan dari ribuan penjual terpercaya di seluruh Indonesia.
+        {/*
+          FIXED: Warna solid #6C63FF, bukan gradient.
+          Hapus ilustrasi SVG dalam lingkaran — elemen itu generik
+          dan tidak menambah konteks pada marketplace.
+          Hero sekarang left-aligned dan lebih fokus ke teks.
+        */}
+        <section className="bg-[#6C63FF] text-white">
+          <div className="max-w-7xl mx-auto px-4 py-14 md:py-20">
+            <div className="max-w-2xl">
+              <p className="text-white/60 text-xs font-semibold mb-3 tracking-widest uppercase">
+                Marketplace Indonesia
               </p>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold" asChild>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5">
+                50.000 Produk,<br />
+                Satu Platform
+              </h1>
+              <p className="text-white/75 text-lg mb-8 leading-relaxed">
+                50.000+ produk pilihan dari berbagai kategori, siap dikirim ke seluruh Indonesia.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  size="lg"
+                  className="bg-white text-[#6C63FF] hover:bg-white/90 font-semibold"
+                  asChild
+                >
                   <Link href={ROUTES.PRODUCTS}>
                     Mulai Belanja <ShoppingBag className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-black hover:bg-white/10 hover:text-white" asChild>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white/40 text-white hover:bg-white/10"
+                  asChild
+                >
                   <Link href={ROUTES.REGISTER}>Daftar Gratis</Link>
                 </Button>
-              </div>
-            </div>
-            <div className="flex-shrink-0 hidden md:block">
-              <div className="w-64 h-64 bg-white/10 rounded-full flex items-center justify-center">
-                <Image src="/zenit-icon.svg" alt="Zenit Shopping" width={220} height={220} priority />
               </div>
             </div>
           </div>
@@ -230,18 +242,29 @@ export default function HomePage() {
         </section>
 
         {/* ── Promo Banner ────────────────────────────────────── */}
+        {/*
+          FIXED: Solid primary (#6C63FF), bukan gradient violet-to-teal.
+          Satu halaman tidak boleh punya lebih dari satu surface bergradient.
+          Hero sudah solid violet → banner ini ikut solid.
+        */}
         <section className="max-w-7xl mx-auto px-4 pt-8 w-full">
-          <div className="rounded-2xl bg-gradient-to-r from-violet-600 to-teal-500 text-white p-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="rounded-xl bg-[#6C63FF] text-white px-8 py-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Tag className="w-4 h-4 opacity-80" />
-                <p className="text-sm font-medium opacity-80">Promo Hari Ini</p>
+              <div className="flex items-center gap-1.5 mb-1">
+                <Tag className="w-3.5 h-3.5 opacity-70" />
+                <p className="text-sm font-medium opacity-70">Promo Hari Ini</p>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Diskon s/d 75%! 🎉</h3>
-              <p className="text-white/70 text-sm">Belanja sekarang dan hemat lebih banyak</p>
+              <h3 className="text-xl md:text-2xl font-bold mb-1">Diskon s/d 75%! 🎉</h3>
+              <p className="text-white/65 text-sm">Belanja sekarang dan hemat lebih banyak</p>
             </div>
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold flex-shrink-0" asChild>
-              <Link href={`${ROUTES.PRODUCTS}?sortBy=soldCount&sortOrder=desc`}>Lihat Promo</Link>
+            <Button
+              size="lg"
+              className="bg-white text-[#6C63FF] hover:bg-white/90 font-semibold flex-shrink-0"
+              asChild
+            >
+              <Link href={`${ROUTES.PRODUCTS}?sortBy=soldCount&sortOrder=desc`}>
+                Lihat Promo
+              </Link>
             </Button>
           </div>
         </section>
@@ -270,11 +293,19 @@ export default function HomePage() {
         </section>
 
         {/* ── CTA ─────────────────────────────────────────────── */}
+        {/*
+          FIXED: Tombol solid putih dengan teks gelap.
+          Tidak ada gradient di tombol — dark section sudah memberi kontras cukup.
+        */}
         <section className="bg-gray-900 text-white mt-4">
           <div className="max-w-7xl mx-auto px-4 py-12 text-center">
             <h2 className="text-2xl font-bold mb-2">Bergabung dengan Zenit Sekarang</h2>
-            <p className="text-gray-400 mb-6">Daftar gratis dan nikmati pengalaman belanja terbaik</p>
-            <Button size="lg" className="bg-gradient-to-r from-purple-400 to-blue-400 hover:opacity-90 border-0" asChild>
+            <p className="text-gray-400 mb-6">Daftar gratis dan mulai belanja sekarang.</p>
+            <Button
+              size="lg"
+              className="bg-white text-gray-900 hover:bg-gray-100 font-semibold"
+              asChild
+            >
               <Link href={ROUTES.REGISTER}>Daftar Sekarang — Gratis!</Link>
             </Button>
           </div>

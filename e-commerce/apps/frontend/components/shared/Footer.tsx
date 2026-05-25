@@ -9,7 +9,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Image src="/zenit-logo.svg" alt="Zenit" width={90} height={28} className="mb-3" />
             <p className="text-sm text-gray-500 leading-relaxed">
-              Platform belanja online terpercaya dengan jutaan produk pilihan.
+              Platform belanja dengan 50.000+ produk dari berbagai kategori.
             </p>
           </div>
           <div>

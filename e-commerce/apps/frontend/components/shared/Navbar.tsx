@@ -110,7 +110,8 @@ export function Navbar() {
                 <Button variant="outline" size="sm" asChild>
                   <Link href={ROUTES.LOGIN}>Masuk</Link>
                 </Button>
-                <Button size="sm" className="bg-gradient-zenit border-0" asChild>
+                {/* FIXED: solid primary, tidak pakai gradient */}
+                <Button size="sm" asChild>
                   <Link href={ROUTES.REGISTER}>Daftar</Link>
                 </Button>
               </div>

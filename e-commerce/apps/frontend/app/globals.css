@@ -126,17 +126,16 @@
 
 /* ── UTILITIES ──────────────────────────────────────────────── */
 @layer utilities {
-  /* Gradient text — pakai di heading hero */
+  /*
+   * Gradient text — GUNAKAN SANGAT HEMAT.
+   * Satu elemen per halaman, hanya untuk momen editorial/dekoratif.
+   * JANGAN gunakan di tombol, label form, atau elemen interaktif.
+   */
   .text-gradient {
     background: linear-gradient(135deg, #6C63FF 0%, #3ECFCF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  /* Gradient background — tombol, banner */
-  .bg-gradient-zenit {
-    background: linear-gradient(135deg, #6C63FF 0%, #3ECFCF 100%);
   }
 
   /* Card hover effect */

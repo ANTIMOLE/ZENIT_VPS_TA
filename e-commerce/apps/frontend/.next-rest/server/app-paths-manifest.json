@@ -1,0 +1,21 @@
+{
+  "/(admin)/admin/dashboard/page": "app/(admin)/admin/dashboard/page.js",
+  "/(admin)/admin/orders/page": "app/(admin)/admin/orders/page.js",
+  "/(admin)/admin/products/page": "app/(admin)/admin/products/page.js",
+  "/(admin)/admin/users/page": "app/(admin)/admin/users/page.js",
+  "/(admin)/page": "app/(admin)/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
+  "/(main)/cart/page": "app/(main)/cart/page.js",
+  "/(main)/checkout/page": "app/(main)/checkout/page.js",
+  "/(main)/checkout/success/page": "app/(main)/checkout/success/page.js",
+  "/(main)/orders/[id]/page": "app/(main)/orders/[id]/page.js",
+  "/(main)/orders/page": "app/(main)/orders/page.js",
+  "/(main)/products/[slug]/page": "app/(main)/products/[slug]/page.js",
+  "/(main)/products/page": "app/(main)/products/page.js",
+  "/(main)/profile/page": "app/(main)/profile/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js"
+}

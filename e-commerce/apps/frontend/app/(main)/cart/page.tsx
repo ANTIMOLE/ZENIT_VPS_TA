@@ -26,9 +26,6 @@ export default function CartPage() {
   const isUpdatingItem = isMutating;
   const isRemovingItem = isMutating;
 
-//   const isEmpty        = true as boolean;       // hindari literal narrowing
-// const cart           = null as unknown as Cart;
-
   // ── Belum login ─────────────────────────────────────────────
   if (!loadingAuth && !isAuthenticated) {
     return (
@@ -199,8 +196,10 @@ export default function CartPage() {
               <span>Total</span>
               <span className="text-primary">{formatPrice(total)}</span>
             </div>
+
+            {/* FIXED: solid primary, tidak pakai gradient */}
             <Button
-              className="w-full gap-2 bg-gradient-zenit border-0"
+              className="w-full gap-2"
               size="lg"
               onClick={() => router.push("/checkout")}
             >

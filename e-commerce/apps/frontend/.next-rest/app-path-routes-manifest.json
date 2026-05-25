@@ -1,0 +1,21 @@
+{
+  "/(admin)/admin/dashboard/page": "/admin/dashboard",
+  "/(admin)/admin/orders/page": "/admin/orders",
+  "/(admin)/admin/products/page": "/admin/products",
+  "/(admin)/admin/users/page": "/admin/users",
+  "/(admin)/page": "/",
+  "/(auth)/login/page": "/login",
+  "/(auth)/register/page": "/register",
+  "/(main)/cart/page": "/cart",
+  "/(main)/checkout/page": "/checkout",
+  "/(main)/checkout/success/page": "/checkout/success",
+  "/(main)/orders/[id]/page": "/orders/[id]",
+  "/(main)/orders/page": "/orders",
+  "/(main)/products/[slug]/page": "/products/[slug]",
+  "/(main)/products/page": "/products",
+  "/(main)/profile/page": "/profile",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}

@@ -310,8 +310,9 @@ export default function CheckoutPage() {
               <span className="text-primary">{isLoadingSummary ? "..." : formatPrice(displayTotal)}</span>
             </div>
 
+            {/* FIXED: solid primary, tidak pakai gradient */}
             <Button
-              className="w-full gap-2 bg-gradient-zenit border-0"
+              className="w-full gap-2"
               size="lg"
               disabled={!canConfirm}
               onClick={handleConfirm}

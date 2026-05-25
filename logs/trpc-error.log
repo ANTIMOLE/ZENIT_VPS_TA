@@ -10424,3 +10424,575 @@ Error: Cannot find module '/home/zenit/e-commerce/apps/backend-trpc/dist/server.
 ❌ tRPC error on [auth.login]: Connection terminated unexpectedly
 ❌ tRPC error on [auth.login]: Connection terminated unexpectedly
 ❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [order.getById]: Connection terminated unexpectedly
+❌ tRPC error on [order.getAll]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.refresh]: Connection terminated unexpectedly
+❌ tRPC error on [auth.me]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.login]: Connection terminated unexpectedly
+❌ tRPC error on [auth.logout]: Connection terminated unexpectedly
+❌ tRPC error on [admin.getProducts]: 
+Invalid `prisma.product.count()` invocation:
+
+
+Server has closed the connection.
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+Server has closed the connection.
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [admin.updateProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.getOrders]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.getProducts]: 
+Invalid `prisma.product.count()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [admin.getProducts]: 
+Invalid `prisma.product.count()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.updateProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [admin.getProducts]: 
+Invalid `prisma.product.findMany()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [admin.getProducts]: 
+Invalid `prisma.product.count()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.updateProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [admin.getUsers]: 
+Invalid `prisma.user.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.getOrders]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [admin.getUsers]: 
+Invalid `prisma.user.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.getProducts]: 
+Invalid `prisma.product.count()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: the database system is starting up
+❌ tRPC error on [auth.login]: the database system is shutting down
+❌ tRPC error on [admin.getProducts]: the database system is shutting down
+❌ tRPC error on [auth.login]: the database system is shutting down
+❌ tRPC error on [auth.login]: the database system is shutting down
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [admin.deleteProduct]: 
+Invalid `prisma.product.update()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+
+❌ tRPC error on [auth.login]: 
+Invalid `prisma.refreshToken.updateMany()` invocation:
+
+
+
+❌ tRPC error on [admin.getDashboard]: 
+Invalid `prisma.order.count()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+
+❌ tRPC error on [admin.createProduct]: 
+Invalid `prisma.product.create()` invocation:
+
+
+

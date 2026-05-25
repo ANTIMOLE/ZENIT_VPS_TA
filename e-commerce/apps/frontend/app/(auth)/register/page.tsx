@@ -180,10 +180,10 @@ export default function RegisterPage() {
             {" "}Zenit.
           </p>
 
-          {/* Submit */}
+          {/* Submit — FIXED: solid primary, tidak pakai gradient */}
           <Button
             type="submit"
-            className="w-full bg-gradient-zenit border-0 h-11 font-semibold"
+            className="w-full h-11 font-semibold"
             disabled={isRegisterLoading || !captchaDone}
           >
             {isRegisterLoading ? (

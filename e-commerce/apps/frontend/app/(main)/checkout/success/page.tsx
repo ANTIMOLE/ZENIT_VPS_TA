@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2, Package, ArrowRight, ShoppingBag } from "lucide-react";
@@ -8,14 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/lib/constants";
 
-// Dicapai setelah checkout berhasil.
-// orderId dan orderNumber dipass via query param dari checkout/page.tsx:
-//   router.push(`/checkout/success?orderId=xxx&orderNumber=ORD-xxx`)
-
-export default function CheckoutSuccessPage() {
-  const searchParams  = useSearchParams();
-  const orderId       = searchParams.get("orderId");
-  const orderNumber   = searchParams.get("orderNumber");
+function CheckoutSuccessContent() {
+  const searchParams = useSearchParams();
+  const orderId      = searchParams.get("orderId");
+  const orderNumber  = searchParams.get("orderNumber");
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -25,7 +21,6 @@ export default function CheckoutSuccessPage() {
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-16">
       <div className="max-w-md w-full text-center">
 
-        {/* Checkmark */}
         <div className="flex justify-center mb-6">
           <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center animate-in zoom-in-50 duration-500">
             <CheckCircle2 className="w-12 h-12 text-green-500" />
@@ -37,7 +32,6 @@ export default function CheckoutSuccessPage() {
           Terima kasih sudah berbelanja di Zenit. Pesanan kamu sedang kami proses.
         </p>
 
-        {/* Nomor order */}
         {orderNumber && (
           <div className="bg-gray-50 rounded-2xl p-5 mb-6 text-left">
             <p className="text-xs text-gray-500 mb-1">Nomor Pesanan</p>
@@ -48,7 +42,6 @@ export default function CheckoutSuccessPage() {
           </div>
         )}
 
-        {/* Steps */}
         <div className="bg-white border rounded-2xl p-5 mb-6 text-left space-y-3">
           {[
             { icon: "✅", label: "Pesanan diterima",     sub: "Kami sudah menerima pesananmu" },
@@ -67,10 +60,9 @@ export default function CheckoutSuccessPage() {
 
         <Separator className="mb-6" />
 
-        {/* CTA */}
         <div className="flex flex-col gap-3">
           {orderId && (
-            <Button className="w-full gap-2 bg-gradient-zenit border-0" size="lg" asChild>
+            <Button className="w-full gap-2" size="lg" asChild>
               <Link href={ROUTES.ORDER_DETAIL(orderId)}>
                 <Package className="w-4 h-4" />
                 Lihat Detail Pesanan
@@ -90,5 +82,17 @@ export default function CheckoutSuccessPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }

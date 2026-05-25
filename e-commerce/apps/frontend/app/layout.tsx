@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
+
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -19,7 +20,7 @@ export const viewport = {
 
 export const metadata: Metadata = {
   title:       "Zenit — Marketplace",
-  description: "Belanja produk terbaik di Zenit Marketplace",
+  description: "Belanja di Zenit — 50.000+ produk dari berbagai kategori",
   keywords:    ["e-commerce", "marketplace", "belanja online", "produk terbaik"],
   authors:     { name: "Zenit Team" },
   icons:       {
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
     locale: "id_ID",
     siteName: "Zenit Marketplace",
     title: "Zenit Marketplace",
-    description: "Belanja produk terbaik di Zenit Marketplace",
+    description: "Belanja di Zenit — 50.000+ produk dari berbagai kategori",
     images: [
       {
         url: "/zenit-logo.svg",

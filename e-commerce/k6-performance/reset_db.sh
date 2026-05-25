@@ -110,7 +110,7 @@ if [ "$SKIP_ORDER_RESET" = true ]; then
     DELETE FROM refresh_tokens;
     DELETE FROM products WHERE name LIKE 'k6 Test Product %';
     UPDATE carts SET status = 'active';
-    UPDATE products SET stock = 9999 WHERE stock < 9999;
+    UPDATE products SET stock = 99999 WHERE stock < 99999;
     DELETE FROM carts
       WHERE user_id IN (SELECT id FROM users WHERE email LIKE '%@k6test.dev');
     DELETE FROM users WHERE email LIKE '%@k6test.dev';
@@ -123,7 +123,7 @@ else
     DELETE FROM refresh_tokens;
     DELETE FROM products WHERE name LIKE 'k6 Test Product %';
     UPDATE carts SET status = 'active';
-    UPDATE products SET stock = 9999 WHERE stock < 9999;
+    UPDATE products SET stock = 99999 WHERE stock < 99999;
     DELETE FROM carts
       WHERE user_id IN (SELECT id FROM users WHERE email LIKE '%@k6test.dev');
     DELETE FROM users WHERE email LIKE '%@k6test.dev';
@@ -246,7 +246,7 @@ AFTER_K6_USERS=$(psql "$DB" -t -A -c \
 AFTER_K6_PRODUCTS=$(psql "$DB" -t -A -c \
   "SELECT COUNT(*) FROM products WHERE name LIKE 'k6 Test Product %';" 2>/dev/null || echo "0")
 AFTER_STOCK_LOW=$(psql "$DB" -t -A -c \
-  "SELECT COUNT(*) FROM products WHERE stock < 9999;" 2>/dev/null || echo "0")
+  "SELECT COUNT(*) FROM products WHERE stock < 99999;" 2>/dev/null || echo "0")
 
 echo "  🔍 Verifikasi target state:"
 echo ""
@@ -280,7 +280,7 @@ check_val "order_items (harus 0)"       "$AFTER_ORDER_ITEMS" "0"    "zero"
 check_val "refresh_tokens (harus 0)"    "$AFTER_REFRESH"     "0"    "zero"
 check_val "k6test.dev users (harus 0)"  "$AFTER_K6_USERS"    "0"    "zero"
 check_val "k6 test products (harus 0)"  "$AFTER_K6_PRODUCTS" "0"    "zero"
-check_val "products stock < 9999 (0)"   "$AFTER_STOCK_LOW"   "0"    "zero"
+check_val "products stock < 99999 (0)"   "$AFTER_STOCK_LOW"   "0"    "zero"
 
 echo ""
 
@@ -293,7 +293,7 @@ echo "  [OK] order_items, cart_items           -> dihapus"
 echo "  [OK] refresh_tokens                    -> semua dihapus"
 echo "  [OK] k6 test products (orphan S-05)    -> dihapus"
 echo "  [OK] carts                             -> status reset ke active"
-echo "  [OK] products                          -> stock reset ke 9999"
+echo "  [OK] products                          -> stock reset ke 99999"
 echo "  [OK] k6test.dev users + carts          -> dihapus"
 if [ "$SKIP_ORDER_RESET" = true ]; then
   echo "  [SKIP] orders                          -> sudah valid, tidak diubah"

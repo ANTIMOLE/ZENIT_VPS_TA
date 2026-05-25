@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ function parseNumParam(s: string | null | undefined): number | undefined {
   return isNaN(n) ? undefined : n;
 }
 
-export default function ProductsPage() {
+function ProductsContent() {
   const router        = useRouter();
   const searchParams  = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
@@ -337,5 +337,22 @@ export default function ProductsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="h-8 w-48 bg-gray-200 rounded animate-pulse mb-6" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="h-64 bg-gray-100 rounded-xl animate-pulse" />
+          ))}
+        </div>
+      </div>
+    }>
+      <ProductsContent />
+    </Suspense>
   );
 }

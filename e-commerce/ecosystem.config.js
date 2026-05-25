@@ -20,5 +20,19 @@ module.exports = {
       out_file: "/home/zenit/logs/trpc-out.log",
       merge_logs: true, restart_delay: 2000, max_restarts: 5, watch: false,
     },
+    {
+      name: "frontend",
+      script: "pnpm",
+      args: "start",
+      cwd: "/home/zenit/e-commerce/apps/frontend",
+      instances: 1, exec_mode: "fork",
+      env: {
+        NODE_ENV: "production",
+        PORT: "3000",
+      },
+      error_file: "/home/zenit/logs/frontend-error.log",
+      out_file: "/home/zenit/logs/frontend-out.log",
+      merge_logs: true, restart_delay: 2000, max_restarts: 5, watch: false,
+    },
   ],
 };
