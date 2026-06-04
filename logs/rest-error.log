@@ -12094,3 +12094,8 @@ Authentication error: Error: Connection terminated unexpectedly
     at async e.run (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:15:43231)
     at async e.execute (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:61:815)
     at async jt.request (/home/zenit/e-commerce/packages/shared/generated/prisma/runtime/client.js:62:2327)
+SocketClosedUnexpectedlyError: Socket closed unexpectedly
+    at Socket.<anonymous> (/home/zenit/e-commerce/node_modules/.pnpm/@redis+client@5.12.1_@opentelemetry+api@1.4.1/node_modules/@redis/client/lib/client/socket.ts:327:29)
+    at Object.onceWrapper (node:events:634:26)
+    at Socket.emit (node:events:519:28)
+    at TCP.<anonymous> (node:net:346:12)

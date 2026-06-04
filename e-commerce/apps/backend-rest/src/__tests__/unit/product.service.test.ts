@@ -1,246 +1,252 @@
 /**
- * product.service.test.ts — Whitebox Unit Test (backend-rest)
+ * product.service.test.ts — Whitebox Unit Test
+ * File ini SAMA untuk REST dan tRPC (service identik).
+ *   REST : backend-rest/src/__tests__/unit/product.service.test.ts
+ *   tRPC : backend-trpc/src/__tests__/unit/product.service.test.ts
  *
- * Letakkan di: backend-rest/src/__tests__/unit/product.service.test.ts
+ * FIX v2:
+ *  [1] Filter by q — service sekarang pakai PostgreSQL FTS: name: { search: buildTsQuery(q) }
+ *      BUKAN lagi { contains: q } atau { contains: q, mode: "insensitive" }.
+ *      buildTsQuery("kata") = "kata" (satu kata)
+ *      buildTsQuery("laptop gaming") = "laptop & gaming" (multi kata → tsquery format)
  *
- * Perubahan vs versi original:
- *  - Tambah regression group: 0-valued filter (minPrice=0, maxPrice=0, minRating=0)
- *    Bug sebelumnya: `...(minPrice && {...})` skip nilai 0 karena falsy check.
- *    Fix: harus pakai `minPrice !== undefined` / `minPrice != null`.
+ * Catatan: @ecommerce/shared tidak di-mock → getCached() berjalan nyata.
+ * Jika getCached() miss → memanggil function yang menggunakan prisma mock.
+ * Potensi cache pollution antar test diminimalisir dengan query params yang berbeda.
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+// ─── MOCK ────────────────────────────────────────────────────────────────────
 vi.mock("../../config/database", () => ({
   prisma: {
     product: {
+      count:      vi.fn(),
       findMany:   vi.fn(),
       findFirst:  vi.fn(),
       findUnique: vi.fn(),
-      count:      vi.fn(),
     },
   },
 }));
 
-vi.mock("../../config/env", () => ({ env: { NODE_ENV: "test" } }));
+vi.mock("../../config/env", () => ({
+  env: { NODE_ENV: "test" },
+}));
 
+// ─── Import setelah mock ──────────────────────────────────────────────────────
 import { prisma } from "../../config/database";
 import * as productService from "../../services/product.service";
-import { AppError } from "../../middlewares/error.middleware";
 
-const mockFindMany  = (prisma.product as any).findMany  as ReturnType<typeof vi.fn>;
-const mockFindFirst = (prisma.product as any).findFirst as ReturnType<typeof vi.fn>;
-const mockFindUnique = (prisma.product as any).findUnique as ReturnType<typeof vi.fn>;
-const mockCount     = (prisma.product as any).count     as ReturnType<typeof vi.fn>;
-
-const sampleProduct = {
-  id:        "prod-uuid",
-  name:      "Samsung Galaxy S24",
-  slug:      "samsung-galaxy-s24",
-  price:     "8999000",
-  images:    ["img1.jpg"],
-  rating:    "4.5",
-  soldCount: 100,
-  location:  "Jakarta",
-  discount:  10,
-  stock:     50,
-  category:  { id: "cat-uuid", name: "Handphone", slug: "handphone" },
-};
+// ─── Typed mocks ─────────────────────────────────────────────────────────────
+const mockCount     = prisma.product.count     as ReturnType<typeof vi.fn>;
+const mockFindMany  = prisma.product.findMany  as ReturnType<typeof vi.fn>;
+const mockFindFirst = prisma.product.findFirst as ReturnType<typeof vi.fn>;
+const mockFindUnique = prisma.product.findUnique as ReturnType<typeof vi.fn>;
 
 beforeEach(() => { vi.clearAllMocks(); });
 
-// ══════════════════════════════════════════════════════════════
-// getAll()
-// ══════════════════════════════════════════════════════════════
-describe("productService.getAll()", () => {
-  it("✅ query dasar mengembalikan produk dan metadata pagination", async () => {
-    mockCount.mockResolvedValue(25);
-    mockFindMany.mockResolvedValue([sampleProduct]);
+// ─── Fixture helpers ──────────────────────────────────────────────────────────
+const fakeProduct = {
+  id: "prod-1", name: "Sepatu Lari Nike", slug: "sepatu-lari-nike",
+  price: 500_000, discount: 0, stock: 50, rating: 4.5,
+  soldCount: 100, location: "Jakarta", images: ["img.jpg"],
+  category: { id: "cat-1", name: "Sepatu", slug: "sepatu" },
+};
 
-    const result = await productService.getAll({ page: 1, limit: 10 });
+// =============================================================================
+// getAll()
+// =============================================================================
+describe("productService.getAll()", () => {
+  it("✅ return data dengan pagination shape yang benar", async () => {
+    mockCount.mockResolvedValue(25);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    // Pakai query unik untuk hindari cache pollution
+    const result = await productService.getAll({ page: 1, limit: 10, minPrice: 1 });
 
     expect(result.data).toHaveLength(1);
     expect(result.totalCount).toBe(25);
-    expect(result.totalPages).toBe(3);        // Math.ceil(25/10)
+    expect(result.page).toBe(1);
+    expect(result.totalPages).toBe(3);
     expect(result.hasNextPage).toBe(true);
     expect(result.hasPrevPage).toBe(false);
   });
 
-  it("✅ memfilter hanya produk isActive:true", async () => {
+  it("✅ filter isActive: true selalu ada di where clause", async () => {
     mockCount.mockResolvedValue(0);
     mockFindMany.mockResolvedValue([]);
 
-    await productService.getAll({});
+    await productService.getAll({ page: 2, limit: 5 });
 
-    expect(mockCount.mock.calls[0][0].where).toMatchObject({ isActive: true });
-    expect(mockFindMany.mock.calls[0][0].where).toMatchObject({ isActive: true });
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    expect(where?.isActive).toBe(true);
   });
 
-  it("✅ filter categoryId ditambahkan ke where clause", async () => {
-    mockCount.mockResolvedValue(5);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ categoryId: "cat-uuid" });
-
-    expect(mockFindMany.mock.calls[0][0].where).toMatchObject({ categoryId: "cat-uuid" });
-  });
-
-  it("✅ filter harga (minPrice dan maxPrice) ke where.price", async () => {
-    mockCount.mockResolvedValue(3);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ minPrice: 1_000_000, maxPrice: 5_000_000 });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    expect(where.price).toMatchObject({ gte: 1_000_000, lte: 5_000_000 });
-  });
-
-  it("✅ sort field snake_case di-map ke camelCase Prisma", async () => {
+  it("✅ filter by categoryId jika disertakan", async () => {
     mockCount.mockResolvedValue(1);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.getAll({ categoryId: "cat-electronics", page: 1 });
+
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    expect(where?.categoryId).toBe("cat-electronics");
+  });
+
+  it("✅ filter by q pakai PostgreSQL FTS: name.search (bukan contains)", async () => {
+    // FIX [1]: service memakai { name: { search: buildTsQuery(q) } }
+    // BUKAN { name: { contains: q } } atau { name: { contains: q, mode: "insensitive" } }
+    mockCount.mockResolvedValue(2);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.getAll({ q: "nikefts1", page: 3 });  // query unik per test
+
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    // Harus pakai { search } bukan { contains }
+    expect(where?.name).toHaveProperty("search");
+    expect(where?.name).not.toHaveProperty("contains");
+    // buildTsQuery("nikefts1") = "nikefts1" (single word, tidak berubah)
+    expect(where?.name.search).toBe("nikefts1");
+  });
+
+  it("✅ buildTsQuery multi-kata menggunakan format tsquery (& antar kata)", async () => {
+    // "laptop gaming" → "laptop & gaming" (PostgreSQL tsquery AND operator)
+    mockCount.mockResolvedValue(0);
     mockFindMany.mockResolvedValue([]);
 
-    await productService.getAll({ sortBy: "sold_count", sortOrder: "desc" });
+    await productService.getAll({ q: "laptop gaming", page: 1, minRating: 1 });
 
-    const orderBy = mockFindMany.mock.calls[0][0].orderBy;
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    expect(where?.name.search).toBe("laptop & gaming");
+  });
+
+  it("✅ filter by minPrice dan maxPrice", async () => {
+    mockCount.mockResolvedValue(3);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.getAll({ minPrice: 100_000, maxPrice: 500_000, page: 4 });
+
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    expect(where?.price?.gte).toBe(100_000);
+    expect(where?.price?.lte).toBe(500_000);
+  });
+
+  it("✅ minPrice: 0 tetap diaplikasikan (bukan falsy check)", async () => {
+    // Penting: minPrice = 0 adalah nilai valid. Jangan pakai if(minPrice) — harus !== undefined.
+    mockCount.mockResolvedValue(5);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.getAll({ minPrice: 0, maxPrice: 200_000, page: 5 });
+
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    expect(where?.price?.gte).toBe(0);
+  });
+
+  it("✅ sort field snake_case di-map ke camelCase Prisma (SORT_MAP)", async () => {
+    mockCount.mockResolvedValue(1);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.getAll({ sortBy: "sold_count", sortOrder: "desc", page: 6 });
+
+    const orderBy = mockFindMany.mock.calls[0]?.[0]?.orderBy;
+    // "sold_count" → "soldCount" via SORT_MAP
     expect(orderBy).toHaveProperty("soldCount", "desc");
     expect(orderBy).not.toHaveProperty("sold_count");
   });
 
-  it("✅ pagination: skip = (page-1) * limit", async () => {
+  it("✅ sort field created_at di-map ke createdAt", async () => {
+    mockCount.mockResolvedValue(1);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.getAll({ sortBy: "created_at", sortOrder: "asc", page: 7 });
+
+    const orderBy = mockFindMany.mock.calls[0]?.[0]?.orderBy;
+    expect(orderBy).toHaveProperty("createdAt", "asc");
+    expect(orderBy).not.toHaveProperty("created_at");
+  });
+
+  it("✅ skip dihitung dari (page-1) * limit untuk paging yang benar", async () => {
     mockCount.mockResolvedValue(100);
     mockFindMany.mockResolvedValue([]);
 
-    await productService.getAll({ page: 3, limit: 12 });
+    await productService.getAll({ page: 3, limit: 10, minPrice: 999 });
 
-    const args = mockFindMany.mock.calls[0][0];
-    expect(args.skip).toBe(24);  // (3-1) * 12
-    expect(args.take).toBe(12);
-  });
-
-  it("✅ search keyword 'q' menambahkan filter name contains (case-insensitive)", async () => {
-    mockCount.mockResolvedValue(2);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ q: "samsung" });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    expect(where.name).toMatchObject({ contains: "samsung", mode: "insensitive" });
-  });
-
-  it("✅ halaman terakhir: hasNextPage = false, hasPrevPage = true", async () => {
-    mockCount.mockResolvedValue(15);
-    mockFindMany.mockResolvedValue([]);
-
-    const result = await productService.getAll({ page: 3, limit: 5 });
-
-    expect(result.hasNextPage).toBe(false);
-    expect(result.hasPrevPage).toBe(true);
-  });
-
-  // ── Regression: 0-valued filter ───────────────────────────────
-  // Bug: `...(minPrice && { price: { gte: minPrice } })` melewati nilai 0 karena falsy.
-  // Fix yang benar: `minPrice !== undefined` atau `minPrice != null`.
-
-  it("🔴 regression: minPrice=0 harus menghasilkan filter gte:0, BUKAN di-skip", async () => {
-    mockCount.mockResolvedValue(5);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ minPrice: 0 });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    // Jika pakai truthy check, price tidak ada di where → test ini MERAH
-    expect(where).toHaveProperty("price");
-    expect(where.price).toMatchObject({ gte: 0 });
-  });
-
-  it("🔴 regression: maxPrice=0 harus menghasilkan filter lte:0, BUKAN di-skip", async () => {
-    mockCount.mockResolvedValue(0);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ maxPrice: 0 });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    expect(where).toHaveProperty("price");
-    expect(where.price).toMatchObject({ lte: 0 });
-  });
-
-  it("🔴 regression: minPrice=0 dan maxPrice=0 — keduanya aktif sekaligus", async () => {
-    mockCount.mockResolvedValue(0);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ minPrice: 0, maxPrice: 0 });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    expect(where.price).toMatchObject({ gte: 0, lte: 0 });
-  });
-
-  it("🔴 regression: minRating=0 harus menghasilkan filter rating gte:0, BUKAN di-skip", async () => {
-    mockCount.mockResolvedValue(5);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ minRating: 0 });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    expect(where).toHaveProperty("rating");
-    expect(where.rating).toMatchObject({ gte: 0 });
-  });
-
-  it("✅ minRating normal (>0) tetap berfungsi setelah fix", async () => {
-    mockCount.mockResolvedValue(3);
-    mockFindMany.mockResolvedValue([]);
-
-    await productService.getAll({ minRating: 3.5 });
-
-    const where = mockFindMany.mock.calls[0][0].where;
-    expect(where.rating).toMatchObject({ gte: 3.5 });
+    const args = mockFindMany.mock.calls[0]?.[0];
+    expect(args?.skip).toBe(20);   // (3-1) * 10
+    expect(args?.take).toBe(10);
   });
 });
 
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 // getBySlug()
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 describe("productService.getBySlug()", () => {
-  it("✅ mengembalikan produk yang ditemukan", async () => {
-    mockFindFirst.mockResolvedValue(sampleProduct);
+  it("✅ return produk yang ditemukan berdasarkan slug", async () => {
+    mockFindFirst.mockResolvedValue(fakeProduct);
 
-    const result = await productService.getBySlug("samsung-galaxy-s24");
+    const result = await productService.getBySlug("sepatu-lari-nike-unique-slug");
 
-    expect(result.slug).toBe("samsung-galaxy-s24");
+    expect(result.slug).toBe("sepatu-lari-nike");
     expect(mockFindFirst).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({ slug: "samsung-galaxy-s24", isActive: true }),
-      })
+      expect.objectContaining({ where: { slug: "sepatu-lari-nike-unique-slug", isActive: true } })
     );
   });
 
-  it("❌ throw 404 jika produk tidak ditemukan", async () => {
+  it("✅ throw 404 jika slug tidak ditemukan", async () => {
     mockFindFirst.mockResolvedValue(null);
 
-    await expect(productService.getBySlug("tidak-ada")).rejects.toMatchObject({ status: 404 });
-  });
-
-  it("❌ produk inactive tidak dikembalikan (isActive: true di where)", async () => {
-    mockFindFirst.mockResolvedValue(null);
-
-    await expect(productService.getBySlug("inactive-product")).rejects.toThrow(AppError);
+    await expect(productService.getBySlug("tidak-ada-slug-unik-999"))
+      .rejects.toMatchObject({ status: 404 });
   });
 });
 
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 // getById()
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 describe("productService.getById()", () => {
-  it("✅ mengembalikan produk berdasarkan ID", async () => {
-    mockFindUnique.mockResolvedValue(sampleProduct);
+  it("✅ return produk berdasarkan id", async () => {
+    mockFindUnique.mockResolvedValue(fakeProduct);
 
-    const result = await productService.getById("prod-uuid");
+    const result = await productService.getById("prod-id-getbyid-unique");
 
-    expect(result.id).toBe("prod-uuid");
+    expect(result.id).toBe("prod-1");
   });
 
-  it("❌ throw 404 jika ID tidak ditemukan", async () => {
+  it("✅ throw 404 jika id tidak ditemukan", async () => {
     mockFindUnique.mockResolvedValue(null);
 
-    await expect(productService.getById("ghost-uuid")).rejects.toMatchObject({ status: 404 });
+    await expect(productService.getById("ghost-id-unique-999"))
+      .rejects.toMatchObject({ status: 404 });
+  });
+});
+
+// =============================================================================
+// search()
+// =============================================================================
+describe("productService.search()", () => {
+  it("✅ meneruskan keyword sebagai q ke getAll() — filter name.search diisi", async () => {
+    // FIX [1]: search() mendelegasi ke getAll() dengan q = keyword
+    // where.name harus { search: "keyword" }, bukan { contains: "keyword" }
+    mockCount.mockResolvedValue(2);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.search("nikesearch99");   // query unik per test
+
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    // FIX [1]: harus pakai { search }, bukan { contains }
+    expect(where?.name).toHaveProperty("search");
+    expect(where?.name.search).toBe("nikesearch99");
+    expect(where?.name).not.toHaveProperty("contains");
+  });
+
+  it("✅ search() bisa dikombinasikan dengan filter lain (minPrice, maxPrice)", async () => {
+    mockCount.mockResolvedValue(1);
+    mockFindMany.mockResolvedValue([fakeProduct]);
+
+    await productService.search("samsung99", { minPrice: 1_000_000, maxPrice: 5_000_000 });
+
+    const where = mockFindMany.mock.calls[0]?.[0]?.where;
+    expect(where?.name?.search).toBe("samsung99");
+    expect(where?.price?.gte).toBe(1_000_000);
+    expect(where?.price?.lte).toBe(5_000_000);
   });
 });

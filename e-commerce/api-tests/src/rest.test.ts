@@ -126,7 +126,7 @@ describe.sequential("REST API — Functional Blackbox Test", () => {
         S.product?.name,
         "S.product harus ada dari test pertama",
       ).toBeTruthy();
-      const keyword = S.product!.name.split(" ")[0].slice(0, 4).toLowerCase();
+      const keyword = S.product!.name.split(" ")[0].toLowerCase();
       const res = await S.user.client.get("/products", {
         params: { q: keyword, limit: 10 },
       });

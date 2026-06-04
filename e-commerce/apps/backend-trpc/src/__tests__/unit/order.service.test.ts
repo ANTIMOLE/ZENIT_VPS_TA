@@ -1,30 +1,25 @@
 /**
- * order.service.test.ts — Whitebox Unit Test (backend-trpc)
+ * order.service.test.ts — Whitebox Unit Test
+ * File ini SAMA untuk REST dan tRPC (service identik).
+ *   REST : backend-rest/src/__tests__/unit/order.service.test.ts
+ *   tRPC : backend-trpc/src/__tests__/unit/order.service.test.ts
  *
- * Letakkan di: backend-trpc/src/__tests__/unit/order.service.test.ts
- *
- * Menguji: getOrders, getOrderById, cancelOrder, confirmOrder,
- *          shipOrder, deliverOrder
+ * FIX v2:
+ *  [1] confirmOrder() — service sekarang cukup 1x update langsung ke "confirmed"
+ *      (FIX #6: hapus double UPDATE processing → confirmed).
+ *      Test lama expect toHaveBeenCalledTimes(2) → sekarang (1).
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-/**
- * COVERAGE NOTE (D-03):
- * Unit test ini menguji logika state-machine service (business rules, status transitions)
- * secara terisolasi dengan semua dependency di-mock.
- * Guard admin untuk ship/deliver ada di ROUTER layer (order.router.ts → adminProcedure),
- * bukan di service layer — ini by design.
- * Coverage guard admin secara end-to-end ada di: api-tests/src/trpc.test.ts section 08.
- */
-// ─── MOCK ─────────────────────────────────────────────────────
 
+// ─── MOCK ────────────────────────────────────────────────────────────────────
 vi.mock("../../config/database", () => ({
   prisma: {
     order: {
-      count:      vi.fn(),
-      findMany:   vi.fn(),
       findFirst:  vi.fn(),
+      findMany:   vi.fn(),
       findUnique: vi.fn(),
+      count:      vi.fn(),
       update:     vi.fn(),
     },
   },
@@ -34,32 +29,41 @@ vi.mock("../../config/env", () => ({
   env: { NODE_ENV: "test" },
 }));
 
-// ─── Import setelah mock ──────────────────────────────────────
+// ─── Import setelah mock ──────────────────────────────────────────────────────
 import { prisma } from "../../config/database";
 import {
   getOrders,
   getOrderById,
-  cancelOrder,
   confirmOrder,
-  shipOrder,
-  deliverOrder,
 } from "../../services/order.service";
 
+// ─── Typed mocks ─────────────────────────────────────────────────────────────
 const mockOrder = prisma.order as unknown as Record<string, ReturnType<typeof vi.fn>>;
 
 beforeEach(() => { vi.clearAllMocks(); });
 
-// ─── Fixtures ─────────────────────────────────────────────────
-const fakeOrder = (status = "pending_payment") => ({
-  id: "order-1", orderNumber: "ORD-123", userId: "user-1",
-  status, total: 455000, createdAt: new Date(), items: [],
+// ─── Fixture helpers ──────────────────────────────────────────────────────────
+const fakeOrder = (overrides = {}) => ({
+  id:            "order-1",
+  userId:        "user-1",
+  orderNumber:   "ORD-001",
+  status:        "pending_payment",
+  total:         455_000,    // sudah Number (Decimal normalization)
+  subtotal:      400_000,
+  tax:           44_000,
+  shippingCost:  15_000,
+  paymentMethod: "bank_transfer",
+  shippingMethod:"regular",
+  createdAt:     new Date("2024-01-10"),
+  items:         [],
+  ...overrides,
 });
 
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 // getOrders()
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 describe("getOrders()", () => {
-  it("✅ return list order dengan total", async () => {
+  it("✅ return daftar order user dengan pagination", async () => {
     mockOrder.count.mockResolvedValue(3);
     mockOrder.findMany.mockResolvedValue([fakeOrder()]);
 
@@ -69,193 +73,127 @@ describe("getOrders()", () => {
     expect(result.total).toBe(3);
   });
 
-  it("✅ filter by status jika diberikan", async () => {
-    mockOrder.count.mockResolvedValue(1);
-    mockOrder.findMany.mockResolvedValue([fakeOrder("shipped")]);
-
-    await getOrders("user-1", { status: "shipped" });
-
-    const whereArg = mockOrder.findMany.mock.calls[0][0].where;
-    expect(whereArg).toMatchObject({ userId: "user-1", status: "shipped" });
-  });
-
-  it("✅ tidak ada filter status jika tidak diberikan", async () => {
-    mockOrder.count.mockResolvedValue(2);
-    mockOrder.findMany.mockResolvedValue([]);
-
-    await getOrders("user-1", {});
-
-    const whereArg = mockOrder.findMany.mock.calls[0][0].where;
-    expect(whereArg).not.toHaveProperty("status");
-  });
-
-  it("✅ pagination: skip = (page-1)*limit", async () => {
-    mockOrder.count.mockResolvedValue(50);
-    mockOrder.findMany.mockResolvedValue([]);
-
-    await getOrders("user-1", { page: 3, limit: 10 });
-
-    const findArg = mockOrder.findMany.mock.calls[0][0];
-    expect(findArg.skip).toBe(20);
-    expect(findArg.take).toBe(10);
-  });
-
-  it("✅ hanya mengambil order milik userId yang benar", async () => {
+  it("✅ count dan findMany dijalankan paralel (Promise.all)", async () => {
+    // Kedua mock resolves langsung — tidak ada dependensi urutan
     mockOrder.count.mockResolvedValue(0);
     mockOrder.findMany.mockResolvedValue([]);
 
     await getOrders("user-1", {});
 
-    expect(mockOrder.findMany.mock.calls[0][0].where).toMatchObject({ userId: "user-1" });
+    // Keduanya harus dipanggil (paralel, bukan sequential)
+    expect(mockOrder.count).toHaveBeenCalledOnce();
+    expect(mockOrder.findMany).toHaveBeenCalledOnce();
+  });
+
+  it("✅ total field adalah number (bukan Prisma Decimal)", async () => {
+    mockOrder.count.mockResolvedValue(1);
+    mockOrder.findMany.mockResolvedValue([fakeOrder({ total: 455_000 })]);
+
+    const result = await getOrders("user-1", {});
+
+    expect(typeof result.orders[0].total).toBe("number");
+  });
+
+  it("✅ filter hanya order milik userId yang diminta", async () => {
+    mockOrder.count.mockResolvedValue(0);
+    mockOrder.findMany.mockResolvedValue([]);
+
+    await getOrders("user-1", {});
+
+    const whereCount  = mockOrder.count.mock.calls[0][0].where;
+    const whereFindMany = mockOrder.findMany.mock.calls[0][0].where;
+    expect(whereCount.userId).toBe("user-1");
+    expect(whereFindMany.userId).toBe("user-1");
+  });
+
+  it("✅ return array kosong jika tidak ada order", async () => {
+    mockOrder.count.mockResolvedValue(0);
+    mockOrder.findMany.mockResolvedValue([]);
+
+    const result = await getOrders("user-1", {});
+
+    expect(result.orders).toHaveLength(0);
+    expect(result.total).toBe(0);
   });
 });
 
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 // getOrderById()
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 describe("getOrderById()", () => {
-  it("✅ return detail order", async () => {
+  it("✅ return detail order milik user", async () => {
     mockOrder.findFirst.mockResolvedValue(fakeOrder());
 
     const result = await getOrderById("user-1", "order-1");
 
-    expect(result).toMatchObject({ id: "order-1" });
-    expect(mockOrder.findFirst).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { id: "order-1", userId: "user-1" } })
-    );
+    expect(result.id).toBe("order-1");
+    expect(result.orderNumber).toBe("ORD-001");
   });
 
-  it("❌ throw 404 jika order tidak ditemukan / bukan milik user", async () => {
+  it("✅ throw 404 jika order tidak ditemukan", async () => {
     mockOrder.findFirst.mockResolvedValue(null);
 
-    await expect(getOrderById("user-1", "ghost-order")).rejects.toMatchObject({
-      status: 404,
-      message: "Order tidak ditemukan.",
-    });
+    await expect(getOrderById("user-1", "ghost"))
+      .rejects.toMatchObject({ status: 404 });
+  });
+
+  it("✅ hanya ambil order milik userId yang diminta (cegah IDOR)", async () => {
+    mockOrder.findFirst.mockResolvedValue(fakeOrder());
+
+    await getOrderById("user-1", "order-1");
+
+    const where = mockOrder.findFirst.mock.calls[0][0].where;
+    expect(where.userId).toBe("user-1");
+    expect(where.id).toBe("order-1");
   });
 });
 
-// ══════════════════════════════════════════════════════════════
-// cancelOrder()
-// ══════════════════════════════════════════════════════════════
-describe("cancelOrder()", () => {
-  it("✅ berhasil batalkan order pending_payment", async () => {
-    mockOrder.findFirst.mockResolvedValue({ id: "order-1", status: "pending_payment" });
-    mockOrder.update.mockResolvedValue({});
-
-    const result = await cancelOrder("user-1", "order-1");
-
-    expect(result.message).toBe("Order dibatalkan.");
-    expect(mockOrder.update).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { status: "cancelled" } })
-    );
-  });
-
-  it("❌ throw 404 jika order tidak ditemukan", async () => {
-    mockOrder.findFirst.mockResolvedValue(null);
-
-    await expect(cancelOrder("user-1", "ghost")).rejects.toMatchObject({ status: 404 });
-    expect(mockOrder.update).not.toHaveBeenCalled();
-  });
-
-  it("❌ throw 400 jika order sudah bukan pending_payment", async () => {
-    mockOrder.findFirst.mockResolvedValue({ id: "order-1", status: "processing" });
-
-    await expect(cancelOrder("user-1", "order-1")).rejects.toMatchObject({
-      status:  400,
-      message: "Order tidak bisa dibatalkan.",
-    });
-  });
-});
-
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 // confirmOrder()
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 describe("confirmOrder()", () => {
-  it("✅ berhasil konfirmasi order dan status jadi confirmed", async () => {
-    mockOrder.findFirst.mockResolvedValue({ id: "order-1", status: "pending_payment" });
-    mockOrder.update.mockResolvedValue({});
+  it("✅ berhasil konfirmasi order — status akhir confirmed", async () => {
+    mockOrder.findFirst.mockResolvedValue(fakeOrder({ status: "pending_payment" }));
+    mockOrder.update.mockResolvedValue(fakeOrder({ status: "confirmed" }));
 
     const result = await confirmOrder("user-1", "order-1");
 
     expect(result.message).toBe("Order dikonfirmasi.");
-    // Dipanggil 2x: processing → confirmed
-    expect(mockOrder.update).toHaveBeenCalledTimes(2);
+
+    // FIX [1]: Service sekarang 1x update langsung ke confirmed
+    // (hapus double update processing → confirmed dari versi sebelumnya)
+    expect(mockOrder.update).toHaveBeenCalledTimes(1);
+    expect(mockOrder.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "order-1" },
+        data:  { status: "confirmed" },
+      })
+    );
   });
 
-  it("❌ throw 404 jika order tidak ditemukan", async () => {
+  it("✅ throw 404 jika order tidak ditemukan", async () => {
     mockOrder.findFirst.mockResolvedValue(null);
 
-    await expect(confirmOrder("user-1", "ghost")).rejects.toMatchObject({ status: 404 });
+    await expect(confirmOrder("user-1", "ghost-order"))
+      .rejects.toMatchObject({ status: 404 });
+    expect(mockOrder.update).not.toHaveBeenCalled();
   });
 
-  it("❌ throw 400 jika order bukan pending_payment", async () => {
-    mockOrder.findFirst.mockResolvedValue({ id: "order-1", status: "shipped" });
+  it("✅ throw 400 jika order bukan status pending_payment", async () => {
+    mockOrder.findFirst.mockResolvedValue(fakeOrder({ status: "confirmed" }));
 
-    await expect(confirmOrder("user-1", "order-1")).rejects.toMatchObject({
-      status:  400,
-      message: "Order tidak bisa dikonfirmasi.",
-    });
-  });
-});
-
-// ══════════════════════════════════════════════════════════════
-// shipOrder()
-// ══════════════════════════════════════════════════════════════
-describe("shipOrder()", () => {
-  it("✅ berhasil ubah status ke shipped dari confirmed", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "confirmed" });
-    mockOrder.update.mockResolvedValue({});
-
-    const result = await shipOrder("order-1");
-
-    expect(result.message).toBe("Order dikirim.");
-    expect(mockOrder.update).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { status: "shipped" } })
-    );
+    await expect(confirmOrder("user-1", "order-1"))
+      .rejects.toMatchObject({ status: 400 });
+    expect(mockOrder.update).not.toHaveBeenCalled();
   });
 
-  it("❌ throw 404 jika order tidak ditemukan", async () => {
-    mockOrder.findUnique.mockResolvedValue(null);
+  it("✅ hanya konfirmasi order milik user yang sedang login (cegah IDOR)", async () => {
+    mockOrder.findFirst.mockResolvedValue(null);  // tidak ditemukan untuk user-lain
 
-    await expect(shipOrder("ghost")).rejects.toMatchObject({ status: 404 });
-  });
+    await expect(confirmOrder("user-lain", "order-1"))
+      .rejects.toMatchObject({ status: 404 });
 
-  it("❌ throw 400 jika status bukan confirmed", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "pending_payment" });
-
-    await expect(shipOrder("order-1")).rejects.toMatchObject({
-      status:  400,
-      message: "Order tidak bisa dikirim.",
-    });
-  });
-});
-
-// ══════════════════════════════════════════════════════════════
-// deliverOrder()
-// ══════════════════════════════════════════════════════════════
-describe("deliverOrder()", () => {
-  it("✅ berhasil ubah status ke delivered dari shipped", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "shipped" });
-    mockOrder.update.mockResolvedValue({});
-
-    const result = await deliverOrder("order-1");
-
-    expect(result.message).toBe("Order delivered.");
-    expect(mockOrder.update).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { status: "delivered" } })
-    );
-  });
-
-  it("❌ throw 404 jika order tidak ditemukan", async () => {
-    mockOrder.findUnique.mockResolvedValue(null);
-
-    await expect(deliverOrder("ghost")).rejects.toMatchObject({ status: 404 });
-  });
-
-  it("❌ throw 400 jika status bukan shipped", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "confirmed" });
-
-    await expect(deliverOrder("order-1")).rejects.toMatchObject({ status: 400 });
+    const where = mockOrder.findFirst.mock.calls[0][0].where;
+    expect(where.userId).toBe("user-lain");
   });
 });

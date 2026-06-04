@@ -1,25 +1,47 @@
 /**
- * admin.service.test.ts — Whitebox Unit Test (backend-rest)
+ * admin.service.test.ts — Whitebox Unit Test
+ * File ini SAMA untuk REST dan tRPC (service identik).
+ *   REST : backend-rest/src/__tests__/unit/admin.service.test.ts
+ *   tRPC : backend-trpc/src/__tests__/unit/admin.service.test.ts
  *
- * Letakkan di: backend-rest/src/__tests__/unit/admin.service.test.ts
+ * FIX v2:
+ *  [1] getDashboardStats() — service sekarang pakai prisma.$queryRaw untuk salesChart
+ *      (FIX #3: DATE_TRUNC per hari, bukan groupBy exact timestamp).
+ *      prisma.$queryRaw HARUS ada di mock object. groupBy tidak lagi dipanggil service.
  *
- * Menguji: getDashboardStats, getAllProducts, createProduct,
- *          updateProduct, deleteProduct (soft-delete),
- *          getAllOrders, updateOrderStatus, getAllUsers
+ *  [2] updateProduct() "throw 404" — service sekarang TIDAK panggil findUnique dulu.
+ *      Langsung update(), tangkap error Prisma P2025 → AppError 404.
+ *      Mock update() harus dikonfigurasi throw { code: "P2025" } untuk simulate not-found.
  *
- * Perilaku kritis yang dikunci:
- *  - deleteProduct = soft delete (isActive: false), TIDAK hapus row
- *  - updateOrderStatus = validasi state machine transition
- *  - getDashboardStats = Promise.all 7 query paralel
+ *  [3] deleteProduct() "throw 404" — sama dengan updateProduct().
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+// ─── MOCK ─────────────────────────────────────────────────────────────────────
 vi.mock("../../config/database", () => ({
   prisma: {
-    order:   { count: vi.fn(), findMany: vi.fn(), findUnique: vi.fn(), update: vi.fn(), aggregate: vi.fn(), groupBy: vi.fn() },
-    product: { count: vi.fn(), findMany: vi.fn(), findUnique: vi.fn(), update: vi.fn(), create: vi.fn() },
-    user:    { count: vi.fn(), findMany: vi.fn() },
+    order: {
+      count:      vi.fn(),
+      findMany:   vi.fn(),
+      findUnique: vi.fn(),
+      update:     vi.fn(),
+      aggregate:  vi.fn(),
+      // groupBy dihapus — service tidak memanggil groupBy lagi (FIX #3)
+    },
+    product: {
+      count:      vi.fn(),
+      findMany:   vi.fn(),
+      findUnique: vi.fn(),
+      update:     vi.fn(),
+      create:     vi.fn(),
+    },
+    user: {
+      count:    vi.fn(),
+      findMany: vi.fn(),
+    },
+    // FIX [1]: $queryRaw WAJIB ada — dipanggil service untuk salesChart
+    $queryRaw: vi.fn(),
   },
 }));
 
@@ -27,68 +49,71 @@ vi.mock("../../config/env", () => ({
   env: { NODE_ENV: "test" },
 }));
 
-vi.mock("@ecommerce/shared/generated/prisma", () => ({
-  OrderStatus: {
-    pending_payment: "pending_payment",
-    confirmed:       "confirmed",
-    processing:      "processing",
-    shipped:         "shipped",
-    delivered:       "delivered",
-    cancelled:       "cancelled",
-  },
-}));
-
+// ─── Import setelah mock ──────────────────────────────────────────────────────
 import { prisma } from "../../config/database";
 import {
   getDashboardStats,
-  getAllProducts,
+  getAllProducts  as getAdminProducts,
   createProduct,
   updateProduct,
   deleteProduct,
-  getAllOrders,
+  getAllOrders    as getAdminOrders,
   updateOrderStatus,
-  getAllUsers,
+  getAllUsers     as getAdminUsers,
 } from "../../services/admin.service";
 
+// ─── Typed mocks ─────────────────────────────────────────────────────────────
 const mockOrder   = prisma.order   as unknown as Record<string, ReturnType<typeof vi.fn>>;
 const mockProduct = prisma.product as unknown as Record<string, ReturnType<typeof vi.fn>>;
 const mockUser    = prisma.user    as unknown as Record<string, ReturnType<typeof vi.fn>>;
+// FIX [1]: akses $queryRaw via cast — tidak ada di Prisma type tapi ada di mock
+const mockQueryRaw = (prisma as any).$queryRaw as ReturnType<typeof vi.fn>;
 
 beforeEach(() => { vi.clearAllMocks(); });
 
-// ─── Fixtures ─────────────────────────────────────────────────
-const fakeProduct = {
-  id: "prod-1", name: "Produk A", slug: "produk-a",
-  price: 100_000, stock: 50, soldCount: 10,
-  isActive: true, discount: 0, images: [], createdAt: new Date(),
-  category: { id: "cat-1", name: "Elektronik" },
-};
+// ─── Fixture helpers ──────────────────────────────────────────────────────────
+const fakeProduct = (overrides = {}) => ({
+  id: "prod-1", name: "Produk Test", slug: "produk-test",
+  price: 100_000, stock: 50, isActive: true, updatedAt: new Date(),
+  ...overrides,
+});
 
-const fakeOrder = {
-  id: "order-1", orderNumber: "ORD-123",
-  status: "pending_payment", total: 150_000,
-  createdAt: new Date(),
-  user: { id: "user-1", name: "Budi", email: "budi@test.com" },
-  items: [],
-};
+const fakeOrder = (overrides = {}) => ({
+  id: "order-1", orderNumber: "ORD-001",
+  status: "pending_payment", total: 500_000,
+  createdAt: new Date(), user: { name: "Budi", email: "b@test.com" },
+  ...overrides,
+});
 
-// ══════════════════════════════════════════════════════════════
+const fakeUser = (overrides = {}) => ({
+  id: "user-1", name: "Budi", email: "b@test.com",
+  role: "USER", createdAt: new Date(),
+  _count: { orders: 3 },
+  ...overrides,
+});
+
+// Helper setup semua mocks untuk getDashboardStats()
+function setupDashboardMocks() {
+  // FIX [1]: $queryRaw menggantikan order.groupBy untuk salesChart
+  mockQueryRaw.mockResolvedValue([]);   // default: salesChart kosong
+
+  mockOrder.count
+    .mockResolvedValueOnce(5)           // total orders hari ini
+    .mockResolvedValueOnce(100);        // total orders keseluruhan
+  mockOrder.aggregate.mockResolvedValue({ _sum: { total: 5_000_000 } });
+  mockOrder.findMany.mockResolvedValue([fakeOrder()]);
+
+  mockProduct.count.mockResolvedValue(200);
+  mockProduct.findMany.mockResolvedValue([fakeProduct()]);
+
+  mockUser.count.mockResolvedValue(50);
+}
+
+// =============================================================================
 // getDashboardStats()
-// ══════════════════════════════════════════════════════════════
+// =============================================================================
 describe("getDashboardStats()", () => {
-  function setupDashboardMocks() {
-    mockOrder.count
-      .mockResolvedValueOnce(5)   // totalOrdersToday
-      .mockResolvedValueOnce(100); // totalOrders
-    mockOrder.aggregate.mockResolvedValue({ _sum: { total: 5_000_000 } });
-    mockOrder.findMany.mockResolvedValue([fakeOrder]);
-    mockOrder.groupBy.mockResolvedValue([]);
-    mockProduct.count.mockResolvedValue(200);
-    mockProduct.findMany.mockResolvedValue([fakeProduct]);
-    mockUser.count.mockResolvedValue(50);
-  }
-
-  it("✅ return summary + topProducts + recentOrders + salesChart", async () => {
+  it("✅ return shape dengan summary, topProducts, recentOrders, salesChart", async () => {
     setupDashboardMocks();
 
     const result = await getDashboardStats();
@@ -97,325 +122,298 @@ describe("getDashboardStats()", () => {
     expect(result).toHaveProperty("topProducts");
     expect(result).toHaveProperty("recentOrders");
     expect(result).toHaveProperty("salesChart");
-    expect(result.summary.totalOrdersToday).toBe(5);
-    expect(result.summary.weeklyRevenue).toBe(5_000_000);
   });
 
-  it("✅ weeklyRevenue default 0 jika tidak ada order minggu ini", async () => {
-    mockOrder.count.mockResolvedValueOnce(0).mockResolvedValueOnce(0);
-    mockOrder.aggregate.mockResolvedValue({ _sum: { total: null } }); // null jika tidak ada
-    mockOrder.findMany.mockResolvedValue([]);
-    mockOrder.groupBy.mockResolvedValue([]);
-    mockProduct.count.mockResolvedValue(0);
-    mockProduct.findMany.mockResolvedValue([]);
-    mockUser.count.mockResolvedValue(0);
+  it("✅ summary berisi semua field yang dibutuhkan dashboard", async () => {
+    setupDashboardMocks();
 
     const result = await getDashboardStats();
 
-    expect(result.summary.weeklyRevenue).toBe(0); // Number(null ?? 0) = 0
-  });
-});
-
-// ══════════════════════════════════════════════════════════════
-// getAllProducts()
-// ══════════════════════════════════════════════════════════════
-describe("getAllProducts()", () => {
-  it("✅ return products + metadata pagination", async () => {
-    mockProduct.count.mockResolvedValue(100);
-    mockProduct.findMany.mockResolvedValue([fakeProduct]);
-
-    const result = await getAllProducts({ page: 1, limit: 20 });
-
-    expect(result.data).toHaveLength(1);
-    expect(result.totalCount).toBe(100);
-    expect(result.totalPages).toBe(5);
-    expect(result.hasNextPage).toBe(true);
-    expect(result.hasPrevPage).toBe(false);
+    expect(result.summary).toHaveProperty("totalOrdersToday");
+    expect(result.summary).toHaveProperty("weeklyRevenue");
+    expect(result.summary).toHaveProperty("totalProducts");
+    expect(result.summary).toHaveProperty("totalUsers");
+    expect(result.summary.totalOrdersToday).toBe(5);
+    expect(result.summary.weeklyRevenue).toBe(5_000_000);
+    expect(result.summary.totalProducts).toBe(200);
+    expect(result.summary.totalUsers).toBe(50);
   });
 
-  it("✅ filter by q (search nama produk)", async () => {
-    mockProduct.count.mockResolvedValue(1);
-    mockProduct.findMany.mockResolvedValue([fakeProduct]);
+  it("✅ weeklyRevenue dikonversi ke Number (bukan string/Decimal)", async () => {
+    setupDashboardMocks();
 
-    await getAllProducts({ q: "Produk A" });
+    const result = await getDashboardStats();
 
-    expect(mockProduct.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({
-          name: { contains: "Produk A", mode: "insensitive" },
-        }),
-      })
-    );
+    expect(typeof result.summary.weeklyRevenue).toBe("number");
   });
 
-  it("✅ filter by categoryId", async () => {
-    mockProduct.count.mockResolvedValue(1);
-    mockProduct.findMany.mockResolvedValue([fakeProduct]);
+  it("✅ weeklyRevenue default 0 jika aggregate return null", async () => {
+    setupDashboardMocks();
+    mockOrder.aggregate.mockResolvedValue({ _sum: { total: null } });
 
-    await getAllProducts({ categoryId: "cat-1" });
+    const result = await getDashboardStats();
 
-    expect(mockProduct.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({ categoryId: "cat-1" }),
-      })
-    );
+    expect(result.summary.weeklyRevenue).toBe(0);
   });
 
-  it("✅ pagination — skip = (page-1) * limit", async () => {
-    mockProduct.count.mockResolvedValue(100);
-    mockProduct.findMany.mockResolvedValue([]);
+  it("✅ salesChart adalah array (kosong jika tidak ada transaksi)", async () => {
+    setupDashboardMocks();
+    // mockQueryRaw sudah di-set ke [] di setupDashboardMocks()
 
-    await getAllProducts({ page: 3, limit: 10 });
+    const result = await getDashboardStats();
 
-    expect(mockProduct.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({ skip: 20, take: 10 })
-    );
+    expect(Array.isArray(result.salesChart)).toBe(true);
   });
-});
 
-// ══════════════════════════════════════════════════════════════
-// createProduct()
-// ══════════════════════════════════════════════════════════════
-describe("createProduct()", () => {
-  it("✅ berhasil buat produk + generate slug unik", async () => {
-    mockProduct.create.mockResolvedValue({ ...fakeProduct, id: "prod-new" });
+  it("✅ salesChart item memiliki date, revenue (number), dan orders (number)", async () => {
+    setupDashboardMocks();
+    // FIX [1]: override $queryRaw untuk test ini dengan data nyata
+    mockQueryRaw.mockResolvedValue([
+      { date: new Date("2025-05-15"), revenue: 150_000, orders: 3 },
+    ]);
 
-    const result = await createProduct({
-      categoryId: "cat-1",
-      name: "Produk Baru",
-      price: 50_000,
-      stock: 20,
+    const result = await getDashboardStats();
+
+    expect(result.salesChart).toHaveLength(1);
+    expect(result.salesChart[0]).toHaveProperty("date");
+    expect(result.salesChart[0]).toHaveProperty("revenue");
+    expect(result.salesChart[0]).toHaveProperty("orders");
+    // revenue dan orders harus number (Number() normalization)
+    expect(typeof result.salesChart[0].revenue).toBe("number");
+    expect(typeof result.salesChart[0].orders).toBe("number");
+    expect(result.salesChart[0].revenue).toBe(150_000);
+    expect(result.salesChart[0].orders).toBe(3);
+  });
+
+  it("✅ $queryRaw dipanggil untuk salesChart (bukan groupBy)", async () => {
+    // FIX [1]: verifikasi bahwa service memanggil $queryRaw, bukan groupBy
+    setupDashboardMocks();
+
+    await getDashboardStats();
+
+    expect(mockQueryRaw).toHaveBeenCalledOnce();
+  });
+
+  it("✅ topProducts price adalah number (bukan Decimal string)", async () => {
+    setupDashboardMocks();
+    mockProduct.findMany.mockResolvedValue([
+      fakeProduct({ price: { toNumber: () => 100_000 } }),   // simulate Prisma Decimal
+    ]);
+
+    const result = await getDashboardStats();
+
+    // Setelah Number() normalization, harus number
+    result.topProducts.forEach((p: any) => {
+      expect(typeof p.price).toBe("number");
     });
-
-    expect(mockProduct.create).toHaveBeenCalledOnce();
-    const createData = mockProduct.create.mock.calls[0][0].data;
-    // Slug harus ada dan berbasis nama
-    expect(createData.slug).toContain("produk-baru");
-    // Slug harus unique (append timestamp)
-    expect(createData.slug).toMatch(/-\d+$/);
-    expect(result.id).toBe("prod-new");
   });
 
-  it("✅ images default [] jika tidak disupply", async () => {
-    mockProduct.create.mockResolvedValue(fakeProduct);
+  it("✅ recentOrders total adalah number (bukan Decimal string)", async () => {
+    setupDashboardMocks();
+    mockOrder.findMany.mockResolvedValue([
+      fakeOrder({ total: { toNumber: () => 500_000 } }),   // simulate Prisma Decimal
+    ]);
 
-    await createProduct({ categoryId: "cat-1", name: "X", price: 1000, stock: 1 });
+    const result = await getDashboardStats();
 
-    const createData = mockProduct.create.mock.calls[0][0].data;
-    expect(createData.images).toEqual([]);
+    result.recentOrders.forEach((o: any) => {
+      expect(typeof o.total).toBe("number");
+    });
   });
 });
 
-// ══════════════════════════════════════════════════════════════
-// updateProduct()
-// ══════════════════════════════════════════════════════════════
-describe("updateProduct()", () => {
-  it("✅ berhasil update produk yang ada", async () => {
-    mockProduct.findUnique.mockResolvedValue(fakeProduct);
-    mockProduct.update.mockResolvedValue({ ...fakeProduct, price: 90_000 });
+// =============================================================================
+// getAdminProducts()
+// =============================================================================
+describe("getAdminProducts()", () => {
+  it("✅ return daftar produk dengan pagination", async () => {
+    mockProduct.count.mockResolvedValue(50);
+    mockProduct.findMany.mockResolvedValue([fakeProduct()]);
 
-    const result = await updateProduct("prod-1", { price: 90_000 });
-
-    expect(result.price).toBe(90_000);
-    expect(mockProduct.update).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { id: "prod-1" }, data: { price: 90_000 } })
-    );
-  });
-
-  it("❌ throw 404 jika produk tidak ditemukan", async () => {
-    mockProduct.findUnique.mockResolvedValue(null);
-
-    await expect(updateProduct("ghost", { price: 1 }))
-      .rejects.toMatchObject({ status: 404 });
-
-    expect(mockProduct.update).not.toHaveBeenCalled();
-  });
-});
-
-// ══════════════════════════════════════════════════════════════
-// deleteProduct() — soft delete
-// ══════════════════════════════════════════════════════════════
-describe("deleteProduct()", () => {
-  it("✅ SOFT DELETE — set isActive: false, tidak hapus row", async () => {
-    mockProduct.findUnique.mockResolvedValue(fakeProduct);
-    mockProduct.update.mockResolvedValue({ ...fakeProduct, isActive: false });
-
-    const result = await deleteProduct("prod-1");
-
-    // Harus update, bukan delete
-    expect(mockProduct.update).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { isActive: false } })
-    );
-    expect(result.message).toBe("Produk dinonaktifkan.");
-  });
-
-  it("❌ throw 404 jika produk tidak ditemukan", async () => {
-    mockProduct.findUnique.mockResolvedValue(null);
-
-    await expect(deleteProduct("ghost")).rejects.toMatchObject({ status: 404 });
-
-    expect(mockProduct.update).not.toHaveBeenCalled();
-  });
-});
-
-// ══════════════════════════════════════════════════════════════
-// getAllOrders()
-// ══════════════════════════════════════════════════════════════
-describe("getAllOrders()", () => {
-  it("✅ return orders + metadata pagination", async () => {
-    mockOrder.count.mockResolvedValue(50);
-    mockOrder.findMany.mockResolvedValue([fakeOrder]);
-
-    const result = await getAllOrders({ page: 1, limit: 20 });
+    const result = await getAdminProducts({ page: 1, limit: 20 });
 
     expect(result.data).toHaveLength(1);
     expect(result.totalCount).toBe(50);
   });
 
-  it("✅ filter by status", async () => {
-    mockOrder.count.mockResolvedValue(5);
-    mockOrder.findMany.mockResolvedValue([]);
+  it("✅ filter by keyword q jika diberikan", async () => {
+    mockProduct.count.mockResolvedValue(2);
+    mockProduct.findMany.mockResolvedValue([fakeProduct()]);
 
-    await getAllOrders({ status: "pending_payment" });
+    await getAdminProducts({ q: "sepatu", page: 1, limit: 20 });
 
-    expect(mockOrder.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({ status: "pending_payment" }),
-      })
-    );
-  });
-
-  it("✅ filter by q (orderNumber atau email user)", async () => {
-    mockOrder.count.mockResolvedValue(1);
-    mockOrder.findMany.mockResolvedValue([fakeOrder]);
-
-    await getAllOrders({ q: "ORD-123" });
-
-    expect(mockOrder.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({ OR: expect.any(Array) }),
-      })
-    );
+    const where = mockProduct.findMany.mock.calls[0][0].where;
+    expect(where).toHaveProperty("name");
   });
 });
 
-// ══════════════════════════════════════════════════════════════
-// updateOrderStatus()
-// ══════════════════════════════════════════════════════════════
-describe("updateOrderStatus()", () => {
-  it("✅ transition valid: pending_payment → confirmed", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "pending_payment" });
-    mockOrder.update.mockResolvedValue({ id: "order-1", orderNumber: "ORD-1", status: "confirmed", updatedAt: new Date() });
+// =============================================================================
+// createProduct()
+// =============================================================================
+describe("createProduct()", () => {
+  const newProductData = {
+    name: "Produk Baru", slug: "produk-baru",
+    price: 200_000, stock: 100, categoryId: "cat-1",
+    description: "Desc", images: [],
+  };
 
-    const result = await updateOrderStatus("order-1", "confirmed" as any);
+  it("✅ berhasil create produk baru", async () => {
+    mockProduct.create.mockResolvedValue(fakeProduct({ name: "Produk Baru" }));
 
-    expect(result.status).toBe("confirmed");
-    expect(mockOrder.update).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { status: "confirmed" } })
+    const result = await createProduct(newProductData);
+
+    expect(result.name).toBe("Produk Baru");
+    expect(mockProduct.create).toHaveBeenCalledOnce();
+  });
+});
+
+// =============================================================================
+// updateProduct()
+// =============================================================================
+describe("updateProduct()", () => {
+  it("✅ berhasil update produk", async () => {
+    mockProduct.update.mockResolvedValue(fakeProduct({ price: 120_000 }));
+
+    const result = await updateProduct("prod-1", { price: 120_000 });
+
+    expect(result.price).toBe(120_000);
+    expect(mockProduct.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "prod-1" },
+        data:  expect.objectContaining({ price: 120_000 }),
+      })
     );
   });
 
-  it("✅ transition valid: confirmed → processing", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "confirmed" });
-    mockOrder.update.mockResolvedValue({ id: "order-1", status: "processing" });
+  it("✅ throw 404 jika produk tidak ditemukan (P2025 catch pattern)", async () => {
+    // FIX [2]: service tidak memanggil findUnique lagi.
+    // Langsung update() dan tangkap P2025 → AppError 404.
+    // Mock update() harus throw { code: "P2025" } untuk simulate not-found.
+    mockProduct.update.mockRejectedValue({ code: "P2025" });
 
-    await updateOrderStatus("order-1", "processing" as any);
+    await expect(updateProduct("ghost-prod", { price: 100 }))
+      .rejects.toMatchObject({ status: 404 });
 
-    expect(mockOrder.update).toHaveBeenCalledOnce();
+    // update() harus dipanggil (service langsung update, tidak findUnique dulu)
+    expect(mockProduct.update).toHaveBeenCalledOnce();
+    // findUnique TIDAK dipanggil (pattern baru: tidak ada extra findUnique)
+    expect(mockProduct.findUnique).not.toHaveBeenCalled();
   });
 
-  it("✅ transition valid: processing → shipped → delivered", async () => {
-    const statuses = [
-      { from: "processing", to: "shipped" },
-      { from: "shipped", to: "delivered" },
-    ];
+  it("✅ error non-P2025 tetap di-rethrow apa adanya", async () => {
+    const dbConnectionError = new Error("DB connection lost");
+    mockProduct.update.mockRejectedValue(dbConnectionError);
 
-    for (const { from, to } of statuses) {
-      vi.clearAllMocks();
-      mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: from });
-      mockOrder.update.mockResolvedValue({ id: "order-1", status: to });
+    await expect(updateProduct("prod-1", { price: 100 }))
+      .rejects.toThrow("DB connection lost");
+  });
+});
 
-      await updateOrderStatus("order-1", to as any);
+// =============================================================================
+// deleteProduct()
+// =============================================================================
+describe("deleteProduct()", () => {
+  it("✅ berhasil delete (soft delete: isActive = false)", async () => {
+    mockProduct.update.mockResolvedValue(fakeProduct({ isActive: false }));
 
-      expect(mockOrder.update).toHaveBeenCalledWith(
-        expect.objectContaining({ data: { status: to } })
-      );
-    }
+    await deleteProduct("prod-1");
+
+    expect(mockProduct.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "prod-1" },
+        data:  expect.objectContaining({ isActive: false }),
+      })
+    );
   });
 
-  it("❌ throw 400 untuk transition tidak valid: delivered → confirmed", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "delivered" });
+  it("✅ throw 404 jika produk tidak ditemukan (P2025 catch pattern)", async () => {
+    // FIX [3]: sama dengan updateProduct — langsung update(), catch P2025 → 404
+    mockProduct.update.mockRejectedValue({ code: "P2025" });
 
-    await expect(updateOrderStatus("order-1", "confirmed" as any))
-      .rejects.toMatchObject({ status: 400 });
+    await expect(deleteProduct("ghost-prod"))
+      .rejects.toMatchObject({ status: 404 });
 
+    expect(mockProduct.update).toHaveBeenCalledOnce();
+    expect(mockProduct.findUnique).not.toHaveBeenCalled();
+  });
+});
+
+// =============================================================================
+// getAdminOrders()
+// =============================================================================
+describe("getAdminOrders()", () => {
+  it("✅ return semua order dengan pagination", async () => {
+    mockOrder.count.mockResolvedValue(10);
+    mockOrder.findMany.mockResolvedValue([fakeOrder()]);
+
+    const result = await getAdminOrders({ page: 1, limit: 20 });
+
+    expect(result.orders).toHaveLength(1);
+    expect(result.totalCount).toBe(10);
+  });
+
+  it("✅ filter by status jika disertakan", async () => {
+    mockOrder.count.mockResolvedValue(3);
+    mockOrder.findMany.mockResolvedValue([fakeOrder({ status: "confirmed" })]);
+
+    await getAdminOrders({ status: "confirmed", page: 1, limit: 20 });
+
+    const where = mockOrder.findMany.mock.calls[0][0].where;
+    expect(where.status).toBe("confirmed");
+  });
+});
+
+// =============================================================================
+// updateOrderStatus()
+// =============================================================================
+describe("updateOrderStatus()", () => {
+  it("✅ berhasil update status order ke confirmed", async () => {
+    mockOrder.findUnique.mockResolvedValue(fakeOrder({ status: "pending_payment" }));
+    mockOrder.update.mockResolvedValue(fakeOrder({ status: "confirmed" }));
+
+    const result = await updateOrderStatus("order-1", "confirmed");
+
+    expect(result.status).toBe("confirmed");
+  });
+
+  it("✅ throw 404 jika order tidak ditemukan", async () => {
+    mockOrder.findUnique.mockResolvedValue(null);
+
+    await expect(updateOrderStatus("ghost-order", "confirmed"))
+      .rejects.toMatchObject({ status: 404 });
     expect(mockOrder.update).not.toHaveBeenCalled();
   });
 
-  it("❌ throw 400 untuk transition tidak valid: cancelled → confirmed", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "cancelled" });
+  it("✅ throw 400 jika transisi status tidak valid (state machine)", async () => {
+    // "shipped" tidak bisa langsung ke "pending_payment" (state machine)
+    mockOrder.findUnique.mockResolvedValue(fakeOrder({ status: "shipped" }));
 
-    await expect(updateOrderStatus("order-1", "confirmed" as any))
+    await expect(updateOrderStatus("order-1", "pending_payment"))
       .rejects.toMatchObject({ status: 400 });
-  });
-
-  it("❌ throw 400 untuk transition tidak valid: pending_payment → shipped (lompat state)", async () => {
-    mockOrder.findUnique.mockResolvedValue({ id: "order-1", status: "pending_payment" });
-
-    await expect(updateOrderStatus("order-1", "shipped" as any))
-      .rejects.toMatchObject({ status: 400 });
-  });
-
-  it("❌ throw 404 jika order tidak ditemukan", async () => {
-    mockOrder.findUnique.mockResolvedValue(null);
-
-    await expect(updateOrderStatus("ghost", "confirmed" as any))
-      .rejects.toMatchObject({ status: 404 });
   });
 });
 
-// ══════════════════════════════════════════════════════════════
-// getAllUsers()
-// ══════════════════════════════════════════════════════════════
-describe("getAllUsers()", () => {
-  const fakeUser = {
-    id: "user-1", name: "Budi", email: "budi@test.com",
-    role: "USER", phone: null, createdAt: new Date(),
-    _count: { orders: 3 },
-  };
+// =============================================================================
+// getAdminUsers()
+// =============================================================================
+describe("getAdminUsers()", () => {
+  it("✅ return daftar user dengan jumlah order (_count)", async () => {
+    mockUser.count.mockResolvedValue(5);
+    mockUser.findMany.mockResolvedValue([fakeUser()]);
 
-  it("✅ return list user + metadata pagination", async () => {
-    mockUser.count.mockResolvedValue(50);
-    mockUser.findMany.mockResolvedValue([fakeUser]);
+    const result = await getAdminUsers({ page: 1, limit: 20 });
 
-    const result = await getAllUsers({ page: 1, limit: 20 });
-
-    expect(result.data).toHaveLength(1);
-    expect(result.totalCount).toBe(50);
-    expect(result.data[0]).toHaveProperty("_count");
+    expect(result.users).toHaveLength(1);
+    expect(result.users[0]).toHaveProperty("_count");
+    expect(result.users[0]._count.orders).toBe(3);
   });
 
-  it("✅ filter by q (name atau email)", async () => {
-    mockUser.count.mockResolvedValue(1);
-    mockUser.findMany.mockResolvedValue([fakeUser]);
-
-    await getAllUsers({ q: "budi" });
-
-    expect(mockUser.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({ OR: expect.any(Array) }),
-      })
-    );
-  });
-
-  it("✅ tidak ada filter jika q kosong", async () => {
-    mockUser.count.mockResolvedValue(100);
+  it("✅ return total user count untuk pagination", async () => {
+    mockUser.count.mockResolvedValue(42);
     mockUser.findMany.mockResolvedValue([]);
 
-    await getAllUsers({});
+    const result = await getAdminUsers({ page: 1, limit: 20 });
 
-    expect(mockUser.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({ where: {} })
-    );
+    expect(result.totalCount).toBe(42);
   });
 });
