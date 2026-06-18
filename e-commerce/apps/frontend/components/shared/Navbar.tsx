@@ -33,17 +33,17 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white border-b border-[#ebebeb]">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center gap-4 h-16">
+        <div className="flex items-center gap-4 h-[58px]">
 
           {/* Logo */}
           <Link href={ROUTES.HOME} className="flex-shrink-0">
             <Image
               src="/zenit-logo.svg"
               alt="Zenit"
-              width={100}
-              height={32}
+              width={96}
+              height={30}
               priority
             />
           </Link>
@@ -51,25 +51,27 @@ export function Navbar() {
           {/* Search bar */}
           <form onSubmit={handleSearch} className="flex-1 max-w-2xl hidden md:flex">
             <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#a0a0a0]" />
               <Input
                 value={search}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
                 placeholder="Cari produk di Zenit..."
-                className="pl-10 pr-4 h-10 bg-gray-50 border-gray-200 focus:border-primary focus:bg-white"
+                className="pl-9 pr-4 h-9 bg-[#f5f5f5] border-transparent focus:border-primary focus:bg-white text-sm rounded-lg transition-colors"
               />
             </div>
           </form>
 
           {/* Right actions */}
-          <div className="flex items-center gap-2 ml-auto">
+          <div className="flex items-center gap-1 ml-auto">
 
-            {/* Cart */}
-            <Link href={ROUTES.CART}>
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="w-5 h-5" />
+            {/* [FIX] prefetch=false — cegah Next.js cache redirect response
+                dari middleware sebelum user login. Tanpa ini, klik cart setelah
+                login masih pakai cached redirect ke /login. */}
+            <Link href={ROUTES.CART} prefetch={false}>
+              <Button variant="ghost" size="icon" className="relative w-9 h-9">
+                <ShoppingCart className="w-[18px] h-[18px]" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center px-1 leading-none">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center px-1 leading-none">
                     {itemCount > 99 ? "99+" : itemCount}
                   </span>
                 )}
@@ -80,21 +82,22 @@ export function Navbar() {
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="w-5 h-5" />
+                  <Button variant="ghost" size="icon" className="w-9 h-9">
+                    <User className="w-[18px] h-[18px]" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <div className="px-3 py-2">
                     <p className="text-sm font-medium truncate">{user?.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                    <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
                   </div>
                   <DropdownMenuSeparator />
+                  {/* [FIX] prefetch=false pada semua protected links di dropdown */}
                   <DropdownMenuItem asChild>
-                    <Link href={ROUTES.ORDERS}>Pesanan Saya</Link>
+                    <Link href={ROUTES.ORDERS} prefetch={false}>Pesanan Saya</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href={ROUTES.PROFILE}>Profil</Link>
+                    <Link href={ROUTES.PROFILE} prefetch={false}>Profil</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
@@ -106,12 +109,11 @@ export function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="hidden md:flex items-center gap-2">
-                <Button variant="outline" size="sm" asChild>
+              <div className="hidden md:flex items-center gap-2 ml-1">
+                <Button variant="ghost" size="sm" className="h-8 px-3 text-sm font-medium" asChild>
                   <Link href={ROUTES.LOGIN}>Masuk</Link>
                 </Button>
-                {/* FIXED: solid primary, tidak pakai gradient */}
-                <Button size="sm" asChild>
+                <Button size="sm" className="h-8 px-3 text-sm font-medium" asChild>
                   <Link href={ROUTES.REGISTER}>Daftar</Link>
                 </Button>
               </div>
@@ -121,10 +123,10 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden w-9 h-9"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? <X className="w-[18px] h-[18px]" /> : <Menu className="w-[18px] h-[18px]" />}
             </Button>
           </div>
         </div>
@@ -132,12 +134,12 @@ export function Navbar() {
         {/* Mobile search */}
         <form onSubmit={handleSearch} className="pb-3 md:hidden">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#a0a0a0]" />
             <Input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Cari produk..."
-              className="pl-10 h-9 bg-gray-50"
+              className="pl-9 h-9 bg-[#f5f5f5] border-transparent text-sm rounded-lg"
             />
           </div>
         </form>
@@ -145,19 +147,20 @@ export function Navbar() {
 
       {/* Mobile nav drawer */}
       {mobileOpen && (
-        <div className="md:hidden border-t bg-white px-4 py-4 flex flex-col gap-2">
+        <div className="md:hidden border-t border-[#ebebeb] bg-white px-4 py-3 flex flex-col gap-1.5">
           {!isAuthenticated && (
             <>
-              <Button asChild className="w-full">
+              <Button asChild className="w-full h-9 text-sm">
                 <Link href={ROUTES.LOGIN}>Masuk</Link>
               </Button>
-              <Button variant="outline" asChild className="w-full">
+              <Button variant="outline" asChild className="w-full h-9 text-sm">
                 <Link href={ROUTES.REGISTER}>Daftar</Link>
               </Button>
             </>
           )}
-          <Link href={ROUTES.ORDERS} className="py-2 text-sm">Pesanan</Link>
-          <Link href={ROUTES.PROFILE} className="py-2 text-sm">Profil</Link>
+          {/* [FIX] prefetch=false pada protected links di mobile drawer */}
+          <Link href={ROUTES.ORDERS} prefetch={false} className="py-2 text-sm text-foreground/70 hover:text-foreground">Pesanan</Link>
+          <Link href={ROUTES.PROFILE} prefetch={false} className="py-2 text-sm text-foreground/70 hover:text-foreground">Profil</Link>
         </div>
       )}
     </header>

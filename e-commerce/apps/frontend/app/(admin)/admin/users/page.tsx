@@ -28,16 +28,16 @@ export default function AdminUsersPage() {
       {/* ── Header ──────────────────────────────────────────── */}
       <div>
         <h1 className="text-2xl font-bold">Kelola Pengguna</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <p className="text-sm text-[#888] mt-0.5">
           {data ? `${data.totalCount.toLocaleString("id-ID")} pengguna terdaftar` : ""}
         </p>
       </div>
 
       {/* ── Search ──────────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm p-4">
+      <div className="bg-white rounded-[10px] border border-[#ebebeb] p-4">
         <form onSubmit={handleSearch} className="flex gap-2 max-w-sm">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaa]" />
             <Input
               value={qInput}
               onChange={e => setQInput(e.target.value)}
@@ -50,9 +50,9 @@ export default function AdminUsersPage() {
       </div>
 
       {/* ── Table ───────────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-[10px] border border-[#ebebeb] overflow-hidden">
 
-        <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 px-5 py-3 border-b bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 px-5 py-3 border-b bg-[#fafaf9] text-xs font-semibold text-[#888] uppercase tracking-wide">
           <span>Nama</span>
           <span>Email</span>
           <span>Role</span>
@@ -76,10 +76,10 @@ export default function AdminUsersPage() {
         {/* Empty */}
         {!isLoading && (data?.data.length ?? 0) === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-              <Users className="w-5 h-5 text-gray-400" />
+            <div className="w-12 h-12 rounded-full bg-[#f5f5f5] flex items-center justify-center mb-3">
+              <Users className="w-5 h-5 text-[#aaa]" />
             </div>
-            <p className="text-sm font-medium text-gray-500">Tidak ada pengguna ditemukan</p>
+            <p className="text-sm font-medium text-[#888]">Tidak ada pengguna ditemukan</p>
           </div>
         )}
 
@@ -89,7 +89,7 @@ export default function AdminUsersPage() {
             {data?.data.map(user => (
               <div
                 key={user.id}
-                className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 items-center px-5 py-3 hover:bg-gray-50 transition-colors"
+                className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 items-center px-5 py-3 hover:bg-[#fafaf9] transition-colors"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
@@ -98,7 +98,7 @@ export default function AdminUsersPage() {
                   <p className="text-sm font-medium text-gray-800 truncate">{user.name}</p>
                 </div>
 
-                <p className="text-sm text-gray-500 truncate">{user.email}</p>
+                <p className="text-sm text-[#888] truncate">{user.email}</p>
 
                 <div>
                   {user.role === "ADMIN" ? (
@@ -106,7 +106,7 @@ export default function AdminUsersPage() {
                       Admin
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="text-gray-500 border-gray-200 bg-gray-50 text-xs">
+                    <Badge variant="outline" className="text-[#888] border-[#e0e0e0] bg-[#fafaf9] text-xs">
                       User
                     </Badge>
                   )}
@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
                   {user._count.orders.toLocaleString("id-ID")}
                 </p>
 
-                <p className="text-xs text-gray-400">{formatDate(user.createdAt)}</p>
+                <p className="text-xs text-[#aaa]">{formatDate(user.createdAt)}</p>
               </div>
             ))}
           </div>
@@ -124,8 +124,8 @@ export default function AdminUsersPage() {
 
         {/* Pagination */}
         {(data?.totalPages ?? 0) > 1 && (
-          <div className="flex items-center justify-between px-5 py-3 border-t bg-gray-50">
-            <p className="text-xs text-gray-500">
+          <div className="flex items-center justify-between px-5 py-3 border-t bg-[#fafaf9]">
+            <p className="text-xs text-[#888]">
               Halaman {page} dari {data!.totalPages}
             </p>
             <div className="flex gap-1">

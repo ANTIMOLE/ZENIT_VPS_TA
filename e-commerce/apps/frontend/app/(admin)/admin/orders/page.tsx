@@ -81,16 +81,16 @@ export default function AdminOrdersPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold">Kelola Pesanan</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <p className="text-sm text-[#888] mt-0.5">
           {data ? `${data.totalCount.toLocaleString("id-ID")} pesanan total` : ""}
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl border shadow-sm p-4 flex flex-col sm:flex-row gap-3">
+      <div className="bg-white rounded-[10px] border border-[#ebebeb] p-4 flex flex-col sm:flex-row gap-3">
         <form onSubmit={handleSearch} className="flex gap-2 flex-1">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaa]" />
             <Input
               value={qInput}
               onChange={e => setQInput(e.target.value)}
@@ -113,10 +113,10 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-[10px] border border-[#ebebeb] overflow-hidden">
 
         {/* Header */}
-        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 px-5 py-3 border-b bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 px-5 py-3 border-b bg-[#fafaf9] text-xs font-semibold text-[#888] uppercase tracking-wide">
           <span>No. Pesanan</span>
           <span>Pembeli</span>
           <span>Waktu</span>
@@ -142,7 +142,7 @@ export default function AdminOrdersPage() {
         {!isLoading && data?.data.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <RefreshCw className="w-10 h-10 text-gray-200 mb-3" />
-            <p className="text-sm font-medium text-gray-500">Tidak ada pesanan ditemukan</p>
+            <p className="text-sm font-medium text-[#888]">Tidak ada pesanan ditemukan</p>
           </div>
         )}
 
@@ -154,7 +154,7 @@ export default function AdminOrdersPage() {
               return (
                 <div
                   key={order.id}
-                  className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 items-center px-5 py-3.5 hover:bg-gray-50 transition-colors"
+                  className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 items-center px-5 py-3.5 hover:bg-[#fafaf9] transition-colors"
                 >
                   {/* No. pesanan */}
                   <p className="text-sm font-mono font-semibold text-gray-800 truncate">
@@ -164,11 +164,11 @@ export default function AdminOrdersPage() {
                   {/* Pembeli */}
                   <div className="min-w-0">
                     <p className="text-sm text-gray-700 truncate">{order.user.name}</p>
-                    <p className="text-xs text-gray-400 truncate">{order.user.email}</p>
+                    <p className="text-xs text-[#aaa] truncate">{order.user.email}</p>
                   </div>
 
                   {/* Waktu */}
-                  <p className="text-xs text-gray-500">{formatDateTime(order.createdAt)}</p>
+                  <p className="text-xs text-[#888]">{formatDateTime(order.createdAt)}</p>
 
                   {/* Total */}
                   <p className="text-sm font-semibold text-gray-800">{formatPrice(order.total)}</p>
@@ -205,8 +205,8 @@ export default function AdminOrdersPage() {
 
         {/* Pagination */}
         {(data?.totalPages ?? 0) > 1 && (
-          <div className="flex items-center justify-between px-5 py-3 border-t bg-gray-50">
-            <p className="text-xs text-gray-500">
+          <div className="flex items-center justify-between px-5 py-3 border-t bg-[#fafaf9]">
+            <p className="text-xs text-[#888]">
               Halaman {page} dari {data!.totalPages}
             </p>
             <div className="flex gap-1">

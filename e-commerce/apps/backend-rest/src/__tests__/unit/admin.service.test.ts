@@ -348,7 +348,7 @@ describe("getAdminOrders()", () => {
 
     const result = await getAdminOrders({ page: 1, limit: 20 });
 
-    expect(result.orders).toHaveLength(1);
+    expect(result.data).toHaveLength(1);
     expect(result.totalCount).toBe(10);
   });
 
@@ -403,9 +403,9 @@ describe("getAdminUsers()", () => {
 
     const result = await getAdminUsers({ page: 1, limit: 20 });
 
-    expect(result.users).toHaveLength(1);
-    expect(result.users[0]).toHaveProperty("_count");
-    expect(result.users[0]._count.orders).toBe(3);
+    expect(result.data).toHaveLength(1);
+    expect(result.data[0]).toHaveProperty("_count");
+    expect(result.data[0]._count.orders).toBe(3);
   });
 
   it("✅ return total user count untuk pagination", async () => {

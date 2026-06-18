@@ -1,18 +1,3 @@
-// import type { NextConfig } from "next";
-
-// const nextConfig = {
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: "https",
-//         hostname: "placehold.co",
-//       },
-//     ],
-//   },
-// };
-
-// export default nextConfig;
-//
 import type { NextConfig } from "next";
 import path from "path";
 
@@ -21,42 +6,58 @@ import path from "path";
 //
 // Build for REST:  NEXT_PUBLIC_API_MODE=rest  pnpm build
 // Build for tRPC:  NEXT_PUBLIC_API_MODE=trpc  pnpm build
-//
-// When API_MODE=trpc, every import like:
-//   import { useCart } from "@/hooks/useCart"
-// resolves to hooks/trpc/useCart.ts instead of hooks/rest/useCart.ts
-//
-// This ensures the EXACT same component code runs against both
-// transports — fair apple-to-apple comparison for load testing.
 // ============================================================
 
 const apiMode = process.env.NEXT_PUBLIC_API_MODE ?? "rest";
 const isTRPC  = apiMode === "trpc";
+
+// ── Backend URLs (server-side only, safe to use in rewrites) ──
+// These are never exposed to the browser. Set them in .env:
+//   BACKEND_REST_URL=http://localhost:4000
+//   BACKEND_TRPC_URL=http://localhost:4001
+const BACKEND_REST = process.env.BACKEND_REST_URL ?? "http://localhost:4000";
+const BACKEND_TRPC = process.env.BACKEND_TRPC_URL ?? "http://localhost:4001";
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "placehold.co" },
       {
-        // CDN utama Tokopedia — path masih dibatasi ke /img/**
         protocol: "https",
         hostname: "images.tokopedia.net",
         pathname: "/img/**",
       },
       {
-        // [FIX] Wildcard semua subdomain tokopedia-static.net
-        // Contoh yang ada di dataset: images.tokopedia.net,
-        // p16-images-sign-sg.tokopedia-static.net, dsb.
-        // Next.js mendukung "**.hostname" untuk matching semua subdomain.
         protocol: "https",
         hostname: "**.tokopedia-static.net",
       },
       {
-        // [FIX] Fallback bare tokopedia-static.net (tanpa subdomain)
         protocol: "https",
         hostname: "tokopedia-static.net",
       },
     ],
+  },
+
+  // ── API Proxy Rewrites ────────────────────────────────────
+  // Browser makes same-origin requests to /api/v1/* and /trpc/*
+  // Next.js server-side proxies to the backend ports.
+  //
+  // WHY: Cookies dari backend port 4000 tidak bisa di-set di browser
+  // karena cross-origin (port 80 ≠ port 4000) tanpa HTTPS + SameSite=None.
+  // Dengan proxy ini, semua request jadi same-origin → cookie bekerja normal.
+  //
+  // K6 tests tidak terpengaruh — K6 tetap langsung hit port 4000.
+  async rewrites() {
+    return [
+      {
+        source:      "/api/v1/:path*",
+        destination: `${BACKEND_REST}/api/v1/:path*`,
+      },
+      {
+        source:      "/trpc/:path*",
+        destination: `${BACKEND_TRPC}/trpc/:path*`,
+      },
+    ];
   },
 
   turbopack: {

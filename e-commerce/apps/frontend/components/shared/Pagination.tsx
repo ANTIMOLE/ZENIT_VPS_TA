@@ -33,7 +33,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className }:
       {/* Pages */}
       {range.map((item, i) =>
         item === "..." ? (
-          <span key={`dots-${i}`} className="px-2 text-gray-400 text-sm select-none">
+          <span key={`dots-${i}`} className="px-2 text-[#bbb] text-sm select-none">
             …
           </span>
         ) : (

@@ -16,22 +16,30 @@ import { SORT_OPTIONS, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { ProductListParams } from "@/types";
 
-
-// [FIX] parseNumParam: aman untuk nilai 0
-// Number("") === 0 dan Number(null) === 0, keduanya falsish → || undefined gagal untuk nilai 0.
-// Cek string kosong/null terlebih dahulu sebelum konversi.
 function parseNumParam(s: string | null | undefined): number | undefined {
   if (s === null || s === undefined || s.trim() === "") return undefined;
   const n = Number(s);
   return isNaN(n) ? undefined : n;
 }
 
+// ── Sidebar section header ─────────────────────────────────────
+// Thin line + small-caps label. Lebih terstruktur dari bold text biasa.
+function SidebarLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 mb-2.5">
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-[#aaa]">
+        {children}
+      </span>
+      <div className="flex-1 h-px bg-[#f0f0f0]" />
+    </div>
+  );
+}
+
 function ProductsContent() {
-  const router        = useRouter();
-  const searchParams  = useSearchParams();
+  const router       = useRouter();
+  const searchParams = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
 
-  // ── Baca params dari URL ────────────────────────────────────
   const [params, setParams] = useState<ProductListParams>({
     page:       Number(searchParams.get("page"))       || 1,
     limit:      DEFAULT_PAGE_SIZE,
@@ -39,33 +47,31 @@ function ProductsContent() {
     q:          searchParams.get("q")                  || undefined,
     minPrice:   parseNumParam(searchParams.get("minPrice")),
     maxPrice:   parseNumParam(searchParams.get("maxPrice")),
-    minRating: parseNumParam(searchParams.get("minRating")),
+    minRating:  parseNumParam(searchParams.get("minRating")),
     sortBy:     (searchParams.get("sortBy") as ProductListParams["sortBy"]) || "createdAt",
     sortOrder:  (searchParams.get("sortOrder") as "asc" | "desc") || "desc",
   });
 
-  const [searchInput, setSearchInput] = useState(params.q ?? "");
+  const [searchInput,   setSearchInput]   = useState(params.q ?? "");
   const [minPriceInput, setMinPriceInput] = useState(params.minPrice?.toString() ?? "");
   const [maxPriceInput, setMaxPriceInput] = useState(params.maxPrice?.toString() ?? "");
 
-  const { data: result,     isLoading } = useProductList(params);
+  const { data: result,     isLoading }          = useProductList(params);
   const { data: categories, isLoading: loadingCats } = useCategories();
 
-  // ── Update URL saat params berubah ─────────────────────────
   useEffect(() => {
     const p = new URLSearchParams();
-    if (params.page && params.page > 1)  p.set("page", String(params.page));
+    if (params.page && params.page > 1)  p.set("page",       String(params.page));
     if (params.categoryId)               p.set("categoryId", params.categoryId);
-    if (params.q)                        p.set("q", params.q);
-    if (params.minPrice != null)         p.set("minPrice", String(params.minPrice));
-    if (params.maxPrice != null)         p.set("maxPrice", String(params.maxPrice));
-    if (params.minRating != null) p.set("minRating", String(params.minRating));
-    if (params.sortBy && params.sortBy !== "createdAt") p.set("sortBy", params.sortBy);
-    if (params.sortOrder && params.sortOrder !== "desc") p.set("sortOrder", params.sortOrder);
+    if (params.q)                        p.set("q",          params.q);
+    if (params.minPrice != null)         p.set("minPrice",   String(params.minPrice));
+    if (params.maxPrice != null)         p.set("maxPrice",   String(params.maxPrice));
+    if (params.minRating != null)        p.set("minRating",  String(params.minRating));
+    if (params.sortBy && params.sortBy !== "createdAt")   p.set("sortBy",    params.sortBy);
+    if (params.sortOrder && params.sortOrder !== "desc")  p.set("sortOrder", params.sortOrder);
     router.replace(`/products${p.toString() ? `?${p.toString()}` : ""}`, { scroll: false });
   }, [params, router]);
 
-  // ── Helpers ────────────────────────────────────────────────
   function setParam<K extends keyof ProductListParams>(key: K, value: ProductListParams[K]) {
     setParams(prev => ({ ...prev, [key]: value, page: 1 }));
   }
@@ -96,19 +102,22 @@ function ProductsContent() {
     setParams(prev => ({ ...prev, sortBy, sortOrder, page: 1 }));
   }
 
-  const sortValue    = `${params.sortBy ?? "createdAt"}:${params.sortOrder ?? "desc"}`;
+  const sortValue     = `${params.sortBy ?? "createdAt"}:${params.sortOrder ?? "desc"}`;
   const activeFilters = [
     params.categoryId && categories?.find(c => c.id === params.categoryId)?.name,
     params.q          && `"${params.q}"`,
-    (params.minPrice != null || params.maxPrice != null) && `Rp ${params.minPrice?.toLocaleString("id-ID") ?? "0"} – ${params.maxPrice?.toLocaleString("id-ID") ?? "∞"}`,
+    (params.minPrice != null || params.maxPrice != null) &&
+      `Rp ${params.minPrice?.toLocaleString("id-ID") ?? "0"} – ${params.maxPrice?.toLocaleString("id-ID") ?? "∞"}`,
     params.minRating != null && `⭐ ${params.minRating}+`,
   ].filter(Boolean) as string[];
+
+  const hasActiveFilter = activeFilters.length > 0;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
 
       {/* ── Header ─────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
         <div className="flex-1">
           <h1 className="text-xl font-bold">
             {params.q
@@ -119,13 +128,20 @@ function ProductsContent() {
             }
           </h1>
           {result && (
-            <p className="text-sm text-gray-500">
-              {result.totalCount.toLocaleString("id-ID")} produk ditemukan
-            </p>
+            <div className="flex items-center gap-2 mt-0.5">
+              <p className="text-sm text-[#999]">
+                {result.totalCount.toLocaleString("id-ID")} produk ditemukan
+              </p>
+              {hasActiveFilter && (
+                <>
+                  <span className="w-1 h-1 rounded-full bg-[#ccc] inline-block" />
+                  <span className="text-xs text-[#bbb]">{activeFilters.length} filter aktif</span>
+                </>
+              )}
+            </div>
           )}
         </div>
 
-        {/* Sort */}
         <div className="flex items-center gap-2">
           <Select value={sortValue} onValueChange={handleSortChange}>
             <SelectTrigger className="w-44 h-9 text-sm">
@@ -141,13 +157,13 @@ function ProductsContent() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5"
+            className={cn("gap-1.5 transition-colors", hasActiveFilter && "border-primary text-primary")}
             onClick={() => setShowFilters(!showFilters)}
           >
             <SlidersHorizontal className="w-4 h-4" />
             Filter
-            {activeFilters.length > 0 && (
-              <Badge variant="secondary" className="ml-1 px-1.5 py-0 text-xs">
+            {hasActiveFilter && (
+              <Badge variant="secondary" className="ml-1 px-1.5 py-0 text-xs bg-primary/10 text-primary border-0">
                 {activeFilters.length}
               </Badge>
             )}
@@ -156,17 +172,28 @@ function ProductsContent() {
         </div>
       </div>
 
-      {/* ── Active filters chips ─────────────────────────────── */}
-      {activeFilters.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
+      {/* ── Active filter chips ─────────────────────────────── */}
+      {hasActiveFilter && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {activeFilters.map((f, i) => (
-            <Badge key={i} variant="secondary" className="gap-1 pl-2 pr-1 py-1 text-xs">
+            <Badge
+              key={i}
+              variant="secondary"
+              className={cn(
+                "gap-1 pl-2.5 pr-2 py-1 text-xs rounded-full border font-normal",
+                f.startsWith('"')  && "bg-blue-50 text-blue-700 border-blue-200",
+                f.startsWith("Rp") && "bg-emerald-50 text-emerald-700 border-emerald-200",
+                f.startsWith("⭐") && "bg-amber-50 text-amber-700 border-amber-200",
+                !f.startsWith('"') && !f.startsWith("Rp") && !f.startsWith("⭐") &&
+                  "bg-violet-50 text-violet-700 border-violet-200"
+              )}
+            >
               {f}
             </Badge>
           ))}
           <button
             onClick={clearAllFilters}
-            className="text-xs text-red-500 hover:underline flex items-center gap-0.5"
+            className="text-xs text-red-500 hover:underline flex items-center gap-0.5 px-1"
           >
             <X className="w-3 h-3" /> Hapus semua
           </button>
@@ -177,11 +204,11 @@ function ProductsContent() {
 
         {/* ── Sidebar Filter ──────────────────────────────────── */}
         {showFilters && (
-          <aside className="w-60 flex-shrink-0 space-y-6">
+          <aside className="w-56 flex-shrink-0 space-y-5 border-r border-[#f0f0f0] pr-5">
 
             {/* Search */}
             <div>
-              <p className="text-sm font-semibold mb-2">Cari Produk</p>
+              <SidebarLabel>Cari Produk</SidebarLabel>
               <form onSubmit={handleSearch} className="flex gap-1.5">
                 <Input
                   value={searchInput}
@@ -195,39 +222,44 @@ function ProductsContent() {
               </form>
             </div>
 
-            {/* Kategori */}
+            {/* Kategori — scrollable, max 280px */}
             <div>
-              <p className="text-sm font-semibold mb-2">Kategori</p>
-              <div className="space-y-1">
+              <SidebarLabel>Kategori</SidebarLabel>
+              <div className="space-y-0.5 max-h-[280px] overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#e0e0e0_transparent]">
                 <button
                   onClick={() => setParam("categoryId", undefined)}
                   className={cn(
                     "w-full text-left text-sm px-2 py-1.5 rounded-md transition-colors",
                     !params.categoryId
                       ? "bg-primary text-white font-medium"
-                      : "hover:bg-gray-100 text-gray-700"
+                      : "hover:bg-[#f5f5f5] text-[#444]"
                   )}
                 >
                   Semua Kategori
                 </button>
                 {loadingCats
                   ? Array.from({ length: 6 }).map((_, i) => (
-                      <div key={i} className="h-7 bg-gray-100 rounded-md animate-pulse" />
+                      <div key={i} className="h-7 bg-[#f0f0f0] rounded animate-pulse" />
                     ))
                   : categories?.map(cat => (
                       <button
                         key={cat.id}
                         onClick={() => setParam("categoryId", cat.id)}
                         className={cn(
-                          "w-full text-left text-sm px-2 py-1.5 rounded-md transition-colors",
+                          "w-full text-left text-sm px-2 py-1.5 rounded-md transition-colors flex items-center justify-between",
                           params.categoryId === cat.id
                             ? "bg-primary text-white font-medium"
-                            : "hover:bg-gray-100 text-gray-700"
+                            : "hover:bg-[#f5f5f5] text-[#444]"
                         )}
                       >
-                        {cat.name}
+                        <span className="truncate">{cat.name}</span>
                         {cat.productCount !== undefined && (
-                          <span className="ml-1 text-xs opacity-60">({cat.productCount})</span>
+                          <span className={cn(
+                            "text-[11px] flex-shrink-0 ml-1",
+                            params.categoryId === cat.id ? "text-white/70" : "text-[#bbb]"
+                          )}>
+                            {cat.productCount}
+                          </span>
                         )}
                       </button>
                     ))
@@ -237,22 +269,33 @@ function ProductsContent() {
 
             {/* Harga */}
             <div>
-              <p className="text-sm font-semibold mb-2">Rentang Harga</p>
+              <SidebarLabel>Rentang Harga</SidebarLabel>
               <div className="space-y-2">
-                <Input
-                  type="number"
-                  placeholder="Harga minimum"
-                  value={minPriceInput}
-                  onChange={e => setMinPriceInput(e.target.value)}
-                  className="h-8 text-sm"
-                />
-                <Input
-                  type="number"
-                  placeholder="Harga maksimum"
-                  value={maxPriceInput}
-                  onChange={e => setMaxPriceInput(e.target.value)}
-                  className="h-8 text-sm"
-                />
+                {/* Min price dengan prefix "Rp" */}
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#aaa] pointer-events-none select-none">
+                    Rp
+                  </span>
+                  <Input
+                    type="number"
+                    placeholder="Minimum"
+                    value={minPriceInput}
+                    onChange={e => setMinPriceInput(e.target.value)}
+                    className="h-8 text-sm pl-8"
+                  />
+                </div>
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#aaa] pointer-events-none select-none">
+                    Rp
+                  </span>
+                  <Input
+                    type="number"
+                    placeholder="Maksimum"
+                    value={maxPriceInput}
+                    onChange={e => setMaxPriceInput(e.target.value)}
+                    className="h-8 text-sm pl-8"
+                  />
+                </div>
                 <Button
                   size="sm"
                   variant="outline"
@@ -266,17 +309,17 @@ function ProductsContent() {
 
             {/* Rating */}
             <div>
-              <p className="text-sm font-semibold mb-2">Rating Minimum</p>
-              <div className="space-y-1">
+              <SidebarLabel>Rating Minimum</SidebarLabel>
+              <div className="space-y-0.5">
                 {[null, 4, 3, 2].map(r => (
                   <button
                     key={r ?? "all"}
                     onClick={() => setParam("minRating", r ?? undefined)}
                     className={cn(
                       "w-full text-left text-sm px-2 py-1.5 rounded-md transition-colors",
-                      params.minRating === r
+                      params.minRating === (r ?? undefined)
                         ? "bg-primary text-white font-medium"
-                        : "hover:bg-gray-100 text-gray-700"
+                        : "hover:bg-[#f5f5f5] text-[#444]"
                     )}
                   >
                     {r ? `⭐ ${r}+` : "Semua Rating"}
@@ -290,7 +333,6 @@ function ProductsContent() {
 
         {/* ── Product Grid ────────────────────────────────────── */}
         <div className="flex-1 min-w-0">
-
           {isLoading ? (
             <div className={cn(
               "grid gap-4",
@@ -322,7 +364,6 @@ function ProductsContent() {
                 ))}
               </div>
 
-              {/* Pagination */}
               {result.totalPages > 1 && (
                 <Pagination
                   className="mt-8"
@@ -333,7 +374,6 @@ function ProductsContent() {
               )}
             </>
           )}
-
         </div>
       </div>
     </div>
@@ -344,10 +384,10 @@ export default function ProductsPage() {
   return (
     <Suspense fallback={
       <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="h-8 w-48 bg-gray-200 rounded animate-pulse mb-6" />
+        <div className="h-8 w-48 bg-[#f0f0f0] rounded animate-pulse mb-6" />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="h-64 bg-gray-100 rounded-xl animate-pulse" />
+            <div key={i} className="h-64 bg-[#f0f0f0] rounded-lg animate-pulse" />
           ))}
         </div>
       </div>

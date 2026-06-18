@@ -13,7 +13,7 @@ import type { Request } from "express";
 // Cookie config — mirrors REST (auth.controller.ts COOKIE_OPTIONS)
 const COOKIE_BASE = {
   httpOnly: true,
-  secure:   process.env.NODE_ENV === "production",
+  secure:   false,
   sameSite: "lax" as const,
   path:     "/",
 };

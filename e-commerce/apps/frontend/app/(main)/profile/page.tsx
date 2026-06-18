@@ -136,7 +136,7 @@ export default function ProfilePage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
         <Skeleton className="h-8 w-40" />
-        <div className="bg-white rounded-2xl border p-6 space-y-4">
+        <div className="bg-white rounded-lg border border-[#ebebeb] p-6 space-y-4">
           <Skeleton className="h-16 w-16 rounded-full" />
           <Skeleton className="h-5 w-48" />
           <Skeleton className="h-4 w-64" />
@@ -152,20 +152,20 @@ export default function ProfilePage() {
       {/* ── Header ─────────────────────────────────────────── */}
       <div>
         <h1 className="text-2xl font-bold">Profil Saya</h1>
-        <p className="text-sm text-gray-500 mt-1">Kelola informasi akun kamu</p>
+        <p className="text-sm text-[#888] mt-1">Kelola informasi akun kamu</p>
       </div>
 
       {/* ── Info Akun ──────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm">
+      <div className="bg-white rounded-lg border border-[#ebebeb]">
         <div className="flex items-center gap-4 p-6 border-b">
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary flex-shrink-0">
             {(displayUser?.name ?? "?")[0].toUpperCase()}
           </div>
           <div>
             <p className="font-semibold text-lg">{displayUser?.name ?? "—"}</p>
-            <p className="text-sm text-gray-500">{displayUser?.email ?? "—"}</p>
+            <p className="text-sm text-[#888]">{displayUser?.email ?? "—"}</p>
             {displayUser?.createdAt && (
-              <p className="text-xs text-gray-400 mt-0.5">
+              <p className="text-xs text-[#aaa] mt-0.5">
                 Bergabung {formatDate(displayUser.createdAt)}
               </p>
             )}
@@ -176,13 +176,13 @@ export default function ProfilePage() {
           {editMode ? (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="name" className="text-sm font-medium">Nama Lengkap</Label>
+                <Label htmlFor="name" className="text-sm font-medium text-[#555]">Nama Lengkap</Label>
                 <Input id="name" value={form.name} className="mt-1"
                   onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                   placeholder="Nama lengkap kamu" />
               </div>
               <div>
-                <Label htmlFor="phone" className="text-sm font-medium">Nomor Telepon</Label>
+                <Label htmlFor="phone" className="text-sm font-medium text-[#555]">Nomor Telepon</Label>
                 <Input id="phone" value={form.phone} className="mt-1"
                   onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                   placeholder="08xxxxxxxxxx" />
@@ -201,18 +201,18 @@ export default function ProfilePage() {
           ) : (
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
-                <User className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-600 w-24 flex-shrink-0">Nama</span>
+                <User className="w-4 h-4 text-[#aaa] flex-shrink-0" />
+                <span className="text-[#888] w-24 flex-shrink-0">Nama</span>
                 <span className="font-medium">{displayUser?.name ?? "—"}</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-600 w-24 flex-shrink-0">Email</span>
+                <Mail className="w-4 h-4 text-[#aaa] flex-shrink-0" />
+                <span className="text-[#888] w-24 flex-shrink-0">Email</span>
                 <span className="font-medium">{displayUser?.email ?? "—"}</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <Phone className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-600 w-24 flex-shrink-0">Telepon</span>
+                <Phone className="w-4 h-4 text-[#aaa] flex-shrink-0" />
+                <span className="text-[#888] w-24 flex-shrink-0">Telepon</span>
                 <span className="font-medium">{displayUser?.phone ?? "—"}</span>
               </div>
               <div className="pt-2">
@@ -231,11 +231,11 @@ export default function ProfilePage() {
       </div>
 
       {/* ── Alamat Pengiriman ───────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm">
+      <div className="bg-white rounded-lg border border-[#ebebeb]">
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <div>
             <p className="font-semibold text-sm">Alamat Pengiriman</p>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-[#aaa] mt-0.5">
               {addresses.length}/5 alamat tersimpan
             </p>
           </div>
@@ -251,7 +251,7 @@ export default function ProfilePage() {
         {loadingAddr && (
           <div className="p-4 space-y-3">
             {[1, 2].map(i => (
-              <div key={i} className="rounded-xl border p-4 space-y-2">
+              <div key={i} className="rounded-lg border border-[#ebebeb] p-4 space-y-2">
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="h-3 w-48" />
                 <Skeleton className="h-3 w-40" />
@@ -263,11 +263,11 @@ export default function ProfilePage() {
         {/* Tidak ada alamat */}
         {!loadingAddr && addresses.length === 0 && (
           <div className="flex flex-col items-center justify-center py-10 text-center px-6">
-            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-              <MapPin className="w-5 h-5 text-gray-400" />
+            <div className="w-12 h-12 rounded-full bg-[#f5f5f5] flex items-center justify-center mb-3">
+              <MapPin className="w-5 h-5 text-[#aaa]" />
             </div>
-            <p className="text-sm font-medium text-gray-600">Belum ada alamat</p>
-            <p className="text-xs text-gray-400 mt-1">Tambah alamat pengiriman untuk checkout lebih cepat</p>
+            <p className="text-sm font-medium text-[#555]">Belum ada alamat</p>
+            <p className="text-xs text-[#aaa] mt-1">Tambah alamat pengiriman untuk checkout lebih cepat</p>
             <Button size="sm" className="mt-4 gap-1.5" onClick={openAddAddr}>
               <Plus className="w-3.5 h-3.5" />
               Tambah Alamat Pertama
@@ -279,15 +279,15 @@ export default function ProfilePage() {
         {!loadingAddr && addresses.length > 0 && (
           <div className="divide-y">
             {addresses.map(addr => (
-              <div key={addr.id} className="p-4 hover:bg-gray-50/50 transition-colors">
+              <div key={addr.id} className="p-4 hover:bg-[#fafaf9]/50 transition-colors">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-semibold text-gray-800">
+                      <p className="text-sm font-semibold text-[#222]">
                         {addr.recipientName}
                       </p>
                       {addr.label && (
-                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+                        <span className="text-xs bg-[#f5f5f5] text-[#666] px-2 py-0.5 rounded-full">
                           {addr.label}
                         </span>
                       )}
@@ -298,8 +298,8 @@ export default function ProfilePage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-500 mt-0.5">{addr.phone}</p>
-                    <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+                    <p className="text-xs text-[#999] mt-0.5">{addr.phone}</p>
+                    <p className="text-xs text-[#666] mt-1 leading-relaxed">
                       {addr.address}, {addr.city}, {addr.province} {addr.zipCode}
                     </p>
                   </div>
@@ -309,7 +309,7 @@ export default function ProfilePage() {
                     {!addr.isDefault && (
                       <Button
                         variant="ghost" size="sm"
-                        className="h-7 px-2 text-xs text-gray-500 hover:text-primary"
+                        className="h-7 px-2 text-xs text-[#888] hover:text-primary"
                         disabled={isMutating}
                         onClick={() => setDefault(addr.id)}
                       >
@@ -319,7 +319,7 @@ export default function ProfilePage() {
                     )}
                     <Button
                       variant="ghost" size="icon"
-                      className="h-7 w-7 text-gray-400 hover:text-gray-700"
+                      className="h-7 w-7 text-[#aaa] hover:text-[#555]"
                       onClick={() => openEditAddr(addr)}
                     >
                       <Edit2 className="w-3 h-3" />
@@ -342,43 +342,43 @@ export default function ProfilePage() {
       </div>
 
       {/* ── Aktivitas & Quick Links ─────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-lg border border-[#ebebeb] overflow-hidden">
         <div className="px-6 py-4 border-b">
           <p className="font-semibold text-sm">Aktivitas Saya</p>
         </div>
 
         <button
           onClick={() => router.push(ROUTES.ORDERS)}
-          className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-between px-6 py-4 hover:bg-[#fafaf9] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center">
-              <Package className="w-4 h-4 text-blue-600" />
+            <div className="w-9 h-9 rounded-lg bg-[#f5f5f5] flex items-center justify-center">
+              <Package className="w-4 h-4 text-[#aaa]" />
             </div>
             <div className="text-left">
               <p className="text-sm font-medium">Pesanan Saya</p>
-              <p className="text-xs text-gray-500">Lihat semua riwayat pesanan</p>
+              <p className="text-xs text-[#888]">Lihat semua riwayat pesanan</p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-gray-400" />
+          <ChevronRight className="w-4 h-4 text-[#aaa]" />
         </button>
 
         <Separator />
 
         <button
-          className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-between px-6 py-4 hover:bg-[#fafaf9] transition-colors"
           onClick={openPwDialog}
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
-              <KeyRound className="w-4 h-4 text-amber-600" />
+            <div className="w-9 h-9 rounded-lg bg-[#f5f5f5] flex items-center justify-center">
+              <KeyRound className="w-4 h-4 text-[#aaa]" />
             </div>
             <div className="text-left">
               <p className="text-sm font-medium">Ganti Password</p>
-              <p className="text-xs text-gray-500">Ubah kata sandi akun</p>
+              <p className="text-xs text-[#888]">Ubah kata sandi akun</p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-gray-400" />
+          <ChevronRight className="w-4 h-4 text-[#aaa]" />
         </button>
       </div>
 
@@ -457,7 +457,7 @@ export default function ProfilePage() {
                   onChange={e => setAddrField("isDefault", e.target.checked)}
                   className="w-4 h-4 rounded accent-primary"
                 />
-                <span className="text-sm text-gray-700">Jadikan alamat utama</span>
+                <span className="text-sm text-[#555]">Jadikan alamat utama</span>
               </label>
             )}
           </div>
@@ -481,7 +481,7 @@ export default function ProfilePage() {
           <DialogHeader>
             <DialogTitle>Hapus Alamat?</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-[#666]">
             Alamat <span className="font-semibold">"{deleteAddr?.label || deleteAddr?.city}"</span> akan
             dihapus permanen dan tidak bisa dikembalikan.
           </p>

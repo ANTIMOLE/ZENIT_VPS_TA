@@ -129,3 +129,70 @@
 
 ✓ Starting...
 ✓ Ready in 1044ms
+ ELIFECYCLE  Command failed.
+
+> frontend@0.1.0 start /home/zenit/e-commerce/apps/frontend
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://139.59.98.14:3000
+
+✓ Starting...
+✓ Ready in 1071ms
+ ELIFECYCLE  Command failed.
+
+> frontend@0.1.0 start /home/zenit/e-commerce/apps/frontend
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://139.59.98.14:3000
+
+✓ Starting...
+✓ Ready in 1362ms
+ ELIFECYCLE  Command failed.
+
+> frontend@0.1.0 start /home/zenit/e-commerce/apps/frontend
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://139.59.98.14:3000
+
+✓ Starting...
+✓ Ready in 1389ms
+ ELIFECYCLE  Command failed.
+
+> frontend@0.1.0 start /home/zenit/e-commerce/apps/frontend
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://139.59.98.14:3000
+
+✓ Starting...
+✓ Ready in 1339ms
+ ELIFECYCLE  Command failed.
+Scope: all 6 workspace projects
+
+> frontend@0.1.0 start /home/zenit/e-commerce/apps/frontend
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://139.59.98.14:3000
+
+✓ Starting...
+✓ Ready in 1005ms
+ ELIFECYCLE  Command failed.
+
+> frontend@0.1.0 start /home/zenit/e-commerce/apps/frontend
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://139.59.98.14:3000
+
+✓ Starting...
+✓ Ready in 947ms

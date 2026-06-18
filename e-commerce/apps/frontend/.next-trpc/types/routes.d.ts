@@ -5,7 +5,7 @@ type AppRoutes = "/" | "/admin/dashboard" | "/admin/orders" | "/admin/products" 
 type PageRoutes = never
 type LayoutRoutes = "/"
 type RedirectRoutes = never
-type RewriteRoutes = never
+type RewriteRoutes = "/api/v1/[[...path]]" | "/trpc/[[...path]]"
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes
 
 
@@ -15,6 +15,7 @@ interface ParamMap {
   "/admin/orders": {}
   "/admin/products": {}
   "/admin/users": {}
+  "/api/v1/[[...path]]": { "path"?: string[]; }
   "/cart": {}
   "/checkout": {}
   "/checkout/success": {}
@@ -25,6 +26,7 @@ interface ParamMap {
   "/products/[slug]": { "slug": string; }
   "/profile": {}
   "/register": {}
+  "/trpc/[[...path]]": { "path"?: string[]; }
 }
 
 

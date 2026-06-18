@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-[#fafaf9]">
 
       {/* ── Mobile overlay ──────────────────────────────────── */}
       {sidebarOpen && (
@@ -83,34 +83,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* ── Sidebar ─────────────────────────────────────────── */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-30 w-60 bg-white border-r flex flex-col transition-transform duration-200",
+        "fixed inset-y-0 left-0 z-30 w-56 bg-white border-r border-[#ebebeb] flex flex-col transition-transform duration-200",
         "md:translate-x-0 md:static md:z-auto",
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Logo */}
-        <div className="flex items-center justify-between h-16 px-5 border-b flex-shrink-0">
+        <div className="flex items-center justify-between h-[58px] px-5 border-b border-[#ebebeb] flex-shrink-0">
           <Link href="/admin/dashboard" className="flex items-center gap-2">
             <Image
               src="/zenit-logo.svg"
               alt="Zenit Admin"
-              width={80}
-              height={24}
+              width={72}
+              height={22}
               priority
             />
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            <span className="text-[10px] font-bold text-[#bbb] uppercase tracking-widest">
               Admin
             </span>
           </Link>
           <button
-            className="md:hidden text-gray-400 hover:text-gray-600"
+            className="md:hidden text-[#aaa] hover:text-[#555]"
             onClick={() => setSidebarOpen(false)}
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+        <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
           {NAV.map(item => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
             return (
@@ -119,10 +119,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 href={item.href}
                 onClick={() => setSidebarOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
+                  "flex items-center gap-3 px-3 py-2 rounded-[6px] text-[13px] font-medium transition-colors",
                   active
-                    ? "bg-primary text-white"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    ? "bg-primary/8 text-primary border-l-2 border-primary pl-[10px]"
+                    : "text-[#666] hover:bg-[#f5f5f5] hover:text-[#111]"
                 )}
               >
                 {item.icon}
@@ -133,19 +133,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
 
         {/* User info + logout */}
-        <div className="px-3 py-4 border-t flex-shrink-0">
+        <div className="px-3 py-3 border-t border-[#ebebeb] flex-shrink-0">
           <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm font-bold text-primary flex-shrink-0">
+            <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-[12px] font-bold text-primary flex-shrink-0">
               {user.name[0].toUpperCase()}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium truncate">{user.name}</p>
-              <p className="text-xs text-gray-400 truncate">{user.email}</p>
+              <p className="text-[13px] font-medium truncate">{user.name}</p>
+              <p className="text-[11px] text-[#aaa] truncate">{user.email}</p>
             </div>
           </div>
           <button
             onClick={logout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-[6px] text-[13px] font-medium text-[#999] hover:bg-red-50 hover:text-red-500 transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Keluar
@@ -157,14 +157,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex-1 flex flex-col min-w-0">
 
         {/* Mobile topbar */}
-        <header className="md:hidden h-14 bg-white border-b px-4 flex items-center gap-3 flex-shrink-0">
+        <header className="md:hidden h-[58px] bg-white border-b border-[#ebebeb] px-4 flex items-center gap-3 flex-shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-gray-500 hover:text-gray-800"
+            className="text-[#888] hover:text-[#333]"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-[18px] h-[18px]" />
           </button>
-          <span className="font-semibold text-sm">Admin Panel</span>
+          <span className="font-semibold text-[13px]">Admin Panel</span>
         </header>
 
         <main className="flex-1 overflow-auto p-4 md:p-6">

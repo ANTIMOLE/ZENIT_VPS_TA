@@ -42,7 +42,7 @@ function PasswordStrength({ password }: { password: string }) {
   return (
     <ul className="mt-2 space-y-1">
       {rules.map(r => (
-        <li key={r.label} className={cn("flex items-center gap-1.5 text-xs", r.ok ? "text-green-600" : "text-gray-400")}>
+        <li key={r.label} className={cn("flex items-center gap-1.5 text-[11px]", r.ok ? "text-green-600" : "text-[#bbb]")}>
           {r.ok ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
           {r.label}
         </li>
@@ -53,9 +53,9 @@ function PasswordStrength({ password }: { password: string }) {
 
 export default function RegisterPage() {
   const { register: registerUser, isRegisterLoading } = useAuth();
-  const [showPass, setShowPass]           = useState(false);
-  const [showConfirm, setShowConfirm]     = useState(false);
-  const [captchaDone, setCaptchaDone]     = useState(false);
+  const [showPass, setShowPass]       = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [captchaDone, setCaptchaDone] = useState(false);
 
   const {
     register,
@@ -73,12 +73,12 @@ export default function RegisterPage() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <div className="bg-white rounded-xl border border-[#e5e5e5] p-8">
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Buat Akun Zenit</h1>
-          <p className="text-gray-500 text-sm mt-1">
+        <div className="mb-7">
+          <h1 className="text-[1.5rem] font-bold text-[#111] tracking-tight">Buat Akun Zenit</h1>
+          <p className="text-[#999] text-sm mt-1">
             Sudah punya akun?{" "}
             <Link href="/login" className="text-primary font-medium hover:underline">
               Masuk di sini
@@ -89,9 +89,9 @@ export default function RegisterPage() {
         {/* Social Auth */}
         <SocialAuthButtons mode="register" />
 
-        <div className="relative my-6">
+        <div className="relative my-5">
           <Separator />
-          <span className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs text-gray-400">
+          <span className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-[11px] text-[#bbb]">
             atau daftar dengan email
           </span>
         </div>
@@ -136,7 +136,7 @@ export default function RegisterPage() {
                 className={cn("pr-10", errors.password && "border-red-400")}
               />
               <button type="button" onClick={() => setShowPass(!showPass)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#bbb] hover:text-[#666]">
                 {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
@@ -156,7 +156,7 @@ export default function RegisterPage() {
                 className={cn("pr-10", errors.confirmPassword && "border-red-400")}
               />
               <button type="button" onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#bbb] hover:text-[#666]">
                 {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
@@ -172,7 +172,7 @@ export default function RegisterPage() {
           />
 
           {/* Terms */}
-          <p className="text-xs text-gray-500 text-center">
+          <p className="text-[11px] text-[#aaa] text-center leading-relaxed">
             Dengan mendaftar, kamu menyetujui{" "}
             <span className="text-primary cursor-pointer hover:underline">Syarat & Ketentuan</span>
             {" "}dan{" "}
@@ -180,7 +180,7 @@ export default function RegisterPage() {
             {" "}Zenit.
           </p>
 
-          {/* Submit — FIXED: solid primary, tidak pakai gradient */}
+          {/* Submit */}
           <Button
             type="submit"
             className="w-full h-11 font-semibold"
@@ -194,9 +194,9 @@ export default function RegisterPage() {
           </Button>
         </form>
 
-        <p className="text-xs text-gray-400 text-center mt-4 flex items-center justify-center gap-1">
+        <p className="text-[11px] text-[#bbb] text-center mt-4 flex items-center justify-center gap-1">
           <ShieldCheck className="w-3 h-3" />
-          Dilindungi reCAPTCHA — Privasi & Syarat berlaku
+          Dilindungi reCAPTCHA — Privasi &amp; Syarat berlaku
         </p>
       </div>
     </div>

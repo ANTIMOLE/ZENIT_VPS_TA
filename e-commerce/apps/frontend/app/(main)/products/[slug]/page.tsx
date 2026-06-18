@@ -46,7 +46,7 @@ function ProductDetailImage({
   };
 
   return (
-    <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-50 border">
+    <div className="relative aspect-square rounded-lg overflow-hidden bg-[#f8f8f8] border-0">
       <Image
         src={imgSrc}
         alt={name}
@@ -60,7 +60,7 @@ function ProductDetailImage({
         unoptimized={imgSrc.startsWith("http")}
       />
       {discount && discount > 0 ? (
-        <span className="absolute top-3 left-3 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-lg">
+        <span className="absolute top-3 left-3 bg-red-500 text-white text-[11px] font-semibold px-1.5 py-0.5 rounded-[4px]">
           -{discount}%
         </span>
       ) : null}
@@ -85,7 +85,7 @@ export default function ProductDetailPage({ params }: Props) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-8">
-          <Skeleton className="w-full md:w-96 aspect-square rounded-2xl" />
+          <Skeleton className="w-full md:w-96 aspect-square rounded-lg" />
           <div className="flex-1 space-y-4">
             <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-8 w-1/2" />
@@ -125,7 +125,7 @@ export default function ProductDetailPage({ params }: Props) {
     <div className="max-w-5xl mx-auto px-4 py-6">
 
       {/* ── Breadcrumb ──────────────────────────────────────── */}
-      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+      <nav className="flex items-center gap-2 text-sm text-[#999] mb-6">
         <button
           onClick={() => router.back()}
           className="flex items-center gap-1 hover:text-primary transition-colors"
@@ -149,7 +149,7 @@ export default function ProductDetailPage({ params }: Props) {
           </>
         )}
         <span>/</span>
-        <span className="text-gray-800 truncate max-w-48">{product.name}</span>
+        <span className="text-[#333] truncate max-w-48">{product.name}</span>
       </nav>
 
       <div className="flex flex-col md:flex-row gap-8">
@@ -176,16 +176,16 @@ export default function ProductDetailPage({ params }: Props) {
           )}
 
           {/* Nama */}
-          <h1 className="text-2xl font-bold leading-snug text-gray-900">
+          <h1 className="text-2xl font-bold leading-snug text-[#111]">
             {product.name}
           </h1>
 
           {/* Rating + terjual */}
-          <div className="flex items-center gap-3 text-sm text-gray-500">
+          <div className="flex items-center gap-3 text-sm text-[#999]">
             {product.rating ? (
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                <span className="font-medium text-gray-700">{product.rating}</span>
+                <span className="font-medium text-[#555]">{product.rating}</span>
               </div>
             ) : null}
             <span>·</span>
@@ -207,7 +207,7 @@ export default function ProductDetailPage({ params }: Props) {
               {discountedPrice ? formatPrice(discountedPrice) : formatPrice(product.price)}
             </p>
             {discountedPrice && (
-              <p className="text-base text-gray-400 line-through mb-0.5">
+              <p className="text-base text-[#bbb] line-through mb-0.5">
                 {formatPrice(product.price)}
               </p>
             )}
@@ -222,8 +222,8 @@ export default function ProductDetailPage({ params }: Props) {
           {/* Deskripsi */}
           {product.description && (
             <div className="border-t pt-4">
-              <p className="text-sm font-semibold text-gray-700 mb-2">Deskripsi Produk</p>
-              <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+              <p className="text-sm font-semibold text-[#444] mb-2">Deskripsi Produk</p>
+              <p className="text-sm text-[#666] leading-relaxed whitespace-pre-line">
                 {product.description}
               </p>
             </div>
@@ -263,13 +263,13 @@ export default function ProductDetailPage({ params }: Props) {
           )}
 
           {/* Info tambahan */}
-          <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm text-gray-600">
+          <div className="bg-[#f8f8f8] rounded-lg p-4 space-y-2 text-sm text-[#555]">
             <div className="flex items-center gap-2">
-              <Tag className="w-4 h-4 text-gray-400" />
+              <Tag className="w-4 h-4 text-[#bbb]" />
               <span>Harga sudah termasuk pajak</span>
             </div>
             <div className="flex items-center gap-2">
-              <Package className="w-4 h-4 text-gray-400" />
+              <Package className="w-4 h-4 text-[#bbb]" />
               <span>Pengiriman ke seluruh Indonesia</span>
             </div>
           </div>

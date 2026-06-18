@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle2, Package, ArrowRight, ShoppingBag } from "lucide-react";
+import { CheckCircle2, Package, ArrowRight, ShoppingBag, CircleDot, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/lib/constants";
@@ -21,38 +21,38 @@ function CheckoutSuccessContent() {
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-16">
       <div className="max-w-md w-full text-center">
 
-        <div className="flex justify-center mb-6">
-          <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center animate-in zoom-in-50 duration-500">
-            <CheckCircle2 className="w-12 h-12 text-green-500" />
+        <div className="flex justify-center mb-5">
+          <div className="animate-in zoom-in-50 duration-300">
+            <CheckCircle2 className="w-14 h-14 text-[#7132f5]" strokeWidth={1.5} />
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Pesanan Berhasil! 🎉</h1>
-        <p className="text-gray-500 mb-6">
+        <h1 className="text-2xl font-bold text-[#111] mb-2 tracking-tight">Pesanan Berhasil</h1>
+        <p className="text-[#888] mb-6">
           Terima kasih sudah berbelanja di Zenit. Pesanan kamu sedang kami proses.
         </p>
 
         {orderNumber && (
-          <div className="bg-gray-50 rounded-2xl p-5 mb-6 text-left">
-            <p className="text-xs text-gray-500 mb-1">Nomor Pesanan</p>
-            <p className="font-mono font-bold text-lg text-gray-800">{orderNumber}</p>
-            <p className="text-xs text-gray-400 mt-1">
+          <div className="bg-[#fafaf9] rounded-lg border border-[#ebebeb] p-5 mb-6 text-left">
+            <p className="text-xs text-[#888] mb-1">Nomor Pesanan</p>
+            <p className="font-mono font-bold text-lg text-[#111]">{orderNumber}</p>
+            <p className="text-xs text-[#aaa] mt-1">
               Simpan nomor ini untuk melacak status pesananmu.
             </p>
           </div>
         )}
 
-        <div className="bg-white border rounded-2xl p-5 mb-6 text-left space-y-3">
+        <div className="bg-white border border-[#ebebeb] rounded-lg p-5 mb-6 text-left space-y-3">
           {[
-            { icon: "✅", label: "Pesanan diterima",     sub: "Kami sudah menerima pesananmu" },
-            { icon: "📦", label: "Dikemas",              sub: "Pesanan sedang disiapkan" },
-            { icon: "🚚", label: "Dikirim ke alamatmu", sub: "Estimasi 1-5 hari kerja" },
+            { icon: <CheckCircle2 className="w-4 h-4 text-[#7132f5]" />, label: "Pesanan diterima",     sub: "Kami sudah menerima pesananmu" },
+            { icon: <Package      className="w-4 h-4 text-[#aaa]" />,    label: "Dikemas",              sub: "Pesanan sedang disiapkan" },
+            { icon: <Truck        className="w-4 h-4 text-[#aaa]" />,    label: "Dikirim ke alamatmu", sub: "Estimasi 1-5 hari kerja" },
           ].map((s, i) => (
             <div key={i} className="flex items-start gap-3">
-              <span className="text-xl">{s.icon}</span>
+              <div className="mt-0.5 flex-shrink-0">{s.icon}</div>
               <div>
-                <p className="text-sm font-medium text-gray-800">{s.label}</p>
-                <p className="text-xs text-gray-400">{s.sub}</p>
+                <p className="text-sm font-medium text-[#333]">{s.label}</p>
+                <p className="text-xs text-[#aaa]">{s.sub}</p>
               </div>
             </div>
           ))}
@@ -73,7 +73,7 @@ function CheckoutSuccessContent() {
           <Button variant="outline" className="w-full gap-2" asChild>
             <Link href={ROUTES.ORDERS}>Semua Pesanan Saya</Link>
           </Button>
-          <Button variant="ghost" className="w-full gap-2 text-gray-500" asChild>
+          <Button variant="ghost" className="w-full gap-2 text-[#888]" asChild>
             <Link href={ROUTES.PRODUCTS}>
               <ShoppingBag className="w-4 h-4" /> Lanjut Belanja
             </Link>

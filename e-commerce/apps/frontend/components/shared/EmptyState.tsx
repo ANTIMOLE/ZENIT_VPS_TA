@@ -15,14 +15,21 @@ export function EmptyState({ icon, emoji, title, description, action, className 
   return (
     <div className={cn("flex flex-col items-center justify-center py-16 text-center px-4", className)}>
       {emoji ? (
-        <p className="text-5xl mb-4">{emoji}</p>
+        <p className="text-4xl mb-4">{emoji}</p>
       ) : icon ? (
-        <div className="text-gray-300 mb-4">{icon}</div>
+        <div className="text-[#ccc] mb-4">{icon}</div>
       ) : null}
-      <p className="font-semibold text-gray-700 mb-1">{title}</p>
-      {description && <p className="text-sm text-gray-400 max-w-xs">{description}</p>}
+      <p className="font-semibold text-[#333] mb-1">{title}</p>
+      {description && (
+        <p className="text-sm text-[#999] max-w-xs leading-relaxed">{description}</p>
+      )}
       {action && (
-        <Button variant="outline" size="sm" className="mt-4" onClick={action.onClick}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mt-5"
+          onClick={action.onClick}
+        >
           {action.label}
         </Button>
       )}

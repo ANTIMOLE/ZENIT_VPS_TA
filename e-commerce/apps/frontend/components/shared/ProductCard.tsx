@@ -30,64 +30,59 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const handleImageError = () => {
     const localPath = product.images[1]; // e.g. "images/category/slug.jpg"
     if (localPath && imgSrc !== `/${localPath}`) {
-      // Step 2: coba copy lokal yang disimpan di /public/
       setImgSrc(`/${localPath}`);
     } else if (imgSrc !== PLACEHOLDER_IMAGE) {
-      // Step 3: fallback ke placeholder
       setImgSrc(PLACEHOLDER_IMAGE);
     }
-    // Kalau imgSrc sudah PLACEHOLDER_IMAGE, stop — jangan infinite loop
   };
 
   return (
     <Link
       href={ROUTES.PRODUCT_DETAIL(product.slug)}
       className={cn(
-        "group flex flex-col bg-white rounded-xl border border-gray-100 overflow-hidden",
-        "hover:shadow-md hover:-translate-y-0.5 transition-all duration-200",
+        "group flex flex-col bg-white rounded-lg border border-[#ebebeb] overflow-hidden",
+        "hover:border-primary/20 hover: transition-all duration-150",
         className
       )}
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-gray-50">
+      <div className="relative aspect-square overflow-hidden bg-[#f8f8f8]">
         <Image
           src={imgSrc}
           alt={product.name}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-cover group-hover:scale-[1.03] transition-transform duration-300"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           onError={handleImageError}
-          // unoptimized hanya untuk URL tokopedia yang mungkin punya query string
-          // kompleks; Next.js image optimizer tetap jalan untuk path lokal
           unoptimized={imgSrc.startsWith("http")}
         />
         {/* Discount badge */}
         {product.discount && product.discount > 0 ? (
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded">
-            {product.discount}%
+          <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-1.5 py-0.5 rounded-[4px]">
+            -{product.discount}%
           </span>
         ) : null}
       </div>
 
       {/* Info */}
-      <div className="flex flex-col gap-1 p-3">
+      <div className="flex flex-col gap-0.5 p-2.5">
         {/* Name */}
-        <p className="text-sm text-gray-800 leading-snug line-clamp-2">
+        <p className="text-[13px] text-[#333] leading-snug line-clamp-2 font-normal">
           {truncate(product.name, 60)}
         </p>
 
         {/* Price */}
-        <p className="text-base font-bold text-primary mt-0.5">
+        <p className="text-[15px] font-semibold text-primary mt-0.5 tracking-tight">
           {formatPrice(product.price)}
         </p>
 
         {/* Rating + Sold */}
-        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+        <div className="flex items-center gap-1 text-[11px] text-[#999] mt-0.5">
           {product.rating ? (
             <>
-              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+              <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
               <span>{product.rating}</span>
-              <span>·</span>
+              <span className="text-[#ddd]">·</span>
             </>
           ) : null}
           <span>{formatSoldCount(product.soldCount)} terjual</span>
@@ -95,7 +90,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
 
         {/* Location */}
         {product.location ? (
-          <p className="text-xs text-gray-400 truncate">{product.location}</p>
+          <p className="text-[11px] text-[#bbb] truncate mt-0.5">{product.location}</p>
         ) : null}
       </div>
     </Link>
@@ -105,13 +100,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
 // ── Skeleton ──────────────────────────────────────────────────
 export function ProductCardSkeleton() {
   return (
-    <div className="flex flex-col bg-white rounded-xl border border-gray-100 overflow-hidden animate-pulse">
-      <div className="aspect-square bg-gray-200" />
-      <div className="flex flex-col gap-2 p-3">
-        <div className="h-3 bg-gray-200 rounded w-full" />
-        <div className="h-3 bg-gray-200 rounded w-3/4" />
-        <div className="h-4 bg-gray-200 rounded w-1/2 mt-1" />
-        <div className="h-3 bg-gray-200 rounded w-2/3" />
+    <div className="flex flex-col bg-white rounded-lg border border-[#ebebeb] overflow-hidden animate-pulse">
+      <div className="aspect-square bg-[#f0f0f0]" />
+      <div className="flex flex-col gap-2 p-2.5">
+        <div className="h-3 bg-[#f0f0f0] rounded w-full" />
+        <div className="h-3 bg-[#f0f0f0] rounded w-3/4" />
+        <div className="h-4 bg-[#f0f0f0] rounded w-1/2 mt-1" />
+        <div className="h-2.5 bg-[#f0f0f0] rounded w-2/3" />
       </div>
     </div>
   );

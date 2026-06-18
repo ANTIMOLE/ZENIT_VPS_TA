@@ -4,8 +4,8 @@
 // ============================================================
 
 // ── API ──────────────────────────────────────────────────────
-export const API_BASE_URL = process.env.NEXT_PUBLIC_REST_API_URL ?? "http://localhost:4000/api/v1";
-export const TRPC_BASE_URL = process.env.NEXT_PUBLIC_TRPC_API_URL ?? "http://localhost:4001/trpc";
+export const API_BASE_URL  = "/api/v1";   // proxied via next.config.ts rewrites — same-origin
+export const TRPC_BASE_URL = "/trpc";     // proxied via next.config.ts rewrites — same-origin
 
 // ── Pagination ───────────────────────────────────────────────
 export const DEFAULT_PAGE_SIZE = 12;

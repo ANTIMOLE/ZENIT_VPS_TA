@@ -1,5 +1,3 @@
-// 
-
 "use client";
 
 import { useCallback } from "react";
@@ -30,13 +28,18 @@ export function useAuth() {
   const loginMutation = useMutation({
     mutationFn: async (input: LoginInput) => {
       const res = await api.post<{ success: boolean; data: User }>("/auth/login", input);
-      return res.data.data; // Hanya return data user, token disimpan otomatis via cookie
+      return res.data.data;
     },
     onSuccess: (data) => {
-      qc.setQueryData(queryKeys.auth.me, data); // Update cache user setelah login
-      toast.success(`Selamat datang, ${data.name}!`); 
-      const params = new URLSearchParams(window.location.search); // Cek query param "from" untuk redirect setelah login
-      router.push(params.get("from") ?? ROUTES.HOME);
+      qc.setQueryData(queryKeys.auth.me, data);
+      toast.success(`Selamat datang, ${data.name}!`);
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get("from");
+      // [FIX] router.refresh() dulu — clear Next.js router cache supaya
+      // middleware re-run dengan cookie baru. Tanpa ini, navigasi ke /cart
+      // pakai cached redirect response dari sebelum login.
+      router.refresh();
+      router.push(from ?? (data.role === "ADMIN" ? "/admin/dashboard" : ROUTES.HOME));
     },
     onError: (err) => toast.error(getErrorMessage(err)),
   });
@@ -50,6 +53,7 @@ export function useAuth() {
     onSuccess: (data) => {
       qc.setQueryData(queryKeys.auth.me, data);
       toast.success("Akun berhasil dibuat!");
+      router.refresh();
       router.push(ROUTES.HOME);
     },
     onError: (err) => toast.error(getErrorMessage(err)),
@@ -63,23 +67,18 @@ export function useAuth() {
       // Tetap logout meski request gagal
     } finally {
       qc.clear();
+      // [FIX] router.refresh() — clear cache supaya protected routes
+      // tidak accessible setelah logout tanpa full page reload
+      router.refresh();
       router.push(ROUTES.LOGIN);
     }
   }, [qc, router]);
 
-  // ── changePassword — KAMU YANG LANJUT ───────────────────
-  /**
-   * TODO:
-   * 1. mutationFn: hit PATCH /auth/change-password dengan body { oldPassword, newPassword }
-   * 2. onSuccess: toast.success("Password berhasil diubah")
-   *
-   * HINT: Lihat loginMutation — strukturnya sama persis,
-   *       bedanya endpoint PATCH dan body berbeda
-   */
+  // ── changePassword ───────────────────────────────────────
   const changePasswordMutation = useMutation({
     mutationFn: async (_input: { oldPassword: string; newPassword: string }) => {
-        const res = await api.patch<{ success: boolean }>("/auth/change-password", _input);
-        return res.data.success;
+      const res = await api.patch<{ success: boolean }>("/auth/change-password", _input);
+      return res.data.success;
     },
     onSuccess: () => {
       toast.success("Password berhasil diubah");
@@ -87,32 +86,10 @@ export function useAuth() {
     onError: (err) => toast.error(getErrorMessage(err)),
   });
 
-  // // ── updateProfile — KAMU YANG LANJUT ────────────────────
-  // /**
-  //  * TODO:
-  //  * 1. mutationFn: hit PATCH /auth/profile dengan body { name?, phone? }
-  //  * 2. onSuccess:
-  //  *    - qc.invalidateQueries({ queryKey: queryKeys.auth.me })
-  //  *    - toast.success("Profil berhasil diperbarui")
-  //  *
-  //  * HINT: Invalidate supaya data user di header/navbar ikut update
-  //  */
-  // const updateProfileMutation = useMutation({
-  //   mutationFn: async (_input: { name?: string; phone?: string }) => {
-  //     const res = await api.patch<{ success: boolean }>("/auth/profile", _input);
-  //     return res.data.success;
-  //   },
-  //   onSuccess: () => {
-  //     qc.invalidateQueries({ queryKey: queryKeys.auth.me });
-  //     toast.success("Profil berhasil diperbarui");
-  //   },
-  //   onError: (err) => toast.error(getErrorMessage(err)),
-  // });
-
   return {
     user,
     isLoading,
-    isAuthenticated:         !!user && !isError,
+    isAuthenticated:         !!user,
     login:                   loginMutation.mutate,
     loginAsync:              loginMutation.mutateAsync,
     isLoginLoading:          loginMutation.isPending,
@@ -121,7 +98,5 @@ export function useAuth() {
     logout,
     changePassword:          changePasswordMutation.mutate,
     isChangePasswordLoading: changePasswordMutation.isPending,
-    // updateProfile:           updateProfileMutation.mutate,
-    // isUpdateProfileLoading:  updateProfileMutation.isPending,
   };
 }

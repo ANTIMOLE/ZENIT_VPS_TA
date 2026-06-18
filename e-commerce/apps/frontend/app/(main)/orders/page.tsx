@@ -48,7 +48,7 @@ export default function OrdersPage() {
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Pesanan Saya</h1>
-        <p className="text-sm text-gray-500 mt-1">Riwayat dan status semua pesananmu</p>
+        <p className="text-sm text-[#888] mt-1">Riwayat dan status semua pesananmu</p>
       </div>
 
       {/* Status tabs — scroll horizontal di mobile */}
@@ -62,7 +62,7 @@ export default function OrdersPage() {
                 "px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap",
                 activeStatus === tab.value
                   ? "bg-primary text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  : "bg-[#f5f5f5] text-[#555] hover:bg-[#ebebeb]"
               )}
             >
               {tab.label}
@@ -75,7 +75,7 @@ export default function OrdersPage() {
       {isLoading && (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl border p-4 space-y-3">
+            <div key={i} className="bg-white rounded-lg border border-[#ebebeb] p-4 space-y-3">
               <div className="flex justify-between">
                 <Skeleton className="h-4 w-36" />
                 <Skeleton className="h-5 w-20 rounded-full" />
@@ -83,7 +83,7 @@ export default function OrdersPage() {
               <Skeleton className="h-3 w-24" />
               <Separator />
               <div className="flex gap-3">
-                <Skeleton className="w-12 h-12 rounded-xl flex-shrink-0" />
+                <Skeleton className="w-12 h-12 rounded-[6px] flex-shrink-0" />
                 <div className="flex-1 space-y-1.5">
                   <Skeleton className="h-3 w-3/4" />
                   <Skeleton className="h-3 w-1/2" />
@@ -119,14 +119,14 @@ export default function OrdersPage() {
             <Link
               key={order.id}
               href={ROUTES.ORDER_DETAIL(order.id)}
-              className="block bg-white rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
+              className="block bg-white rounded-lg border border-[#ebebeb] hover:border-primary/20 hover:shadow-sm transition-all duration-150"
             >
               <div className="p-4">
                 {/* Top row: order number + status */}
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <div className="flex items-center gap-2">
-                    <Package className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-sm font-semibold text-gray-800 font-mono">
+                    <Package className="w-4 h-4 text-[#aaa] flex-shrink-0" />
+                    <span className="text-sm font-semibold text-[#222] font-mono">
                       {order.orderNumber}
                     </span>
                   </div>
@@ -138,7 +138,7 @@ export default function OrdersPage() {
                   </span>
                 </div>
 
-                <p className="text-xs text-gray-400 mb-3 ml-6">
+                <p className="text-xs text-[#aaa] mb-3 ml-6">
                   {formatDateTime(order.createdAt)}
                 </p>
 
@@ -148,7 +148,7 @@ export default function OrdersPage() {
                 <div className="space-y-2 mb-3">
                   {order.items.slice(0, 2).map(item => (
                     <div key={item.id} className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gray-100 flex-shrink-0 overflow-hidden">
+                      <div className="w-10 h-10 rounded-[6px] bg-[#f5f5f5] flex-shrink-0 overflow-hidden">
                         {item.productImage ? (
                           <img
                             src={item.productImage}
@@ -156,21 +156,21 @@ export default function OrdersPage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-300">
+                          <div className="w-full h-full flex items-center justify-center text-[#ddd]">
                             <Package className="w-4 h-4" />
                           </div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-800 truncate">{item.productName}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-sm text-[#333] truncate">{item.productName}</p>
+                        <p className="text-xs text-[#888]">
                           {item.quantity} × {formatPrice(item.unitPrice)}
                         </p>
                       </div>
                     </div>
                   ))}
                   {(order.items.length ?? 0) > 2 && (
-                    <p className="text-xs text-gray-400 ml-13">
+                    <p className="text-xs text-[#aaa] ml-13">
                       +{order.items.length - 2} produk lainnya
                     </p>
                   )}
@@ -179,7 +179,7 @@ export default function OrdersPage() {
                 {/* Bottom row: total + detail link */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-gray-500">Total: </span>
+                    <span className="text-xs text-[#888]">Total: </span>
                     <span className="text-sm font-bold text-primary">
                       {formatPrice(order.total)}
                     </span>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 import "./globals.css";
 
@@ -15,7 +16,7 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#6C63FF",
+  themeColor: "#7132f5",
 };
 
 export const metadata: Metadata = {
@@ -83,6 +84,15 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body className={`${jakarta.variable} font-sans`}>
+        {/* Top loading bar — muncul saat navigasi antar halaman */}
+        <NextTopLoader
+          color="#7132f5"
+          showSpinner={false}
+          height={2}
+          shadow={false}
+          easing="ease"
+          speed={200}
+        />
         <Providers>
           {children}
           <Toaster richColors position="top-right" />

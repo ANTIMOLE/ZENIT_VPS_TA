@@ -30,85 +30,84 @@
   --radius-xl:  calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
 
-  /* Zenit brand colors — bisa dipakai langsung: bg-zenit-primary, text-zenit-teal */
-  --color-zenit-primary: #6C63FF;
-  --color-zenit-teal:    #3ECFCF;
-  --color-zenit-dark:    #0F0F1A;
+  /* Zenit brand tokens */
+  --color-zenit-primary: #7132f5;
+  --color-zenit-dark:    #0e0e12;
 }
 
 /* ── LIGHT MODE ─────────────────────────────────────────────── */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem; /* 8px — lebih tajam dari default 10px shadcn */
 
   --background:         oklch(1 0 0);
-  --foreground:         oklch(0.13 0.02 285);
+  --foreground:         oklch(0.11 0.01 283);
 
   --card:               oklch(1 0 0);
-  --card-foreground:    oklch(0.13 0.02 285);
+  --card-foreground:    oklch(0.11 0.01 283);
 
   --popover:            oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.02 285);
+  --popover-foreground: oklch(0.11 0.01 283);
 
-  /* Primary = Zenit violet #6C63FF */
-  --primary:            oklch(0.55 0.22 270);
+  /* Primary = #7132f5 — deep violet, opinionated */
+  --primary:            oklch(0.49 0.27 283);
   --primary-foreground: oklch(1 0 0);
 
-  /* Secondary = light violet tint */
-  --secondary:          oklch(0.95 0.03 270);
-  --secondary-foreground: oklch(0.55 0.22 270);
+  /* Secondary = very light violet tint */
+  --secondary:          oklch(0.96 0.02 283);
+  --secondary-foreground: oklch(0.49 0.27 283);
 
-  /* Muted = neutral gray */
-  --muted:              oklch(0.96 0.005 286);
-  --muted-foreground:   oklch(0.55 0.015 286);
+  /* Muted = warm off-white */
+  --muted:              oklch(0.97 0.002 283);
+  --muted-foreground:   oklch(0.52 0.01 283);
 
-  /* Accent = Zenit teal #3ECFCF */
-  --accent:             oklch(0.94 0.06 192);
-  --accent-foreground:  oklch(0.35 0.10 192);
+  /* Accent = subtle violet wash */
+  --accent:             oklch(0.96 0.02 283);
+  --accent-foreground:  oklch(0.49 0.27 283);
 
   --destructive:        oklch(0.58 0.24 27);
 
-  --border:             oklch(0.91 0.008 270);
-  --input:              oklch(0.91 0.008 270);
-  --ring:               oklch(0.55 0.22 270);
+  --border:             oklch(0.92 0.004 283);
+  --input:              oklch(0.92 0.004 283);
+  --ring:               oklch(0.49 0.27 283);
 }
 
 /* ── DARK MODE ──────────────────────────────────────────────── */
 .dark {
-  /* Dark bg = Zenit #0F0F1A */
-  --background:         oklch(0.11 0.02 285);
+  --background:         oklch(0.10 0.015 283);
   --foreground:         oklch(0.97 0 0);
 
-  --card:               oklch(0.15 0.02 285);
+  --card:               oklch(0.14 0.015 283);
   --card-foreground:    oklch(0.97 0 0);
 
-  --popover:            oklch(0.15 0.02 285);
+  --popover:            oklch(0.14 0.015 283);
   --popover-foreground: oklch(0.97 0 0);
 
-  /* Primary = brighter violet in dark */
-  --primary:            oklch(0.65 0.22 270);
-  --primary-foreground: oklch(0.11 0.02 285);
+  /* Primary lighter in dark for contrast */
+  --primary:            oklch(0.64 0.24 283);
+  --primary-foreground: oklch(0.10 0.015 283);
 
-  --secondary:          oklch(0.20 0.03 285);
+  --secondary:          oklch(0.19 0.025 283);
   --secondary-foreground: oklch(0.97 0 0);
 
-  --muted:              oklch(0.20 0.03 285);
-  --muted-foreground:   oklch(0.65 0.015 285);
+  --muted:              oklch(0.19 0.025 283);
+  --muted-foreground:   oklch(0.62 0.01 283);
 
-  /* Accent = teal slightly brighter */
-  --accent:             oklch(0.22 0.05 192);
-  --accent-foreground:  oklch(0.77 0.12 192);
+  --accent:             oklch(0.21 0.04 283);
+  --accent-foreground:  oklch(0.75 0.10 283);
 
   --destructive:        oklch(0.70 0.19 22);
 
-  --border:             oklch(1 0 0 / 10%);
-  --input:              oklch(1 0 0 / 15%);
-  --ring:               oklch(0.65 0.22 270);
+  --border:             oklch(1 0 0 / 9%);
+  --input:              oklch(1 0 0 / 13%);
+  --ring:               oklch(0.64 0.24 283);
 }
 
 /* ── BASE ───────────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Hapus tap highlight biru di mobile */
+    -webkit-tap-highlight-color: transparent;
   }
   html {
     @apply scroll-smooth;
@@ -117,39 +116,56 @@
     @apply bg-background text-foreground antialiased;
   }
 
-  /* Typography scale */
-  h1 { @apply text-4xl font-bold tracking-tight; }
-  h2 { @apply text-3xl font-semibold tracking-tight; }
-  h3 { @apply text-2xl font-semibold; }
-  h4 { @apply text-xl font-semibold; }
+  /* Semua elemen interaktif dapat cursor pointer + transition cepat */
+  a, button, [role="button"], [tabindex]:not([tabindex="-1"]) {
+    cursor: pointer;
+  }
+  a {
+    transition: color 150ms ease, opacity 150ms ease;
+  }
+
+  /* Typography scale — lebih presisi, bukan sekadar bold */
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 650;
+    line-height: 1.20;
+    letter-spacing: -0.025em;
+  }
+  h3 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.30;
+    letter-spacing: -0.01em;
+  }
 }
 
 /* ── UTILITIES ──────────────────────────────────────────────── */
 @layer utilities {
-  /*
-   * Gradient text — GUNAKAN SANGAT HEMAT.
-   * Satu elemen per halaman, hanya untuk momen editorial/dekoratif.
-   * JANGAN gunakan di tombol, label form, atau elemen interaktif.
-   */
-  .text-gradient {
-    background: linear-gradient(135deg, #6C63FF 0%, #3ECFCF 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Card hover effect */
-  .card-hover {
-    @apply transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
-  }
-
   /* Price text */
   .text-price {
-    @apply font-bold text-primary;
+    @apply font-semibold text-primary;
   }
 
   /* Badge sold */
   .badge-sold {
     @apply text-xs text-muted-foreground;
+  }
+
+  /* Hairline border — lebih subtle dari border default */
+  .border-hairline {
+    border-color: oklch(0.91 0.004 283);
+    border-width: 1px;
   }
 }

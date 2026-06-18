@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -15,7 +15,8 @@ import { PLACEHOLDER_IMAGE, ROUTES } from "@/lib/constants";
 
 
 export default function CartPage() {
-  const router = useRouter();
+  const router   = useRouter();
+  const pathname = usePathname();
   const { isAuthenticated, isLoading: loadingAuth } = useAuth();
 
   const { cart, isLoading, isEmpty, subtotal, tax, total,
@@ -26,21 +27,8 @@ export default function CartPage() {
   const isUpdatingItem = isMutating;
   const isRemovingItem = isMutating;
 
-  // ── Belum login ─────────────────────────────────────────────
-  if (!loadingAuth && !isAuthenticated) {
-    return (
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        <EmptyState
-          emoji="🔒"
-          title="Login dulu yuk"
-          description="Kamu perlu login untuk melihat keranjang belanja."
-          action={{ label: "Login Sekarang", onClick: () => router.push(ROUTES.LOGIN) }}
-        />
-      </div>
-    );
-  }
 
-  // ── Loading ─────────────────────────────────────────────────
+  // ── [FIX #1] Loading DULU — cegah auth guard nembak sebelum user resolve ──
   if (isLoading || loadingAuth) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -48,8 +36,8 @@ export default function CartPage() {
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 space-y-4">
             {[1, 2, 3].map(i => (
-              <div key={i} className="bg-white rounded-2xl border p-4 flex gap-4">
-                <Skeleton className="w-20 h-20 rounded-xl shrink-0" />
+              <div key={i} className="bg-white rounded-lg border border-[#ebebeb] p-4 flex gap-4">
+                <Skeleton className="w-20 h-20 rounded-[6px] shrink-0" />
                 <div className="flex-1 space-y-2">
                   <Skeleton className="h-4 w-3/4" />
                   <Skeleton className="h-5 w-1/3" />
@@ -58,8 +46,25 @@ export default function CartPage() {
               </div>
             ))}
           </div>
-          <Skeleton className="w-full lg:w-72 h-56 rounded-2xl" />
+          <Skeleton className="w-full lg:w-72 h-56 rounded-lg" />
         </div>
+      </div>
+    );
+  }
+
+  // ── [FIX #2] Auth check SETELAH loading — + pass ?from= supaya after login balik ke sini ──
+  if (!isAuthenticated) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-16">
+        <EmptyState
+          emoji="🔒"
+          title="Login dulu yuk"
+          description="Kamu perlu login untuk melihat keranjang belanja."
+          action={{
+            label: "Login Sekarang",
+            onClick: () => router.push(`${ROUTES.LOGIN}?from=${pathname}`),
+          }}
+        />
       </div>
     );
   }
@@ -84,7 +89,7 @@ export default function CartPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">
         Keranjang Belanja
-        <span className="ml-2 text-sm font-normal text-gray-500">
+        <span className="ml-2 text-sm font-normal text-[#999]">
           ({cart?.items?.length ?? 0} item)
         </span>
       </h1>
@@ -96,10 +101,10 @@ export default function CartPage() {
           {cart?.items?.map(item => {
             const imgUrl = getImageUrl(item.product?.images?.[0]);
             return (
-              <div key={item.id} className="bg-white rounded-2xl border shadow-sm p-4 flex gap-4">
+              <div key={item.id} className="bg-white rounded-lg border border-[#ebebeb] p-4 flex gap-4">
                 {/* Gambar */}
                 <Link href={ROUTES.PRODUCT_DETAIL(item.product.slug)} className="shrink-0">
-                  <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gray-50 border">
+                  <div className="relative w-20 h-20 rounded-[6px] overflow-hidden bg-[#f8f8f8] border-0">
                     <Image
                       src={imgUrl}
                       alt={item.product.name}
@@ -116,11 +121,11 @@ export default function CartPage() {
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <Link href={ROUTES.PRODUCT_DETAIL(item.product.slug)}>
-                    <p className="text-sm font-medium text-gray-800 line-clamp-2 hover:text-primary transition-colors">
+                    <p className="text-sm font-medium text-[#333] line-clamp-2 hover:text-primary transition-colors">
                       {item.product.name}
                     </p>
                   </Link>
-                  <p className="text-base font-bold text-primary mt-1">
+                  <p className="text-[15px] font-semibold text-primary mt-1">
                     {formatPrice(item.priceAtTime)}
                   </p>
                   {item.product.stock < item.quantity && (
@@ -135,7 +140,7 @@ export default function CartPage() {
                       <button
                         disabled={isBusy || item.quantity <= 1}
                         onClick={() => updateItem({ cartItemId: item.id, quantity: item.quantity - 1 })}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                        className="w-8 h-8 flex items-center justify-center hover:bg-[#f5f5f5] active:bg-[#ececec] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-100"
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
@@ -145,7 +150,7 @@ export default function CartPage() {
                       <button
                         disabled={isBusy || item.quantity >= item.product.stock}
                         onClick={() => updateItem({ cartItemId: item.id, quantity: item.quantity + 1 })}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                        className="w-8 h-8 flex items-center justify-center hover:bg-[#f5f5f5] active:bg-[#ececec] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-100"
                       >
                         <Plus className="w-3.5 h-3.5" />
                       </button>
@@ -153,7 +158,7 @@ export default function CartPage() {
                     <button
                       disabled={isBusy}
                       onClick={() => removeItem(item.id)}
-                      className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 transition-colors disabled:opacity-40"
+                      className="flex items-center gap-1 text-xs text-[#bbb] hover:text-red-500 transition-colors disabled:opacity-40"
                     >
                       <Trash2 className="w-3.5 h-3.5" /> Hapus
                     </button>
@@ -162,7 +167,7 @@ export default function CartPage() {
 
                 {/* Subtotal per item */}
                 <div className="shrink-0 text-right">
-                  <p className="text-sm font-semibold text-gray-800">
+                  <p className="text-sm font-semibold text-[#333]">
                     {formatPrice(Number(item.priceAtTime) * item.quantity)}
                   </p>
                 </div>
@@ -173,20 +178,20 @@ export default function CartPage() {
 
         {/* ── Ringkasan Order ───────────────────────────────── */}
         <div className="w-full lg:w-72 shrink-0">
-          <div className="bg-white rounded-2xl border shadow-sm p-5 sticky top-20">
+          <div className="bg-white rounded-lg border border-[#ebebeb] p-5 sticky top-20">
             <h2 className="font-semibold text-base mb-4">Ringkasan Belanja</h2>
             <div className="space-y-2.5 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500">
+                <span className="text-[#888]">
                   Subtotal ({cart?.items?.length} item)
                 </span>
                 <span className="font-medium">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">PPN 11%</span>
+                <span className="text-[#888]">PPN 11%</span>
                 <span className="font-medium">{formatPrice(tax)}</span>
               </div>
-              <div className="flex justify-between text-xs text-gray-400">
+              <div className="flex justify-between text-xs text-[#bbb]">
                 <span>Ongkir</span>
                 <span>Dihitung saat checkout</span>
               </div>
@@ -205,7 +210,7 @@ export default function CartPage() {
             >
               Lanjut Checkout <ArrowRight className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" className="w-full mt-2 text-sm text-gray-500" asChild>
+            <Button variant="ghost" className="w-full mt-2 text-sm text-[#888]" asChild>
               <Link href={ROUTES.PRODUCTS}>
                 <ShoppingBag className="w-4 h-4 mr-1.5" /> Lanjut Belanja
               </Link>

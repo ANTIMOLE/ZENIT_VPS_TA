@@ -52,13 +52,13 @@ export default function OrderDetailPage({ params }: Props) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-4">
         <Skeleton className="h-5 w-24" />
-        <div className="bg-white rounded-2xl border p-5 space-y-3">
+        <div className="bg-white rounded-lg border border-[#ebebeb] p-5 space-y-3">
           <Skeleton className="h-5 w-48" />
           <Skeleton className="h-4 w-32" />
           <Skeleton className="h-6 w-24 rounded-full" />
         </div>
         {[1,2].map(i => (
-          <div key={i} className="bg-white rounded-2xl border p-5 space-y-3">
+          <div key={i} className="bg-white rounded-lg border border-[#ebebeb] p-5 space-y-3">
             <Skeleton className="h-4 w-32" />
             <Skeleton className="h-3 w-full" />
             <Skeleton className="h-3 w-3/4" />
@@ -92,27 +92,27 @@ export default function OrderDetailPage({ params }: Props) {
       {/* Back */}
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary transition-colors mb-2"
+        className="flex items-center gap-1.5 text-sm text-[#888] hover:text-primary transition-colors mb-2"
       >
         <ArrowLeft className="w-4 h-4" /> Kembali ke Pesanan
       </button>
 
       {/* ── Header Card ─────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm p-5">
+      <div className="bg-white rounded-lg border border-[#ebebeb] p-5">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div>
-            <p className="text-xs text-gray-500 mb-0.5">Nomor Pesanan</p>
-            <p className="font-mono font-bold text-gray-900">{order.orderNumber}</p>
+            <p className="text-xs text-[#888] mb-0.5">Nomor Pesanan</p>
+            <p className="font-mono font-bold text-[#111]">{order.orderNumber}</p>
           </div>
           <span className={cn(
-            "text-xs font-semibold px-2.5 py-1 rounded-full shrink-0",
+            "text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1",
             ORDER_STATUS_COLOR[order.status]
           )}>
             <StatusIcon status={order.status} />
             <span className="ml-1">{ORDER_STATUS_LABEL[order.status] ?? order.status}</span>
           </span>
         </div>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-[#aaa]">
           Dipesan pada {formatDateTime(order.createdAt)}
         </p>
 
@@ -134,15 +134,15 @@ export default function OrderDetailPage({ params }: Props) {
       </div>
 
       {/* ── Item List ───────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm">
+      <div className="bg-white rounded-lg border border-[#ebebeb]">
         <div className="flex items-center gap-2 px-5 py-4 border-b">
-          <Package className="w-4 h-4 text-gray-400" />
+          <Package className="w-4 h-4 text-[#aaa]" />
           <p className="font-semibold text-sm">Produk Dipesan</p>
         </div>
         <div className="divide-y">
           {order.items.map(item => (
             <div key={item.id} className="flex items-center gap-3 p-4">
-              <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0">
+              <div className="w-14 h-14 rounded-[6px] overflow-hidden bg-[#f5f5f5] shrink-0">
                 {/* [FIX] Tambah onError fallback ke placeholder setelah getImageUrl() fix */}
                 <img
                   src={getImageUrl(item.productImage)}
@@ -152,14 +152,14 @@ export default function OrderDetailPage({ params }: Props) {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-800 line-clamp-2">
+                <p className="text-sm font-medium text-[#333] line-clamp-2">
                   {item.productName}
                 </p>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="text-xs text-[#999] mt-0.5">
                   {item.quantity} × {formatPrice(item.unitPrice)}
                 </p>
               </div>
-              <p className="text-sm font-semibold text-gray-800 shrink-0">
+              <p className="text-sm font-semibold text-[#333] shrink-0">
                 {formatPrice(item.subtotal)}
               </p>
             </div>
@@ -168,18 +168,18 @@ export default function OrderDetailPage({ params }: Props) {
       </div>
 
       {/* ── Ringkasan Harga ─────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm p-5 space-y-2 text-sm">
+      <div className="bg-white rounded-lg border border-[#ebebeb] p-5 space-y-2 text-sm">
         <p className="font-semibold mb-3">Ringkasan Pembayaran</p>
-        <div className="flex justify-between text-gray-600">
-          <span>Subtotal</span>
+        <div className="flex justify-between">
+          <span className="text-[#888]">Subtotal</span>
           <span>{formatPrice(order.subtotal)}</span>
         </div>
-        <div className="flex justify-between text-gray-600">
-          <span>PPN (11%)</span>
+        <div className="flex justify-between">
+          <span className="text-[#888]">PPN (11%)</span>
           <span>{formatPrice(order.tax)}</span>
         </div>
-        <div className="flex justify-between text-gray-600">
-          <span>Ongkos Kirim</span>
+        <div className="flex justify-between">
+          <span className="text-[#888]">Ongkos Kirim</span>
           <span>{formatPrice(order.shippingCost)}</span>
         </div>
         <Separator className="my-2" />
@@ -191,16 +191,16 @@ export default function OrderDetailPage({ params }: Props) {
 
       {/* ── Info Pengiriman ─────────────────────────────────── */}
       {shippingAddr && (
-        <div className="bg-white rounded-2xl border shadow-sm p-5">
+        <div className="bg-white rounded-lg border border-[#ebebeb] p-5">
           <div className="flex items-center gap-2 mb-3">
-            <MapPin className="w-4 h-4 text-gray-400" />
+            <MapPin className="w-4 h-4 text-[#aaa]" />
             <p className="font-semibold text-sm">Alamat Pengiriman</p>
           </div>
-          <p className="text-sm font-medium text-gray-800">
+          <p className="text-sm font-medium text-[#222]">
             {shippingAddr.recipientName}
           </p>
-          <p className="text-sm text-gray-500 mt-0.5">{shippingAddr.phone}</p>
-          <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+          <p className="text-sm text-[#888] mt-0.5">{shippingAddr.phone}</p>
+          <p className="text-sm text-[#666] mt-1 leading-relaxed">
             {shippingAddr.address}, {shippingAddr.city},{" "}
             {shippingAddr.province} {shippingAddr.zipCode}
           </p>
@@ -208,22 +208,22 @@ export default function OrderDetailPage({ params }: Props) {
       )}
 
       {/* ── Metode Pembayaran & Pengiriman ───────────────────── */}
-      <div className="bg-white rounded-2xl border shadow-sm p-5 grid grid-cols-2 gap-4 text-sm">
+      <div className="bg-white rounded-lg border border-[#ebebeb] p-5 grid grid-cols-2 gap-4 text-sm">
         <div>
-          <div className="flex items-center gap-1.5 text-gray-400 mb-1">
+          <div className="flex items-center gap-1.5 text-[#aaa] mb-1">
             <CreditCard className="w-3.5 h-3.5" />
             <span className="text-xs">Pembayaran</span>
           </div>
-          <p className="font-medium text-gray-800">
+          <p className="font-medium text-[#222]">
             {PAYMENT_LABEL[order.paymentMethod] ?? order.paymentMethod}
           </p>
         </div>
         <div>
-          <div className="flex items-center gap-1.5 text-gray-400 mb-1">
+          <div className="flex items-center gap-1.5 text-[#aaa] mb-1">
             <Truck className="w-3.5 h-3.5" />
             <span className="text-xs">Pengiriman</span>
           </div>
-          <p className="font-medium text-gray-800">
+          <p className="font-medium text-[#222]">
             {SHIPPING_LABEL[order.shippingMethod] ?? order.shippingMethod}
           </p>
         </div>

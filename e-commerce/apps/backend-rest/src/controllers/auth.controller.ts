@@ -5,7 +5,7 @@ import { env } from "../config/env";
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure:   process.env.NODE_ENV === "production",
+  secure:   false,
   sameSite: "lax" as const,
   path:     "/",
 };
@@ -155,7 +155,7 @@ export async function refreshTokenController(req: Request, res: Response, next: 
     // Set accessToken cookie baru
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure:   env.NODE_ENV === "production",
+      secure:   false,
       sameSite: "lax",
       maxAge:   60 * 60 * 1000, // 1 jam
     });
@@ -164,7 +164,7 @@ export async function refreshTokenController(req: Request, res: Response, next: 
     // Tanpa ini k6 masih kirim refreshToken lama yang sudah invalid di request berikutnya
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-      secure:   env.NODE_ENV === "production",
+      secure:   false,
       sameSite: "lax",
       maxAge:   7 * 24 * 60 * 60 * 1000, // 7 hari
     });

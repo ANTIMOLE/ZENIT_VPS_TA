@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback }  from "react";
-import { useRouter }    from "next/navigation";
-import { trpc }         from "@/lib/trpc";
-import { ROUTES }       from "@/lib/constants";
-import { toast }        from "sonner";
+import { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { trpc } from "@/lib/trpc";
+import { ROUTES } from "@/lib/constants";
+import { toast } from "sonner";
 
 export function useAuth() {
   const router = useRouter();
@@ -20,7 +20,12 @@ export function useAuth() {
       void utils.auth.me.invalidate();
       toast.success(`Selamat datang, ${data.user.name}!`);
       const params = new URLSearchParams(window.location.search);
-      router.push(params.get("from") ?? ROUTES.HOME);
+      const from = params.get("from");
+      // [FIX] router.refresh() dulu — clear Next.js router cache supaya
+      // middleware re-run dengan cookie baru. Tanpa ini, navigasi ke /cart
+      // pakai cached redirect response dari sebelum login.
+      router.refresh();
+      router.push(from ?? (data.user.role === "ADMIN" ? "/admin/dashboard" : ROUTES.HOME));
     },
     onError: (err) => toast.error(err.message),
   });
@@ -29,6 +34,7 @@ export function useAuth() {
     onSuccess: () => {
       void utils.auth.me.invalidate();
       toast.success("Akun berhasil dibuat!");
+      router.refresh();
       router.push(ROUTES.HOME);
     },
     onError: (err) => toast.error(err.message),
@@ -36,8 +42,10 @@ export function useAuth() {
 
   const logoutMutation = trpc.auth.logout.useMutation({
     onSettled: () => {
-      // invalidate semua cache tRPC sekaligus, lalu redirect
       void utils.invalidate();
+      // [FIX] router.refresh() — clear cache supaya protected routes
+      // tidak accessible setelah logout tanpa full page reload
+      router.refresh();
       router.push(ROUTES.LOGIN);
     },
   });
@@ -54,7 +62,7 @@ export function useAuth() {
   return {
     user,
     isLoading,
-    isAuthenticated:         !!user && !isError,
+    isAuthenticated:         !!user,
     login:                   loginMutation.mutate,
     loginAsync:              loginMutation.mutateAsync,
     isLoginLoading:          loginMutation.isPending,

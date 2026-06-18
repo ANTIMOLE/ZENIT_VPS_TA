@@ -322,7 +322,21 @@ self.__SERVER_FILES_MANIFEST={
       },
       "root": "/home/zenit/e-commerce"
     },
-    "distDirRoot": ".next"
+    "distDirRoot": ".next",
+    "_originalRewrites": {
+      "beforeFiles": [],
+      "afterFiles": [
+        {
+          "source": "/api/v1/:path*",
+          "destination": "http://localhost:4000/api/v1/:path*"
+        },
+        {
+          "source": "/trpc/:path*",
+          "destination": "http://localhost:4001/trpc/:path*"
+        }
+      ],
+      "fallback": []
+    }
   },
   "appDir": "/home/zenit/e-commerce/apps/frontend",
   "relativeAppDir": "apps/frontend",

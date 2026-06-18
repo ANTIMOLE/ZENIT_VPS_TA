@@ -63,7 +63,7 @@ function AddAddressDialog({ open, onClose, onSave, isSaving }: {
           <div className="space-y-1.5"><Label>Kode Pos *</Label>
             <Input value={form.zipCode} onChange={e => f("zipCode", e.target.value)} placeholder="55281" className="max-w-32" />
           </div>
-          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-[#555] cursor-pointer">
             <input type="checkbox" checked={!!form.isDefault} onChange={e => f("isDefault", e.target.checked)} className="rounded" />
             Jadikan alamat utama
           </label>
@@ -154,11 +154,11 @@ export default function CheckoutPage() {
           <Section step={1} icon={<MapPin className="w-4 h-4" />} title="Alamat Pengiriman">
             {isLoadingAddr ? (
               <div className="space-y-2">
-                {[1, 2].map(i => <Skeleton key={i} className="h-16 w-full rounded-xl" />)}
+                {[1, 2].map(i => <Skeleton key={i} className="h-16 w-full rounded-lg" />)}
               </div>
             ) : addresses.length === 0 ? (
               <div className="text-center py-4">
-                <p className="text-sm text-gray-500 mb-3">Belum ada alamat tersimpan.</p>
+                <p className="text-sm text-[#888] mb-3">Belum ada alamat tersimpan.</p>
                 <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setShowAddAddr(true)}>
                   <Plus className="w-3.5 h-3.5" /> Tambah Alamat
                 </Button>
@@ -170,17 +170,17 @@ export default function CheckoutPage() {
                     key={addr.id}
                     onClick={() => setSelectedAddressId(addr.id)}
                     className={cn(
-                      "w-full text-left p-3 rounded-xl border-2 transition-all text-sm",
+                      "w-full text-left p-3 rounded-lg border-2 transition-all duration-150 text-sm",
                       selectedAddressId === addr.id
                         ? "border-primary bg-primary/5"
-                        : "border-gray-200 hover:border-gray-300"
+                        : "border-[#e0e0e0] hover:border-gray-300"
                     )}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <p className="font-medium">{addr.recipientName}</p>
-                        <p className="text-gray-500 text-xs mt-0.5">{addr.phone}</p>
-                        <p className="text-gray-600 text-xs mt-1 leading-relaxed">
+                        <p className="text-[#888] text-xs mt-0.5">{addr.phone}</p>
+                        <p className="text-[#666] text-xs mt-1 leading-relaxed">
                           {addr.address}, {addr.city}, {addr.province} {addr.zipCode}
                         </p>
                         {addr.isDefault && (
@@ -195,7 +195,7 @@ export default function CheckoutPage() {
                     </div>
                   </button>
                 ))}
-                <Button variant="ghost" size="sm" className="w-full gap-1.5 text-gray-500 mt-1" onClick={() => setShowAddAddr(true)}>
+                <Button variant="ghost" size="sm" className="w-full gap-1.5 text-[#888] mt-1" onClick={() => setShowAddAddr(true)}>
                   <Plus className="w-3.5 h-3.5" /> Tambah Alamat Baru
                 </Button>
               </div>
@@ -210,16 +210,16 @@ export default function CheckoutPage() {
                   key={opt.code}
                   onClick={() => setSelectedShipping(opt.code)}
                   className={cn(
-                    "w-full text-left p-3 rounded-xl border-2 transition-all",
+                    "w-full text-left p-3 rounded-lg border-2 transition-all duration-150",
                     selectedShipping === opt.code
                       ? "border-primary bg-primary/5"
-                      : "border-gray-200 hover:border-gray-300"
+                      : "border-[#e0e0e0] hover:border-gray-300"
                   )}
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium">{opt.name}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{opt.description}</p>
+                      <p className="text-xs text-[#888] mt-0.5">{opt.description}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-semibold text-primary">{formatPrice(opt.price)}</span>
@@ -239,16 +239,16 @@ export default function CheckoutPage() {
                   key={method.code}
                   onClick={() => setSelectedPayment(method.code)}
                   className={cn(
-                    "w-full text-left p-3 rounded-xl border-2 transition-all",
+                    "w-full text-left p-3 rounded-lg border-2 transition-all duration-150",
                     selectedPayment === method.code
                       ? "border-primary bg-primary/5"
-                      : "border-gray-200 hover:border-gray-300"
+                      : "border-[#e0e0e0] hover:border-gray-300"
                   )}
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium">{method.name}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{method.description}</p>
+                      <p className="text-xs text-[#888] mt-0.5">{method.description}</p>
                     </div>
                     {selectedPayment === method.code && <CheckCircle2 className="w-4 h-4 text-primary" />}
                   </div>
@@ -261,7 +261,7 @@ export default function CheckoutPage() {
 
         {/* ── Kanan: Ringkasan ──────────────────────────────── */}
         <div className="w-full lg:w-72 flex-shrink-0">
-          <div className="bg-white rounded-2xl border shadow-sm p-5 sticky top-20">
+          <div className="bg-white rounded-lg border border-[#ebebeb] p-5 sticky top-20">
             <h2 className="font-semibold text-base mb-4">Ringkasan Order</h2>
 
             {isLoadingCart ? (
@@ -272,7 +272,7 @@ export default function CheckoutPage() {
               <div className="space-y-2 mb-4 max-h-40 overflow-y-auto">
                 {cart?.items?.map(item => (
                   <div key={item.id} className="flex items-center gap-2 text-xs">
-                    <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                    <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-[#f5f5f5] flex-shrink-0">
                       <Image
                         src={getImageUrl(item.product?.images?.[0])}
                         alt={item.product.name}
@@ -281,7 +281,7 @@ export default function CheckoutPage() {
                         onError={(e) => { (e.target as HTMLImageElement).src = "/images/placeholder-product.png"; }}
                       />
                     </div>
-                    <p className="flex-1 text-gray-700 line-clamp-1">{item.product.name}</p>
+                    <p className="flex-1 text-[#444] line-clamp-1">{item.product.name}</p>
                     <p className="font-medium flex-shrink-0">×{item.quantity}</p>
                   </div>
                 ))}
@@ -291,15 +291,15 @@ export default function CheckoutPage() {
             <Separator className="mb-4" />
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500">Subtotal</span>
+                <span className="text-[#888]">Subtotal</span>
                 <span>{formatPrice(displaySubtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">PPN 11%</span>
+                <span className="text-[#888]">PPN 11%</span>
                 <span>{formatPrice(displayTax)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Ongkir</span>
+                <span className="text-[#888]">Ongkir</span>
                 {/* [FIX] Tampilkan "..." saat summary sedang loading — hindari angka lama */}
                 <span>{isLoadingSummary ? "..." : formatPrice(displayShipping)}</span>
               </div>
@@ -321,7 +321,7 @@ export default function CheckoutPage() {
               {!isConfirming && <ChevronRight className="w-4 h-4" />}
             </Button>
             {!selectedAddressId && (
-              <p className="text-xs text-center text-gray-400 mt-2">Pilih alamat pengiriman dulu</p>
+              <p className="text-xs text-center text-[#aaa] mt-2">Pilih alamat pengiriman dulu</p>
             )}
           </div>
         </div>
@@ -347,7 +347,7 @@ function Section({ step, icon, title, children }: {
   step: number; icon: React.ReactNode; title: string; children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-2xl border shadow-sm">
+    <div className="bg-white rounded-lg border border-[#ebebeb]">
       <div className="flex items-center gap-2.5 px-5 py-4 border-b">
         <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
           {step}
