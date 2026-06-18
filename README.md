@@ -1,9 +1,9 @@
 # Zenit — E-Commerce Sandbox
 
-> **Undergraduate Thesis (Skripsi) — Universitas Atma Jaya Yogyakarta**  
+> Universitas Atma Jaya Yogyakarta**  
 > Program Studi Informatika · NIM 220711833
 
-Zenit adalah aplikasi e-commerce yang digunakan sebagai **environment benchmark** untuk membandingkan performa REST API dan tRPC. Dibangun sebagai pnpm monorepo dan di-deploy di DigitalOcean VPS.
+Zenit adalah aplikasi e-commerce yang digunakan sebagai **sandbox** untuk membandingkan performa REST API dan tRPC. Dibangun sebagai pnpm monorepo dan di-deploy di DigitalOcean VPS.
 
 ---
 
