@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@ecommerce/shared": ["../../packages/shared/dist/index.d.ts"]
+      "@ecommerce/shared": ["../../packages/shared/dist/index.js"]
     }
   },
   "include": ["src/**/*"],

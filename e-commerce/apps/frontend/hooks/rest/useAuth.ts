@@ -31,14 +31,20 @@ export function useAuth() {
       return res.data.data;
     },
     onSuccess: (data) => {
+      // setQueryData writes the confirmed user (with role) into the cache
+      // synchronously, so any component reading useAuth() right after this
+      // — including the admin layout's role guard — sees it immediately.
       qc.setQueryData(queryKeys.auth.me, data);
       toast.success(`Selamat datang, ${data.name}!`);
       const params = new URLSearchParams(window.location.search);
       const from = params.get("from");
-      // [FIX] router.refresh() dulu — clear Next.js router cache supaya
-      // middleware re-run dengan cookie baru. Tanpa ini, navigasi ke /cart
-      // pakai cached redirect response dari sebelum login.
-      router.refresh();
+      // NOTE: no router.refresh() here on purpose. There is no
+      // middleware.ts in this project — route protection is entirely
+      // client-side (see (admin)/layout.tsx), so refresh() had nothing to
+      // re-run. Calling it back-to-back with push() only added a race
+      // window in the App Router where the target route could mount
+      // before the refresh settled, occasionally landing an admin on the
+      // normal user flow right after login.
       router.push(from ?? (data.role === "ADMIN" ? "/admin/dashboard" : ROUTES.HOME));
     },
     onError: (err) => toast.error(getErrorMessage(err)),
@@ -53,7 +59,6 @@ export function useAuth() {
     onSuccess: (data) => {
       qc.setQueryData(queryKeys.auth.me, data);
       toast.success("Akun berhasil dibuat!");
-      router.refresh();
       router.push(ROUTES.HOME);
     },
     onError: (err) => toast.error(getErrorMessage(err)),
@@ -67,9 +72,6 @@ export function useAuth() {
       // Tetap logout meski request gagal
     } finally {
       qc.clear();
-      // [FIX] router.refresh() — clear cache supaya protected routes
-      // tidak accessible setelah logout tanpa full page reload
-      router.refresh();
       router.push(ROUTES.LOGIN);
     }
   }, [qc, router]);

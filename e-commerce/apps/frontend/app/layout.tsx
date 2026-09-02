@@ -1,9 +1,10 @@
+
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
-
+import { ShiftBackground } from "@/components/shared/ShiftBackground";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -20,45 +21,77 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title:       "Zenit — Marketplace",
+  title: "Zenit — Marketplace",
   description: "Belanja di Zenit — 50.000+ produk dari berbagai kategori",
-  keywords:    ["e-commerce", "marketplace", "belanja online", "produk terbaik"],
-  authors:     { name: "Zenit Team" },
-  icons:       {
-    icon:[
-      { url : "/favicon/favicon.ico" },
-      { url : "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url : "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+  keywords: [
+    "e-commerce",
+    "marketplace",
+    "belanja online",
+    "produk terbaik",
+  ],
+  authors: { name: "Zenit Team" },
+
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.ico" },
+      {
+        url: "/favicon/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        url: "/favicon/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
     ],
     apple: [
-      { url : "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      {
+        url: "/favicon/apple-touch-icon.png",
+        sizes: "180x180",
+      },
     ],
-    other:[
-      { rel: "manifest", url: "/favicon/site.webmanifest" },
-      { rel: "android-chrome", url: "/favicon/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { rel: "android-chrome", url: "/favicon/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
-    ]
+    other: [
+      {
+        rel: "manifest",
+        url: "/favicon/site.webmanifest",
+      },
+      {
+        rel: "android-chrome",
+        url: "/favicon/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        rel: "android-chrome",
+        url: "/favicon/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
   },
 
   manifest: "/favicon/site.webmanifest",
 
-  // https://zenit.com
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  ),
 
-  appleWebApp:{
+  appleWebApp: {
     capable: true,
     title: "Zenit Marketplace",
     statusBarStyle: "default",
   },
 
-
   openGraph: {
-    type : "website",
-    url  : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+    type: "website",
+    url:
+      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
     locale: "id_ID",
     siteName: "Zenit Marketplace",
     title: "Zenit Marketplace",
-    description: "Belanja di Zenit — 50.000+ produk dari berbagai kategori",
+    description:
+      "Belanja di Zenit — 50.000+ produk dari berbagai kategori",
     images: [
       {
         url: "/zenit-logo.svg",
@@ -72,8 +105,8 @@ export const metadata: Metadata = {
         height: 512,
         alt: "Zenit Marketplace Icon",
       },
-    ]
-  }
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -84,18 +117,33 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body className={`${jakarta.variable} font-sans`}>
-        {/* Top loading bar — muncul saat navigasi antar halaman */}
+        <ShiftBackground />
+
+        {/* Strong global navigation loading indicator */}
         <NextTopLoader
-          color="#7132f5"
+          color="#4C0DDB"
+          initialPosition={0.08}
+          crawlSpeed={160}
+          height={7}
+          crawl={true}
           showSpinner={false}
-          height={2}
-          shadow={false}
           easing="ease"
-          speed={200}
+          speed={180}
+          shadow="
+            0 0 6px #4C0DDB,
+            0 0 14px #4C0DDB,
+            0 0 28px rgba(76, 13, 219, 0.95),
+            0 0 45px rgba(76, 13, 219, 0.65)
+          "
         />
+
         <Providers>
           {children}
-          <Toaster richColors position="top-right" />
+
+          <Toaster
+            richColors
+            position="top-right"
+          />
         </Providers>
       </body>
     </html>

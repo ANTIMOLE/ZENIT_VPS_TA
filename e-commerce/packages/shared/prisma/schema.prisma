@@ -1,5 +1,5 @@
 // ============================================================
-// schema.prisma — E-Commerce System
+// schema.prisma â€” E-Commerce System
 // Research: tRPC vs REST API Performance Comparison
 // Database: PostgreSQL 15
 //
@@ -135,7 +135,7 @@ model Product {
 
   // -- Full-text search index ---------------------------------
   // GIN index untuk to_tsvector TIDAK bisa didefinisikan di Prisma schema DSL.
-  // Harus dibuat manual via migration SQL — lihat:
+  // Harus dibuat manual via migration SQL â€” lihat:
   //   migrations/YYYYMMDDHHMMSS_add_fts_index/migration.sql
   //
   // CREATE INDEX "idx_products_name_fts"

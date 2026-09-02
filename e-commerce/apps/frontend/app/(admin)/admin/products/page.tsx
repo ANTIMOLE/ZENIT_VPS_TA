@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Search, Plus, Pencil, Trash2,
-  ChevronLeft, ChevronRight, ToggleLeft, ToggleRight,
+  ChevronLeft, ChevronRight, ToggleLeft, ToggleRight, PackageSearch,
 } from "lucide-react";
 import { Button }   from "@/components/ui/button";
 import { Input }    from "@/components/ui/input";
@@ -13,15 +13,15 @@ import { Badge }    from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ProductThumb } from "@/components/shared/ProductThumb";
 import {
   useAdminProducts, useCreateProduct,
   useUpdateProduct, useDeleteProduct,
 } from "@/hooks/useAdmin";
 import type { AdminProduct } from "@/hooks/useAdmin";
 import { useCategories } from "@/hooks/useCategories";
-import { formatPrice, getImageUrl } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 // ── Form state ─────────────────────────────────────────────────
 interface ProductForm {
@@ -61,34 +61,6 @@ function productToForm(p: AdminProduct): ProductForm {
     categoryId:  p.category.id,
     images:      (p.images ?? []).join("\n"),
   };
-}
-
-// ── Page ───────────────────────────────────────────────────────
-
-// ── AdminProductThumb ─────────────────────────────────────────
-// Komponen kecil yang kelola fallback gambar via React state.
-// React-safe: tidak mutasi DOM, tidak pakai innerHTML.
-function AdminProductThumb({ src, alt }: { src?: string; alt: string }) {
-  const [imgSrc, setImgSrc] = useState<string | undefined>(src);
-  if (!imgSrc) {
-    return (
-      <div className="w-10 h-10 rounded-lg bg-[#f5f5f5] overflow-hidden shrink-0 flex items-center justify-center text-gray-300 text-lg">
-        📷
-      </div>
-    );
-  }
-  return (
-    <div className="w-10 h-10 rounded-lg bg-[#f5f5f5] overflow-hidden shrink-0">
-      <img
-        src={imgSrc}
-        alt={alt}
-        width={40}
-        height={40}
-        className="w-full h-full object-cover"
-        onError={() => setImgSrc(undefined)}
-      />
-    </div>
-  );
 }
 
 export default function AdminProductsPage() {
@@ -150,8 +122,8 @@ export default function AdminProductsPage() {
       {/* ── Header ──────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Kelola Produk</h1>
-          <p className="text-sm text-[#888] mt-0.5">
+          <h1 className="text-2xl font-bold text-zinc-900">Kelola Produk</h1>
+          <p className="text-sm text-zinc-500 mt-0.5">
             {data ? `${data.totalCount.toLocaleString("id-ID")} produk total` : ""}
           </p>
         </div>
@@ -162,10 +134,10 @@ export default function AdminProductsPage() {
       </div>
 
       {/* ── Filters ─────────────────────────────────────────── */}
-      <div className="bg-white rounded-[10px] border border-[#ebebeb] p-4 flex flex-col sm:flex-row gap-3 flex-wrap">
+      <div className="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col sm:flex-row gap-3 flex-wrap">
         <form onSubmit={handleSearch} className="flex gap-2 flex-1 min-w-0">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaa]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <Input
               value={qInput}
               onChange={e => setQInput(e.target.value)}
@@ -203,15 +175,15 @@ export default function AdminProductsPage() {
       </div>
 
       {/* ── Table ───────────────────────────────────────────── */}
-      <div className="bg-white rounded-[10px] border border-[#ebebeb] overflow-hidden">
-        <div className="grid grid-cols-[2fr_1fr_1fr_1fr_80px_120px] gap-3 px-5 py-3 border-b bg-[#fafaf9] text-xs font-semibold text-[#888] uppercase tracking-wide">
+      <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+        <div className="grid grid-cols-[2fr_1fr_1fr_1fr_80px_120px] gap-3 px-5 py-3 border-b border-zinc-200 bg-zinc-50 text-xs font-semibold text-zinc-400 uppercase tracking-wide">
           <span>Produk</span><span>Kategori</span><span>Harga</span>
           <span>Stok</span><span>Status</span><span>Aksi</span>
         </div>
 
         {/* Loading skeleton */}
         {isLoading && (
-          <div className="divide-y">
+          <div className="divide-y divide-zinc-100">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="grid grid-cols-[2fr_1fr_1fr_1fr_80px_120px] gap-3 items-center px-5 py-3.5">
                 <div className="flex items-center gap-3">
@@ -227,60 +199,63 @@ export default function AdminProductsPage() {
         {/* Empty */}
         {!isLoading && (data?.data.length ?? 0) === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="text-4xl mb-3">📦</div>
-            <p className="text-sm font-medium text-[#888]">Tidak ada produk ditemukan</p>
-            <p className="text-xs text-[#aaa] mt-1">Coba ubah filter atau tambah produk baru</p>
+            <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center mb-3">
+              <PackageSearch className="w-5 h-5 text-zinc-400" />
+            </div>
+            <p className="text-sm font-medium text-zinc-500">Tidak ada produk ditemukan</p>
+            <p className="text-xs text-zinc-400 mt-1">Coba ubah filter atau tambah produk baru</p>
           </div>
         )}
 
         {/* Rows */}
         {!isLoading && (data?.data.length ?? 0) > 0 && (
-          <div className="divide-y">
+          <div className="divide-y divide-zinc-100">
             {data?.data.map(product => (
               <div key={product.id}
-                className="grid grid-cols-[2fr_1fr_1fr_1fr_80px_120px] gap-3 items-center px-5 py-3 hover:bg-[#fafaf9] transition-colors"
+                className="grid grid-cols-[2fr_1fr_1fr_1fr_80px_120px] gap-3 items-center px-5 py-3 hover:bg-zinc-50 transition-colors"
               >
                 {/* Produk */}
                 <div className="flex items-center gap-3 min-w-0">
-                  {/* [FIX] AdminProductThumb kelola fallback via React state — tidak mutasi DOM */}
-                  <AdminProductThumb src={product.images?.[0]} alt={product.name} />
+                  <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-zinc-100 flex-shrink-0">
+                    <ProductThumb images={product.images} alt={product.name} sizes="40px" />
+                  </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">{product.name}</p>
+                    <p className="text-sm font-medium text-zinc-800 truncate">{product.name}</p>
                     {product.discount > 0 && (
                       <span className="text-xs text-orange-500 font-medium">{product.discount}% off</span>
                     )}
                   </div>
                 </div>
 
-                <p className="text-sm text-[#888] truncate">{product.category.name}</p>
-                <p className="text-sm font-semibold text-gray-800">{formatPrice(product.price)}</p>
+                <p className="text-sm text-zinc-500 truncate">{product.category.name}</p>
+                <p className="text-sm font-semibold text-zinc-800">{formatPrice(product.price)}</p>
 
                 <p className={cn(
                   "text-sm font-medium",
                   product.stock === 0 ? "text-red-500" :
-                  product.stock < 10  ? "text-orange-500" : "text-gray-700"
+                  product.stock < 10  ? "text-orange-500" : "text-zinc-700"
                 )}>
                   {product.stock.toLocaleString("id-ID")}
                 </p>
 
                 <div>
                   {product.isActive ? (
-                    <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50 text-xs">Aktif</Badge>
+                    <Badge variant="outline" className="text-emerald-600 border-emerald-200 bg-emerald-50 text-xs">Aktif</Badge>
                   ) : (
-                    <Badge variant="outline" className="text-[#aaa] border-[#e0e0e0] bg-[#fafaf9] text-xs">Nonaktif</Badge>
+                    <Badge variant="outline" className="text-zinc-400 border-zinc-200 bg-zinc-50 text-xs">Nonaktif</Badge>
                   )}
                 </div>
 
                 <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-[#aaa] hover:text-gray-700"
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-400 hover:text-zinc-700"
                     onClick={() => openEdit(product)} title="Edit">
                     <Pencil className="w-3.5 h-3.5" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-[#aaa] hover:text-gray-700"
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-400 hover:text-zinc-700"
                     onClick={() => updateProduct.mutate({ id: product.id, data: { isActive: !product.isActive } })}
                     title={product.isActive ? "Nonaktifkan" : "Aktifkan"}>
                     {product.isActive
-                      ? <ToggleRight className="w-4 h-4 text-green-500" />
+                      ? <ToggleRight className="w-4 h-4 text-emerald-500" />
                       : <ToggleLeft className="w-4 h-4" />}
                   </Button>
                   <Button variant="ghost" size="icon"
@@ -296,8 +271,8 @@ export default function AdminProductsPage() {
 
         {/* Pagination */}
         {(data?.totalPages ?? 0) > 1 && (
-          <div className="flex items-center justify-between px-5 py-3 border-t bg-[#fafaf9]">
-            <p className="text-xs text-[#888]">Halaman {page} dari {data!.totalPages}</p>
+          <div className="flex items-center justify-between px-5 py-3 border-t border-zinc-200 bg-zinc-50">
+            <p className="text-xs text-zinc-500">Halaman {page} dari {data!.totalPages}</p>
             <div className="flex gap-1">
               <Button variant="outline" size="icon" className="h-8 w-8"
                 disabled={page <= 1} onClick={() => setPage(p => p - 1)}>
@@ -370,7 +345,7 @@ export default function AdminProductsPage() {
                 onChange={e => setField("images", e.target.value)}
                 placeholder={"https://example.com/img1.jpg\nhttps://example.com/img2.jpg"}
                 rows={3} className="resize-none text-xs font-mono" />
-              <p className="text-xs text-[#aaa]">Satu URL per baris, maks. 5 gambar</p>
+              <p className="text-xs text-zinc-400">Satu URL per baris, maks. 5 gambar</p>
             </div>
           </div>
 
@@ -390,8 +365,8 @@ export default function AdminProductsPage() {
           <DialogHeader>
             <DialogTitle>Hapus Produk?</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-gray-600">
-            Produk <span className="font-semibold">"{deleteTarget?.name}"</span> akan dinonaktifkan
+          <p className="text-sm text-zinc-600">
+            Produk <span className="font-semibold">&quot;{deleteTarget?.name}&quot;</span> akan dinonaktifkan
             dan tidak muncul di katalog. Tindakan ini dapat dibalik dengan mengaktifkan kembali.
           </p>
           <DialogFooter className="gap-2">

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Inbox } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAdminOrders, useUpdateOrderStatus } from "@/hooks/useAdmin";
@@ -12,22 +11,6 @@ import { formatPrice, formatDateTime } from "@/lib/utils";
 import { ORDER_STATUS_LABEL, ORDER_STATUS_COLOR } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { OrderStatus } from "@/hooks/useAdmin";
-
-// ─────────────────────────────────────────────────────────────
-// HOOKS YANG DIBUTUHKAN:
-//
-//   useAdminOrders(params)      →  hooks/rest/useAdmin.ts  ✅
-//     - data     : PaginatedAdmin<AdminOrder>
-//     - isLoading: boolean
-//
-//   useUpdateOrderStatus()      →  hooks/rest/useAdmin.ts  ✅
-//     - mutate({ id, status })
-//     - isPending: boolean
-//
-//   Endpoints:
-//     GET   /admin/orders?page=&limit=&status=&q=
-//     PATCH /admin/orders/:id/status  { status }
-// ─────────────────────────────────────────────────────────────
 
 // Transisi status yang valid (sesuai backend)
 const NEXT_STATUS: Record<OrderStatus, OrderStatus | null> = {
@@ -80,17 +63,17 @@ export default function AdminOrdersPage() {
 
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold">Kelola Pesanan</h1>
-        <p className="text-sm text-[#888] mt-0.5">
+        <h1 className="text-2xl font-bold text-zinc-900">Kelola Pesanan</h1>
+        <p className="text-sm text-zinc-500 mt-0.5">
           {data ? `${data.totalCount.toLocaleString("id-ID")} pesanan total` : ""}
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-[10px] border border-[#ebebeb] p-4 flex flex-col sm:flex-row gap-3">
+      <div className="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col sm:flex-row gap-3">
         <form onSubmit={handleSearch} className="flex gap-2 flex-1">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaa]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <Input
               value={qInput}
               onChange={e => setQInput(e.target.value)}
@@ -113,10 +96,10 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-[10px] border border-[#ebebeb] overflow-hidden">
+      <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
 
         {/* Header */}
-        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 px-5 py-3 border-b bg-[#fafaf9] text-xs font-semibold text-[#888] uppercase tracking-wide">
+        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 px-5 py-3 border-b border-zinc-200 bg-zinc-50 text-xs font-semibold text-zinc-400 uppercase tracking-wide">
           <span>No. Pesanan</span>
           <span>Pembeli</span>
           <span>Waktu</span>
@@ -127,7 +110,7 @@ export default function AdminOrdersPage() {
 
         {/* Loading */}
         {isLoading && (
-          <div className="divide-y">
+          <div className="divide-y divide-zinc-100">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 items-center px-5 py-3.5">
                 {Array.from({ length: 6 }).map((_, j) => (
@@ -141,37 +124,39 @@ export default function AdminOrdersPage() {
         {/* Empty */}
         {!isLoading && data?.data.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <RefreshCw className="w-10 h-10 text-gray-200 mb-3" />
-            <p className="text-sm font-medium text-[#888]">Tidak ada pesanan ditemukan</p>
+            <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center mb-3">
+              <Inbox className="w-5 h-5 text-zinc-400" />
+            </div>
+            <p className="text-sm font-medium text-zinc-500">Tidak ada pesanan ditemukan</p>
           </div>
         )}
 
         {/* Rows */}
         {!isLoading && (data?.data.length ?? 0) > 0 && (
-          <div className="divide-y">
+          <div className="divide-y divide-zinc-100">
             {data?.data.map(order => {
               const nextStatus = NEXT_STATUS[order.status];
               return (
                 <div
                   key={order.id}
-                  className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 items-center px-5 py-3.5 hover:bg-[#fafaf9] transition-colors"
+                  className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_160px] gap-3 items-center px-5 py-3.5 hover:bg-zinc-50 transition-colors"
                 >
                   {/* No. pesanan */}
-                  <p className="text-sm font-mono font-semibold text-gray-800 truncate">
+                  <p className="text-sm font-mono font-semibold text-zinc-800 truncate">
                     {order.orderNumber}
                   </p>
 
                   {/* Pembeli */}
                   <div className="min-w-0">
-                    <p className="text-sm text-gray-700 truncate">{order.user.name}</p>
-                    <p className="text-xs text-[#aaa] truncate">{order.user.email}</p>
+                    <p className="text-sm text-zinc-700 truncate">{order.user.name}</p>
+                    <p className="text-xs text-zinc-400 truncate">{order.user.email}</p>
                   </div>
 
                   {/* Waktu */}
-                  <p className="text-xs text-[#888]">{formatDateTime(order.createdAt)}</p>
+                  <p className="text-xs text-zinc-500">{formatDateTime(order.createdAt)}</p>
 
                   {/* Total */}
-                  <p className="text-sm font-semibold text-gray-800">{formatPrice(order.total)}</p>
+                  <p className="text-sm font-semibold text-zinc-800">{formatPrice(order.total)}</p>
 
                   {/* Status */}
                   <span className={cn(
@@ -194,7 +179,7 @@ export default function AdminOrdersPage() {
                         → {ORDER_STATUS_LABEL[nextStatus]}
                       </Button>
                     ) : (
-                      <span className="text-xs text-gray-300">—</span>
+                      <span className="text-xs text-zinc-300">—</span>
                     )}
                   </div>
                 </div>
@@ -205,8 +190,8 @@ export default function AdminOrdersPage() {
 
         {/* Pagination */}
         {(data?.totalPages ?? 0) > 1 && (
-          <div className="flex items-center justify-between px-5 py-3 border-t bg-[#fafaf9]">
-            <p className="text-xs text-[#888]">
+          <div className="flex items-center justify-between px-5 py-3 border-t border-zinc-200 bg-zinc-50">
+            <p className="text-xs text-zinc-500">
               Halaman {page} dari {data!.totalPages}
             </p>
             <div className="flex gap-1">

@@ -3,13 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Package, ChevronRight, Filter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Package, ChevronRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Pagination } from "@/components/shared/Pagination";
+import { ProductThumb } from "@/components/shared/ProductThumb";
 import { useOrders } from "@/hooks/useOrders";
 import { formatPrice, formatDateTime } from "@/lib/utils";
 import { ORDER_STATUS_LABEL, ORDER_STATUS_COLOR, ROUTES } from "@/lib/constants";
@@ -43,166 +42,168 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-[#fafafa]">
+      <div className="max-w-3xl mx-auto px-4 py-8">
 
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Pesanan Saya</h1>
-        <p className="text-sm text-[#888] mt-1">Riwayat dan status semua pesananmu</p>
-      </div>
-
-      {/* Status tabs — scroll horizontal di mobile */}
-      <div className="overflow-x-auto -mx-4 px-4 mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="flex gap-1 min-w-max">
-          {STATUS_TABS.map(tab => (
-            <button
-              key={tab.value}
-              onClick={() => handleTabChange(tab.value)}
-              className={cn(
-                "px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap",
-                activeStatus === tab.value
-                  ? "bg-primary text-white"
-                  : "bg-[#f5f5f5] text-[#555] hover:bg-[#ebebeb]"
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-zinc-900">Pesanan Saya</h1>
+          <p className="text-sm text-zinc-500 mt-1">Riwayat dan status semua pesananmu</p>
         </div>
-      </div>
 
-      {/* Loading */}
-      {isLoading && (
-        <div className="space-y-3">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-lg border border-[#ebebeb] p-4 space-y-3">
-              <div className="flex justify-between">
-                <Skeleton className="h-4 w-36" />
-                <Skeleton className="h-5 w-20 rounded-full" />
-              </div>
-              <Skeleton className="h-3 w-24" />
-              <Separator />
-              <div className="flex gap-3">
-                <Skeleton className="w-12 h-12 rounded-[6px] flex-shrink-0" />
-                <div className="flex-1 space-y-1.5">
-                  <Skeleton className="h-3 w-3/4" />
-                  <Skeleton className="h-3 w-1/2" />
+        {/* Status tabs — scroll horizontal di mobile */}
+        <div className="overflow-x-auto -mx-4 px-4 mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-1 min-w-max">
+            {STATUS_TABS.map(tab => (
+              <button
+                key={tab.value}
+                onClick={() => handleTabChange(tab.value)}
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap",
+                  activeStatus === tab.value
+                    ? "bg-primary text-white"
+                    : "bg-white border border-zinc-200 text-zinc-600 hover:border-zinc-300"
+                )}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Loading */}
+        {isLoading && (
+          <div className="space-y-3">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-zinc-200 p-4 space-y-3">
+                <div className="flex justify-between">
+                  <Skeleton className="h-4 w-36" />
+                  <Skeleton className="h-5 w-20 rounded-full" />
                 </div>
-              </div>
-              <div className="flex justify-between">
-                <Skeleton className="h-3 w-28" />
                 <Skeleton className="h-3 w-24" />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Empty */}
-      {!isLoading && data?.data.length === 0 && (
-        <EmptyState
-          emoji="📦"
-          title="Belum ada pesanan"
-          description={
-            activeStatus === "all"
-              ? "Kamu belum pernah melakukan pembelian. Yuk mulai belanja!"
-              : `Tidak ada pesanan dengan status "${ORDER_STATUS_LABEL[activeStatus]}".`
-          }
-          action={{ label: "Mulai Belanja", onClick: () => router.push(ROUTES.PRODUCTS) }}
-        />
-      )}
-
-      {/* Order list */}
-      {!isLoading && (data?.data.length ?? 0) > 0 && (
-        <div className="space-y-3">
-          {data?.data.map(order => (
-            <Link
-              key={order.id}
-              href={ROUTES.ORDER_DETAIL(order.id)}
-              className="block bg-white rounded-lg border border-[#ebebeb] hover:border-primary/20 hover:shadow-sm transition-all duration-150"
-            >
-              <div className="p-4">
-                {/* Top row: order number + status */}
-                <div className="flex items-center justify-between gap-2 mb-1">
-                  <div className="flex items-center gap-2">
-                    <Package className="w-4 h-4 text-[#aaa] flex-shrink-0" />
-                    <span className="text-sm font-semibold text-[#222] font-mono">
-                      {order.orderNumber}
-                    </span>
+                <Separator />
+                <div className="flex gap-3">
+                  <Skeleton className="w-12 h-12 rounded-lg flex-shrink-0" />
+                  <div className="flex-1 space-y-1.5">
+                    <Skeleton className="h-3 w-3/4" />
+                    <Skeleton className="h-3 w-1/2" />
                   </div>
-                  <span className={cn(
-                    "text-xs font-medium px-2 py-0.5 rounded-full",
-                    ORDER_STATUS_COLOR[order.status]
-                  )}>
-                    {ORDER_STATUS_LABEL[order.status] ?? order.status}
-                  </span>
                 </div>
+                <div className="flex justify-between">
+                  <Skeleton className="h-3 w-28" />
+                  <Skeleton className="h-3 w-24" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-                <p className="text-xs text-[#aaa] mb-3 ml-6">
-                  {formatDateTime(order.createdAt)}
-                </p>
+        {/* Empty */}
+        {!isLoading && data?.data.length === 0 && (
+          <EmptyState
+            emoji="📦"
+            title="Belum ada pesanan"
+            description={
+              activeStatus === "all"
+                ? "Kamu belum pernah melakukan pembelian. Yuk mulai belanja!"
+                : `Tidak ada pesanan dengan status "${ORDER_STATUS_LABEL[activeStatus]}".`
+            }
+            action={{ label: "Mulai Belanja", onClick: () => router.push(ROUTES.PRODUCTS) }}
+          />
+        )}
 
-                <Separator className="mb-3" />
-
-                {/* Item preview — maks 2 item */}
-                <div className="space-y-2 mb-3">
-                  {order.items.slice(0, 2).map(item => (
-                    <div key={item.id} className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-[6px] bg-[#f5f5f5] flex-shrink-0 overflow-hidden">
-                        {item.productImage ? (
-                          <img
-                            src={item.productImage}
-                            alt={item.productName}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-[#ddd]">
-                            <Package className="w-4 h-4" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-[#333] truncate">{item.productName}</p>
-                        <p className="text-xs text-[#888]">
-                          {item.quantity} × {formatPrice(item.unitPrice)}
-                        </p>
-                      </div>
+        {/* Order list */}
+        {!isLoading && (data?.data.length ?? 0) > 0 && (
+          <div className="space-y-3">
+            {data?.data.map(order => (
+              <Link
+                key={order.id}
+                href={ROUTES.ORDER_DETAIL(order.id)}
+                className="block bg-white rounded-2xl border border-zinc-200 hover:border-primary/30 hover:shadow-sm transition-all duration-150"
+              >
+                <div className="p-4">
+                  {/* Top row: order number + status */}
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="flex items-center gap-2">
+                      <Package className="w-4 h-4 text-zinc-400 flex-shrink-0" />
+                      <span className="text-sm font-semibold text-zinc-800 font-mono">
+                        {order.orderNumber}
+                      </span>
                     </div>
-                  ))}
-                  {(order.items.length ?? 0) > 2 && (
-                    <p className="text-xs text-[#aaa] ml-13">
-                      +{order.items.length - 2} produk lainnya
-                    </p>
-                  )}
-                </div>
-
-                {/* Bottom row: total + detail link */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-xs text-[#888]">Total: </span>
-                    <span className="text-sm font-bold text-primary">
-                      {formatPrice(order.total)}
+                    <span className={cn(
+                      "text-xs font-medium px-2 py-0.5 rounded-full",
+                      ORDER_STATUS_COLOR[order.status]
+                    )}>
+                      {ORDER_STATUS_LABEL[order.status] ?? order.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-primary font-medium">
-                    Lihat Detail <ChevronRight className="w-3.5 h-3.5" />
+
+                  <p className="text-xs text-zinc-400 mb-3 ml-6">
+                    {formatDateTime(order.createdAt)}
+                  </p>
+
+                  <Separator className="mb-3" />
+
+                  {/* Item preview — maks 2 item */}
+                  <div className="space-y-2 mb-3">
+                    {order.items.slice(0, 2).map(item => (
+                      <div key={item.id} className="flex items-center gap-3">
+                        <div className="relative w-10 h-10 rounded-lg bg-zinc-100 flex-shrink-0 overflow-hidden">
+                          {item.productImage ? (
+                            <ProductThumb
+                              images={[item.productImage]}
+                              alt={item.productName}
+                              sizes="40px"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-zinc-300">
+                              <Package className="w-4 h-4" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-zinc-700 truncate">{item.productName}</p>
+                          <p className="text-xs text-zinc-500">
+                            {item.quantity} × {formatPrice(item.unitPrice)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                    {(order.items.length ?? 0) > 2 && (
+                      <p className="text-xs text-zinc-400 ml-13">
+                        +{order.items.length - 2} produk lainnya
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Bottom row: total + detail link */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-xs text-zinc-500">Total: </span>
+                      <span className="text-sm font-bold text-primary">
+                        {formatPrice(order.total)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-primary font-medium">
+                      Lihat Detail <ChevronRight className="w-3.5 h-3.5" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
 
-          {/* Pagination */}
-          {(data?.totalPages ?? 0) > 1 && (
-            <Pagination
-              className="mt-6"
-              currentPage={page}
-              totalPages={data!.totalPages}
-              onPageChange={setPage}
-            />
-          )}
-        </div>
-      )}
+            {/* Pagination */}
+            {(data?.totalPages ?? 0) > 1 && (
+              <Pagination
+                className="mt-6"
+                currentPage={page}
+                totalPages={data!.totalPages}
+                onPageChange={setPage}
+              />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

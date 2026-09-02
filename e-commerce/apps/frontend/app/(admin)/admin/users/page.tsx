@@ -27,17 +27,17 @@ export default function AdminUsersPage() {
 
       {/* ── Header ──────────────────────────────────────────── */}
       <div>
-        <h1 className="text-2xl font-bold">Kelola Pengguna</h1>
-        <p className="text-sm text-[#888] mt-0.5">
+        <h1 className="text-2xl font-bold text-zinc-900">Kelola Pengguna</h1>
+        <p className="text-sm text-zinc-500 mt-0.5">
           {data ? `${data.totalCount.toLocaleString("id-ID")} pengguna terdaftar` : ""}
         </p>
       </div>
 
       {/* ── Search ──────────────────────────────────────────── */}
-      <div className="bg-white rounded-[10px] border border-[#ebebeb] p-4">
+      <div className="bg-white rounded-xl border border-zinc-200 p-4">
         <form onSubmit={handleSearch} className="flex gap-2 max-w-sm">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaa]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <Input
               value={qInput}
               onChange={e => setQInput(e.target.value)}
@@ -50,9 +50,9 @@ export default function AdminUsersPage() {
       </div>
 
       {/* ── Table ───────────────────────────────────────────── */}
-      <div className="bg-white rounded-[10px] border border-[#ebebeb] overflow-hidden">
+      <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
 
-        <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 px-5 py-3 border-b bg-[#fafaf9] text-xs font-semibold text-[#888] uppercase tracking-wide">
+        <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 px-5 py-3 border-b border-zinc-200 bg-zinc-50 text-xs font-semibold text-zinc-400 uppercase tracking-wide">
           <span>Nama</span>
           <span>Email</span>
           <span>Role</span>
@@ -62,7 +62,7 @@ export default function AdminUsersPage() {
 
         {/* Loading */}
         {isLoading && (
-          <div className="divide-y">
+          <div className="divide-y divide-zinc-100">
             {Array.from({ length: 10 }).map((_, i) => (
               <div key={i} className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 items-center px-5 py-3.5">
                 {Array.from({ length: 5 }).map((_, j) => (
@@ -76,47 +76,47 @@ export default function AdminUsersPage() {
         {/* Empty */}
         {!isLoading && (data?.data.length ?? 0) === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#f5f5f5] flex items-center justify-center mb-3">
-              <Users className="w-5 h-5 text-[#aaa]" />
+            <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center mb-3">
+              <Users className="w-5 h-5 text-zinc-400" />
             </div>
-            <p className="text-sm font-medium text-[#888]">Tidak ada pengguna ditemukan</p>
+            <p className="text-sm font-medium text-zinc-500">Tidak ada pengguna ditemukan</p>
           </div>
         )}
 
         {/* Rows */}
         {!isLoading && (data?.data.length ?? 0) > 0 && (
-          <div className="divide-y">
+          <div className="divide-y divide-zinc-100">
             {data?.data.map(user => (
               <div
                 key={user.id}
-                className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 items-center px-5 py-3 hover:bg-[#fafaf9] transition-colors"
+                className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] gap-3 items-center px-5 py-3 hover:bg-zinc-50 transition-colors"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
                     {user.name[0]?.toUpperCase() ?? "?"}
                   </div>
-                  <p className="text-sm font-medium text-gray-800 truncate">{user.name}</p>
+                  <p className="text-sm font-medium text-zinc-800 truncate">{user.name}</p>
                 </div>
 
-                <p className="text-sm text-[#888] truncate">{user.email}</p>
+                <p className="text-sm text-zinc-500 truncate">{user.email}</p>
 
                 <div>
                   {user.role === "ADMIN" ? (
-                    <Badge variant="outline" className="text-purple-600 border-purple-200 bg-purple-50 text-xs">
+                    <Badge variant="outline" className="text-violet-600 border-violet-200 bg-violet-50 text-xs">
                       Admin
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="text-[#888] border-[#e0e0e0] bg-[#fafaf9] text-xs">
+                    <Badge variant="outline" className="text-zinc-500 border-zinc-200 bg-zinc-50 text-xs">
                       User
                     </Badge>
                   )}
                 </div>
 
-                <p className="text-sm text-gray-600 font-medium">
+                <p className="text-sm text-zinc-700 font-medium">
                   {user._count.orders.toLocaleString("id-ID")}
                 </p>
 
-                <p className="text-xs text-[#aaa]">{formatDate(user.createdAt)}</p>
+                <p className="text-xs text-zinc-400">{formatDate(user.createdAt)}</p>
               </div>
             ))}
           </div>
@@ -124,8 +124,8 @@ export default function AdminUsersPage() {
 
         {/* Pagination */}
         {(data?.totalPages ?? 0) > 1 && (
-          <div className="flex items-center justify-between px-5 py-3 border-t bg-[#fafaf9]">
-            <p className="text-xs text-[#888]">
+          <div className="flex items-center justify-between px-5 py-3 border-t border-zinc-200 bg-zinc-50">
+            <p className="text-xs text-zinc-500">
               Halaman {page} dari {data!.totalPages}
             </p>
             <div className="flex gap-1">

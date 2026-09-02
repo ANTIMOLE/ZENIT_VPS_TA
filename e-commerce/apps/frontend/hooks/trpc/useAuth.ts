@@ -17,14 +17,19 @@ export function useAuth() {
 
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
-      void utils.auth.me.invalidate();
+      // setData writes the confirmed user (with role) into the cache
+      // synchronously. invalidate() only *schedules* a background refetch —
+      // it was possible for router.push() below to land on /admin/dashboard
+      // before that refetch resolved, so the admin layout's role guard
+      // still saw no user yet and bounced to the normal user flow. This is
+      // almost certainly the intermittent redirect bug.
+      utils.auth.me.setData(undefined, data.user);
       toast.success(`Selamat datang, ${data.user.name}!`);
       const params = new URLSearchParams(window.location.search);
       const from = params.get("from");
-      // [FIX] router.refresh() dulu — clear Next.js router cache supaya
-      // middleware re-run dengan cookie baru. Tanpa ini, navigasi ke /cart
-      // pakai cached redirect response dari sebelum login.
-      router.refresh();
+      // No router.refresh() — there's no middleware.ts in this project to
+      // re-run, and calling it right before push() only added a race
+      // window in the App Router navigation.
       router.push(from ?? (data.user.role === "ADMIN" ? "/admin/dashboard" : ROUTES.HOME));
     },
     onError: (err) => toast.error(err.message),
@@ -34,7 +39,6 @@ export function useAuth() {
     onSuccess: () => {
       void utils.auth.me.invalidate();
       toast.success("Akun berhasil dibuat!");
-      router.refresh();
       router.push(ROUTES.HOME);
     },
     onError: (err) => toast.error(err.message),
@@ -43,9 +47,6 @@ export function useAuth() {
   const logoutMutation = trpc.auth.logout.useMutation({
     onSettled: () => {
       void utils.invalidate();
-      // [FIX] router.refresh() — clear cache supaya protected routes
-      // tidak accessible setelah logout tanpa full page reload
-      router.refresh();
       router.push(ROUTES.LOGIN);
     },
   });
