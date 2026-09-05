@@ -1,6 +1,6 @@
 # Zenit — E-Commerce Sandbox
 
-> Universitas Atma Jaya Yogyakarta**  
+> Universitas Atma Jaya Yogyakarta  
 > Program Studi Informatika · NIM 220711833
 
 Zenit adalah aplikasi e-commerce yang digunakan sebagai **sandbox** untuk membandingkan performa REST API dan tRPC. Dibangun sebagai pnpm monorepo dan di-deploy di DigitalOcean VPS.
@@ -47,7 +47,7 @@ Kedua backend (REST & tRPC) berjalan di VPS yang **sama** untuk memastikan kondi
 ## Notes
 
 - Redis digunakan sebagai **read-through cache** untuk query produk dan kategori saja, bukan session store.
-- Auth: REST menggunakan **httpOnly cookie**, tRPC menggunakan **Authorization Bearer header**.
+- Auth: REST dan tRPC sama-sama menggunakan **httpOnly cookie**. tRPC context (`context.ts`) membaca cookie dengan cara yang sama seperti `auth.middleware.ts` di REST, jadi auth bukan variabel pembeda antara keduanya.
 
 ---
 
